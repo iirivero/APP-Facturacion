@@ -1,0 +1,30 @@
+import { ModuleWithProviders } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+
+import { LoginComponent } from './components/login/login.component';
+import { UsuarioComponent } from './components/usuario/usuario/usuario.component';
+import { AltaUsuarioComponent } from './components/usuario/alta-usuario/alta-usuario.component';
+import { EditarUsuarioComponent } from './components/usuario/editar-usuario/editar-usuario.component';
+import { ClienteComponent } from './components/cliente/cliente.component';
+import { ArticulosComponent } from './components/articulos/articulos.component';
+import { AlbaranesComponent } from './components/albaranes/albaranes.component';
+import { FacturasComponent } from './components/facturas/facturas.component';
+
+
+const appRoutes: Routes = [
+	{path: '', component: LoginComponent},
+	{path: 'login', component: LoginComponent},
+	{path: 'usuario', component: UsuarioComponent},
+	{path: 'alta-usuario', component: AltaUsuarioComponent},
+	{path: 'editar-usuario/:uuid', component: EditarUsuarioComponent},
+	{path: 'cliente', component: ClienteComponent},
+	{path: 'articulos', component: ArticulosComponent},
+	{path: 'albaranes', component: AlbaranesComponent},
+	{path: 'facturas', component: FacturasComponent},
+	{path: '**', component: LoginComponent},
+];
+
+export const appRoutingProviders: any[] = [];
+export const routing: ModuleWithProviders<any> = RouterModule.forRoot(appRoutes);
+
+ 

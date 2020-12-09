@@ -1,0 +1,49 @@
+<div class="container">
+	<h2>{{title}}</h2>
+
+	<div class="message success" *ngIf="status == 'success'">
+		El usuario se ha creado correctamente
+	</div>
+
+	<div class="message failed" *ngIf="status == 'failed'">
+		El usuario NO SE HA PODIDO CREAR
+	</div>
+
+	<form #usuarioForm="ngForm" (ngSubmit)="onSubmit(usuarioForm)">
+		<div class="form-group">
+
+			<label class="control-label" for="nombre">Nombre</label>
+			<input type="text" class="form-control boxed" name="nombre" #nombre="ngModel" [(ngModel)]="usuario.nombre" required />
+			<span class="form_error" *ngIf="nombre.touched && !nombre.valid">
+				El nombre es obligatorio
+			</span>
+		</div>
+
+		<div class="form-group">
+
+			<label class="control-label" for="apellidos">Apellidos</label>
+			<input type="text "class="form-control boxed" name="description" #apellidos="ngModel" [(ngModel)]="usuario.apellidos" required/>
+			<span class="form_error" *ngIf="apellidos.touched && !apellidos.valid">
+				Los apellidos son obligatorios
+			</span>
+		</div>
+
+		<div class="form-group">
+			<label class="control-label" for="email">Email</label>
+			<input type="text" class="form-control boxed" name="email" #email="ngModel" [(ngModel)]="usuario.email" required />
+			<span class="form_error" *ngIf="email.touched && !email.valid">
+				El email es obligatorio
+			</span>
+		</div>
+
+		<div class="form-group">
+
+			<label class="control-label" for="password">Contraseña</label>
+			<input type="password"  class="form-control boxed" name="password" #password="ngModel" [(ngModel)]="usuario.password" required />
+			<span class="form_error" *ngIf="password.touched && !password.valid">
+				La contraseña es obligatoria
+			</span>
+		</div>
+		<button type="submit" class="btn btn-rounded btn-secondary" [disabled]="!usuarioForm.form.valid">añadir</button>
+	</form>
+</div>
