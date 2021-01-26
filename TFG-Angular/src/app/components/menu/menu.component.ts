@@ -31,14 +31,13 @@ export class MenuComponent implements OnInit {
     private route: ActivatedRoute
     ) {
   	this.logueado = false;
-	console.log(this.logueado);
    }
 
   ngOnInit(): void {
   this.sidebarnavItems = ROUTES.filter(sidebarnavItem => sidebarnavItem); 
-    if(sessionStorage.getItem('emailLogin')!= null && sessionStorage.getItem('pass')!= null){
+    if(sessionStorage.getItem('emailLogin')!= null || sessionStorage.getItem('pass')!= null){
 this.logueado = true;
-  } 
+  }
   }
 
 }

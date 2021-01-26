@@ -1,0 +1,76 @@
+<div class="container mt-4">
+  <button [routerLink]="['/alta-cliente']" [routerLinkActive]="['actived']" class="btn-twitter col-12 mt-1" > Añadir cliente </button>
+  
+    <label>Filtro</label>
+    <input class="form-control boxed filtro" matInput (keyup)="applyFilter($event)">
+
+  <div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource">
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="razon_social">
+      <th mat-header-cell *matHeaderCellDef>razon social</th>
+      <td mat-cell *matCellDef="let cliente"> {{cliente.razon_social}} </td>
+    </ng-container>
+
+        <!-- Position Column -->
+    <ng-container matColumnDef="nombre_comercial">
+      <th mat-header-cell *matHeaderCellDef>nombre comercial</th>
+      <td mat-cell *matCellDef="let cliente"> {{cliente.nombre_comercial}} </td>
+    </ng-container>
+
+        <!-- Position Column -->
+    <ng-container matColumnDef="direccion">
+      <th mat-header-cell *matHeaderCellDef>direccion</th>
+      <td mat-cell *matCellDef="let cliente"> {{cliente.direccion}} </td>
+    </ng-container>
+
+        <!-- Position Column -->
+    <ng-container matColumnDef="ciudad">
+      <th mat-header-cell *matHeaderCellDef>ciudad</th>
+      <td mat-cell *matCellDef="let cliente"> {{cliente.ciudad}} </td>
+    </ng-container>
+
+        <!-- Position Column -->
+    <ng-container matColumnDef="codigo_postal">
+      <th mat-header-cell *matHeaderCellDef>codigo postal</th>
+      <td mat-cell *matCellDef="let cliente"> {{cliente.codigo_postal}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="telefono">
+      <th mat-header-cell *matHeaderCellDef> telefono </th>
+      <td mat-cell *matCellDef="let cliente"> {{cliente.telefono}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="cif">
+      <th mat-header-cell *matHeaderCellDef> cif </th>
+      <td mat-cell *matCellDef="let cliente"> {{cliente.cif}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef> email </th>
+      <td mat-cell *matCellDef="let cliente"> {{cliente.email}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="Acciones">
+      <th mat-header-cell *matHeaderCellDef> Acciones </th>
+      <td mat-cell *matCellDef="let cliente">
+        <button [routerLink]="['/editar-cliente', cliente.id]" class="btn btn-warning col-12 mt-1"> Editar </button>
+        <button (click)="mostrarDialogo(cliente)" class="btn btn-danger col-12 mb-3 mt-1"> Eliminar </button>
+      </td>
+
+    </ng-container>
+
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5,20,50]" showFirstLastButtons></mat-paginator>
+</div>
+</div>

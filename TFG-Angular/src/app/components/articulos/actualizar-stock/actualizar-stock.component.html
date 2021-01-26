@@ -1,0 +1,31 @@
+<div class="container"> 
+
+	<div class="message success" *ngIf="status == 'success'">
+		El articulo se ha creado correctamente
+	</div>
+
+	<div class="message failed" *ngIf="status == 'failed'">
+		El articulo no se ha podido editar
+	</div>
+
+	<div id="recuadro">
+		<h1> Detalles del articulo </h1>
+		<p> Nombre           : {{articulo.nombre}}</p>
+		<p> Descripción      : {{articulo.descripcion}}</p>
+		<p> Proveedor        : {{articulo.proveedor}}</p>
+		<p> Precio de compra : {{articulo.precio_compra}}</p>
+		<p> Rentabilidad     : {{articulo.rentabilidad}}</p>
+		<p> Precio de venta  : {{articulo.precio_venta}}</p>
+		<p> IVA              : {{articulo.iva}}%</p>
+		<p> Stock actual     : {{articulo.stock}}</p>							
+	</div>
+	<form #articuloForm="ngForm" (ngSubmit)="onSubmit(articuloForm)">
+		<div class="form-group">
+			<label class="control-label" for="precio_compra">Stock que se quiera añadir(si el numero es negativo el stock se restara)</label>
+			<input type="number" class="form-control boxed" name="stock_nuevo" [(ngModel)]="stock_nuevo" required/>
+
+		</div>
+
+		<button type="submit" class="btn btn-rounded btn-secondary" [disabled]="!articuloForm.form.valid">Guardar cambios</button>
+	</form>
+</div>

@@ -1,0 +1,77 @@
+<div class="container mt-4">
+  <button [routerLink]="['/alta-articulos']" [routerLinkActive]="['actived']" class="btn-twitter col-12 mt-1" > Añadir articulo </button>
+  
+    <label>Filtro</label>
+    <input class="form-control boxed filtro" matInput (keyup)="applyFilter($event)">
+
+  <div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource">
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="codigo">
+      <th mat-header-cell *matHeaderCellDef>codigo</th>
+      <td mat-cell *matCellDef="let articulo"> {{articulo.codigo}} </td>
+    </ng-container>
+
+        <!-- Position Column -->
+    <ng-container matColumnDef="nombre">
+      <th mat-header-cell *matHeaderCellDef>nombre</th>
+      <td mat-cell *matCellDef="let articulo"> {{articulo.nombre}} </td>
+    </ng-container>
+
+        <!-- Position Column -->
+    <ng-container matColumnDef="proveedor">
+      <th mat-header-cell *matHeaderCellDef>proveedor</th>
+      <td mat-cell *matCellDef="let articulo"> {{articulo.proveedor}} </td>
+    </ng-container>
+
+        <!-- Position Column -->
+    <ng-container matColumnDef="precio_compra">
+      <th mat-header-cell *matHeaderCellDef>precio compra</th>
+      <td mat-cell *matCellDef="let articulo"> {{articulo.precio_compra}} </td>
+    </ng-container>
+
+        <!-- Position Column -->
+    <ng-container matColumnDef="rentabilidad">
+      <th mat-header-cell *matHeaderCellDef>rentabilidad</th>
+      <td mat-cell *matCellDef="let articulo"> {{articulo.rentabilidad}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="precio_venta">
+      <th mat-header-cell *matHeaderCellDef> precio venta </th>
+      <td mat-cell *matCellDef="let articulo"> {{articulo.precio_venta}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="iva">
+      <th mat-header-cell *matHeaderCellDef> iva </th>
+      <td mat-cell *matCellDef="let articulo"> {{articulo.iva}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="stock">
+      <th mat-header-cell *matHeaderCellDef> stock </th>
+      <td mat-cell *matCellDef="let articulo"> {{articulo.stock}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="Acciones">
+      <th mat-header-cell *matHeaderCellDef> Acciones </th>
+      <td mat-cell *matCellDef="let articulo">
+        <button [routerLink]="['/actualizar-stock', articulo.codigo]" class="btn btn-warning col-12 mt-1"> Añadir stock </button>
+        <button [routerLink]="['/editar-articulos', articulo.codigo]" class="btn btn-warning col-12 mt-1"> Editar </button>
+        <button (click)="mostrarDialogo(articulo)" class="btn btn-danger col-12 mb-3 mt-1"> Eliminar </button>
+      </td>
+
+    </ng-container>
+
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5,20,50]" showFirstLastButtons></mat-paginator>
+</div>
+</div>

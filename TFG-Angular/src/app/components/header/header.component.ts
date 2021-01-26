@@ -15,7 +15,10 @@ export class HeaderComponent {
 
 logout(){
     window.sessionStorage.clear();
-    this.router.navigate(['']);
+    window.sessionStorage.setItem('reload', 'true');
+    
+    this.router.navigate(['login']);
+
 }
 
 }

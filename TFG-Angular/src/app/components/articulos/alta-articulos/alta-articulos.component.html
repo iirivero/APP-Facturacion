@@ -1,0 +1,95 @@
+<div class="container"> 
+	<h2>{{title}}</h2>
+
+	<div class="message success" *ngIf="status == 'success'">
+		El articulo se ha creado correctamente
+	</div>
+
+	<div class="message failed" *ngIf="status == 'failed'">
+		El articulo no se ha podido crear
+	</div>
+
+	<form #articuloForm="ngForm" (ngSubmit)="onSubmit(articuloForm)">
+		<div class="form-group">
+
+			<label class="control-label" for="codigo">codigo</label>
+			<input type="text" class="form-control boxed" name="codigo" #codigo="ngModel" [(ngModel)]="articulo.codigo" required />
+			<span class="form_error" *ngIf="codigo.touched && !codigo.valid">
+			El codigo es obligatorio
+			</span>
+		</div>
+
+		<div class="form-group">
+
+			<label class="control-label" for="nombre">nombre</label>
+			<input type="text "class="form-control boxed" name="nombre" #nombre="ngModel" [(ngModel)]="articulo.nombre" required/>
+			<span class="form_error" *ngIf="nombre.touched && !nombre.valid">
+				El nombre es obligatorio
+			</span>
+		</div>
+
+		<div class="form-group">
+
+			<label class="control-label" for="descripcion">descripcion</label>
+			<textarea class="form-control boxed" name="descripcion" #descripcion="ngModel" [(ngModel)]="articulo.descripcion" required></textarea>
+			<span class="form_error" *ngIf="descripcion.touched && !descripcion.valid">
+				La descripcion es obligatoria
+			</span>
+		</div>
+
+		<div class="form-group">
+			<label class="control-label" for="proveedor">proveedor</label>
+			<input type="text" class="form-control boxed" name="proveedor" #proveedor="ngModel" [(ngModel)]="articulo.proveedor" required />
+			<span class="form_error" *ngIf="proveedor.touched && !proveedor.valid">
+				El proveedor es obligatorio
+			</span>
+		</div>
+
+		<div class="form-group">
+
+			<label class="control-label" for="precio_compra">precio de compra</label>
+			<input type="text"  class="form-control boxed" name="precio_compra" #precio_compra="ngModel" [(ngModel)]="articulo.precio_compra" required />
+			<span class="form_error" *ngIf="precio_compra.touched && !precio_compra.valid">
+				El precio de compra es obligatorio
+			</span>
+		</div>
+
+		<div class="form-group">
+
+			<label class="control-label" for="rentabilidad">rentabilidad</label>
+			<input type="text "class="form-control boxed" name="rentabilidad" #rentabilidad="ngModel" [(ngModel)]="articulo.rentabilidad" required/>
+			<span class="form_error" *ngIf="rentabilidad.touched && !rentabilidad.valid">
+				La rentabilidad son obligatorio
+			</span>
+		</div>
+
+		<div class="form-group">
+
+			<label class="control-label" for="precio_venta">precio venta</label>
+			<input type="text "class="form-control boxed" name="precio_venta" #precio_venta="ngModel" [(ngModel)]="articulo.precio_venta" required/>
+			<span class="form_error" *ngIf="precio_venta.touched && !precio_venta.valid">
+				El precio de venta es obligatorio
+			</span>
+		</div>
+
+		<div class="form-group">
+
+			<label class="control-label" for="iva">iva</label>
+			<input type="text "class="form-control boxed" name="iva" #iva="ngModel" [(ngModel)]="articulo.iva" required/>
+			<span class="form_error" *ngIf="iva.touched && !iva.valid">
+				El iva es obligatorio
+			</span>
+		</div>
+
+		<div class="form-group">
+
+			<label class="control-label" for="stock">stock</label>
+			<input type="text "class="form-control boxed" name="stock" #stock="ngModel" [(ngModel)]="articulo.stock" required/>
+			<span class="form_error" *ngIf="stock.touched && !stock.valid">
+				El stock es obligatorio
+			</span>
+		</div>
+
+		<button type="submit" class="btn btn-rounded btn-secondary" [disabled]="!articuloForm.form.valid">añadir</button>
+	</form>
+</div>

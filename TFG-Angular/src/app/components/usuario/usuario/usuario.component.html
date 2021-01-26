@@ -1,10 +1,8 @@
-
-
-
-
 <div class="container mt-4">
-
-  <a [routerLink]="['/alta-usuario']" [routerLinkActive]="['actived']">Añadir usuario</a>
+  <button [routerLink]="['/alta-usuario']" [routerLinkActive]="['actived']" class="btn-twitter col-12 mt-1" > Añadir usuario </button>
+  
+    <label>Filtro</label>
+    <input class="form-control boxed filtro" matInput (keyup)="applyFilter($event)">
 
   <div class="mat-elevation-z8">
   <table mat-table [dataSource]="dataSource">
@@ -19,6 +17,12 @@
     <ng-container matColumnDef="apellidos">
       <th mat-header-cell *matHeaderCellDef> apellidos </th>
       <td mat-cell *matCellDef="let user"> {{user.apellidos}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef> email </th>
+      <td mat-cell *matCellDef="let user"> {{user.email}} </td>
     </ng-container>
 
     <!-- Weight Column -->

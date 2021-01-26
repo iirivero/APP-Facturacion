@@ -1,1 +1,51 @@
-<p>editar-usuario works!</p>
+<div class="container">
+	<h2>{{title}}</h2>
+
+	<div class="message success" *ngIf="status == 'success'">
+		El usuario se ha editado correctamente
+	</div>
+
+	<div class="message failed" *ngIf="status == 'failed'">
+		El usuario no se ha podido editar
+	</div>
+
+	<form [formGroup]="FormularioEditarUsuario">
+
+		<div class="form-group">
+			<label class="control-label" for="nombre">Nombre</label>
+			<input type="text" class="form-control boxed" id="nombre" formControlName="nombre"  name="nombre" >
+			<div *ngIf="(nombre.invalid && nombre.touched) || nombre.dirty">
+			  <small *ngIf="nombre.errors?.required" class="form_error">El nombre es obligatorio</small>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="control-label" for="apellidos">Apellidos</label>
+			<input type="text" class="form-control boxed" id="apellidos" formControlName="apellidos"  name="apellidos" >
+			<div *ngIf="(apellidos.invalid && apellidos.touched) || apellidos.dirty">
+			  <small *ngIf="apellidos.errors?.required" class="form_error">Los apellidos son obligatorios</small>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="control-label" for="email">Email</label>
+			<input type="text" class="form-control boxed" id="email" formControlName="email"  name="email" >
+			<div *ngIf="(email.invalid && email.touched) || email.dirty">
+			  <small *ngIf="email.errors?.required" class="form_error">El email es obligatorio</small>
+			</div>
+		</div>
+
+
+		<div class="form-group">
+			<label class="control-label" for="password">Contraseña</label>
+			<input type="password" class="form-control boxed" id="password" formControlName="password"  name="password" >
+			<div *ngIf="(password.invalid && password.touched) || password.dirty">
+			  <small *ngIf="password.errors?.required" class="form_error">La contraseña es obligatoria</small>
+			</div>
+		</div>
+
+		<button (click)="editarUsuario()" type="submit"  class="btn btn-rounded btn-secondary" [disabled]="FormularioEditarUsuario.invalid">añadir</button>
+	</form>
+
+
+</div>

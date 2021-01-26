@@ -28,6 +28,11 @@ export class LoginComponent implements OnInit {
    }
 
   ngOnInit(): void {
+  if(sessionStorage.getItem('reload')== 'true'){
+  window.sessionStorage.clear();
+  window.location.reload();
+  } 
+  
   if(sessionStorage.getItem('emailLogin')!= null && sessionStorage.getItem('pass')!= null){
     this._router.navigate(['/usuario']);
   } 

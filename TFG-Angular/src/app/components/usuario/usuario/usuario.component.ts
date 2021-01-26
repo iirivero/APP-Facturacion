@@ -14,13 +14,14 @@ import { DialogoConfirmacionComponent } from "../../dialogo-confirmacion/dialogo
   providers: [UsuarioService]
 })
 export class UsuarioComponent implements OnInit {
+  public logueado: boolean;
   arrayUsuarios: Array<Usuario>;
   //public usuario: Usuario[];
   public url: string;
   /**
    * Columnas que va a tener la tabla.
    */
-  displayedColumns: string[] = ['nombre', 'apellidos', 'Acciones'];
+  displayedColumns: string[] = ['nombre', 'apellidos', 'email', 'Acciones'];
   /**
    * Empleado para pasar los datos a la tabla.
    */
@@ -49,11 +50,20 @@ export class UsuarioComponent implements OnInit {
   ){
   	this.url = Global.url;
     this.arrayUsuarios = new Array<Usuario>();
+    this.logueado= false;
+ 
   }
 
   ngOnInit(){
   	
+  if(sessionStorage.getItem('emailLogin')!= null || sessionStorage.getItem('pass')!= null){
+
+    this.logueado = true;
+
     this.getUsuarios();
+  } 
+
+    
 
   }
 
@@ -146,6 +156,21 @@ private delete(usuario: Usuario) {
     }
   )
 }
+
+/**
+ * Aplica el filtro para poder buscar por todos los campos de la tabla.
+ * @param event
+ */
+applyFilter(event: Event) {
+  const filterValue = (event.target as HTMLInputElement).value;
+  this.dataSource.filter = filterValue.trim().toLowerCase();
+}
+
+
+
+
+
+
 
 
 }

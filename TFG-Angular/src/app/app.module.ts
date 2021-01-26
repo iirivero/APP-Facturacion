@@ -11,13 +11,14 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+import {ReactiveFormsModule} from '@angular/forms';
 
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { UsuarioComponent } from './components/usuario/usuario/usuario.component';
-import { ClienteComponent } from './components/cliente/cliente.component';
-import { ArticulosComponent } from './components/articulos/articulos.component';
+import { ClienteComponent } from './components/cliente/cliente/cliente.component';
+import { ArticulosComponent } from './components/articulos/articulos/articulos.component';
 import { AlbaranesComponent } from './components/albaranes/albaranes.component';
 import { FacturasComponent } from './components/facturas/facturas.component';
 import { AltaUsuarioComponent } from './components/usuario/alta-usuario/alta-usuario.component';
@@ -27,6 +28,12 @@ import { HeaderComponent } from './components/header/header.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { DialogoConfirmacionComponent } from './components/dialogo-confirmacion/dialogo-confirmacion.component';
+import { EditarClienteComponent } from './components/cliente/editar-cliente/editar-cliente.component';
+import { AltaClienteComponent } from './components/cliente/alta-cliente/alta-cliente.component';
+import { EditarArticulosComponent } from './components/articulos/editar-articulos/editar-articulos.component';
+import { AltaArticulosComponent } from './components/articulos/alta-articulos/alta-articulos.component';
+import { DatosComponent } from './components/datos/datos.component';
+import { ActualizarStockComponent } from './components/articulos/actualizar-stock/actualizar-stock.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -48,7 +55,13 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     EditarUsuarioComponent,
     HeaderComponent,
     MenuComponent,
-    DialogoConfirmacionComponent
+    DialogoConfirmacionComponent,
+    EditarClienteComponent,
+    AltaClienteComponent,
+    EditarArticulosComponent,
+    AltaArticulosComponent,
+    DatosComponent,
+    ActualizarStockComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +75,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatTableModule,
     MatDialogModule,
     BrowserAnimationsModule, 
-    MatButtonModule
+    MatButtonModule,
+    ReactiveFormsModule
   ],
   providers: [
   appRoutingProviders
