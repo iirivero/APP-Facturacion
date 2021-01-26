@@ -1,5 +1,5 @@
 <?php
-// file: model/USUARIO_Model.php
+
 require_once(__DIR__."/../core/ValidationException.php");
 // Modelo de la entidad usuario de la BD
 class Usuario_Model implements JsonSerializable{
@@ -10,8 +10,8 @@ class Usuario_Model implements JsonSerializable{
 	private $apellidos;
 	// Constructor de Usuario
 	public function __construct($uuid=NULL,$email=NULL, $password=NULL, $nombre=NULL, $apellidos=NULL) {
-		$this->email = $email;
 		$this->uuid = $uuid;
+		$this->email = $email;
 		$this->password = $password;
 		$this->nombre = $nombre;
 		$this->apellidos = $apellidos;

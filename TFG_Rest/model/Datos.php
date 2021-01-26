@@ -2,10 +2,9 @@
 
 require_once(__DIR__."/../core/ValidationException.php");
 // Modelo de la entidad cliente de la BD
-class Cliente_Model implements JsonSerializable{
+class Datos_Model implements JsonSerializable{
 	private $id;
-	private $razon_social;
-	private $nombre_comercial;
+	private $nombre;
 	private $direccion;
 	private $ciudad;
 	private $codigo_postal;
@@ -14,10 +13,9 @@ class Cliente_Model implements JsonSerializable{
 	private $email;
 
 	// Constructor de Cliente
-	public function __construct($id=NULL,$razon_social=NULL, $nombre_comercial=NULL, $direccion=NULL, $ciudad=NULL, $codigo_postal=NULL, $telefono=NULL, $cif=NULL, $email=NULL) {
+	public function __construct($id=NULL,$nombre=NULL, $direccion=NULL, $ciudad=NULL, $codigo_postal=NULL, $telefono=NULL, $cif=NULL, $email=NULL) {
 		$this->id = $id;
-		$this->razon_social = $razon_social;
-		$this->nombre_comercial = $nombre_comercial;
+		$this->nombre = $nombre;
 		$this->direccion = $direccion;
 		$this->ciudad = $ciudad;
 		$this->codigo_postal = $codigo_postal;
@@ -34,20 +32,12 @@ class Cliente_Model implements JsonSerializable{
 		$this->id = $id;
 	}	
 
-	public function getRazon_social() {
-		return $this->razon_social;
+	public function getNombre() {
+		return $this->nombre;
 	}
 	
-	public function setRazon_social($razon_social) {
-		$this->razon_social = $razon_social;
-	}
-
-	public function getNombre_comercial() {
-		return $this->nombre_comercial;
-	}
-	
-	public function setNombre_comercial($nombre_comercial) {
-		$this->nombre_comercial = $nombre_comercial;
+	public function setNombre($nombre) {
+		$this->nombre = $nombre;
 	}
 
 	public function getDireccion() {
@@ -97,7 +87,6 @@ class Cliente_Model implements JsonSerializable{
 	public function setEmail($email) {
 		$this->email = $email;
 	}
-	
 
     public function jsonSerialize()
     {
