@@ -9,87 +9,77 @@
 		El articulo no se ha podido editar
 	</div>
 
-	<form #articuloForm="ngForm" (ngSubmit)="onSubmit(articuloForm)">
-		<div class="form-group">
+	<form [formGroup]="FormularioEditarArticulo">
 
-			<label class="control-label" for="codigo">codigo</label>
-			<input type="text" class="form-control boxed" name="codigo" #codigo="ngModel" [(ngModel)]="articulo.codigo" required />
-			<span class="form_error" *ngIf="codigo.touched && !codigo.valid">
-			El codigo es obligatorio
-			</span>
+<div class="form-group">
+			<label class="control-label" for="codigo">Codigo</label>
+			<input type="text" class="form-control boxed" id="codigo" formControlName="codigo"  name="codigo" >
+			<div *ngIf="(codigo.invalid && codigo.touched) || codigo.dirty">
+			  <small *ngIf="codigo.errors?.required" class="form_error">El codigo es obligatorio</small>
+			</div>
 		</div>
 
 		<div class="form-group">
-
-			<label class="control-label" for="nombre">nombre</label>
-			<input type="text "class="form-control boxed" name="nombre" #nombre="ngModel" [(ngModel)]="articulo.nombre" required/>
-			<span class="form_error" *ngIf="nombre.touched && !nombre.valid">
-				El nombre es obligatorio
-			</span>
+			<label class="control-label" for="nombre">Nombre</label>
+			<input type="text" class="form-control boxed" id="nombre" formControlName="nombre"  name="nombre" >
+			<div *ngIf="(nombre.invalid && nombre.touched) || nombre.dirty">
+			  <small *ngIf="nombre.errors?.required" class="form_error">El nombre es obligatorio</small>
+			</div>
 		</div>
 
 		<div class="form-group">
-
-			<label class="control-label" for="descripcion">descripcion</label>
-			<textarea class="form-control boxed" name="descripcion" #descripcion="ngModel" [(ngModel)]="articulo.descripcion" required></textarea>
-			<span class="form_error" *ngIf="descripcion.touched && !descripcion.valid">
-				La descripcion es obligatoria
-			</span>
+			<label class="control-label" for="descripcion">Descripcion</label>
+			<textarea class="form-control boxed" id="descripcion" formControlName="descripcion"  name="descripcion"></textarea>
+			<div *ngIf="(descripcion.invalid && descripcion.touched) || descripcion.dirty">
+			  <small *ngIf="descripcion.errors?.required" class="form_error">La descripcion es obligatoria</small>
+			</div>
 		</div>
 
 		<div class="form-group">
-			<label class="control-label" for="proveedor">proveedor</label>
-			<input type="text" class="form-control boxed" name="proveedor" #proveedor="ngModel" [(ngModel)]="articulo.proveedor" required />
-			<span class="form_error" *ngIf="proveedor.touched && !proveedor.valid">
-				El proveedor es obligatorio
-			</span>
+			<label class="control-label" for="proveedor">Proveedor</label>
+			<input type="text" class="form-control boxed" id="proveedor" formControlName="proveedor"  name="proveedor" >
+			<div *ngIf="(proveedor.invalid && proveedor.touched) || proveedor.dirty">
+			  <small *ngIf="proveedor.errors?.required" class="form_error">El proveedor es obligatorio</small>
+			</div>
 		</div>
 
 		<div class="form-group">
-
-			<label class="control-label" for="precio_compra">precio de compra</label>
-			<input type="text"  class="form-control boxed" name="precio_compra" #precio_compra="ngModel" [(ngModel)]="articulo.precio_compra" required />
-			<span class="form_error" *ngIf="precio_compra.touched && !precio_compra.valid">
-				El precio de compra es obligatorio
-			</span>
+			<label class="control-label" for="precio_compra">Precio de compra</label>
+			<input type="text" class="form-control boxed" id="precio_compra" formControlName="precio_compra"  name="precio_compra" >
+			<div *ngIf="(precio_compra.invalid && precio_compra.touched) || precio_compra.dirty">
+			  <small *ngIf="precio_compra.errors?.required" class="form_error">El precio de compra es obligatorio</small>
+			</div>
 		</div>
 
 		<div class="form-group">
-
-			<label class="control-label" for="rentabilidad">rentabilidad</label>
-			<input type="text "class="form-control boxed" name="rentabilidad" #rentabilidad="ngModel" [(ngModel)]="articulo.rentabilidad" required/>
-			<span class="form_error" *ngIf="rentabilidad.touched && !rentabilidad.valid">
-				La rentabilidad son obligatorio
-			</span>
+			<label class="control-label" for="rentabilidad">Rentabilidad</label>
+			<input type="text" class="form-control boxed" id="rentabilidad" formControlName="rentabilidad"  name="rentabilidad" >
+			<div *ngIf="(rentabilidad.invalid && rentabilidad.touched) || rentabilidad.dirty">
+			  <small *ngIf="rentabilidad.errors?.required" class="form_error">La rentabilidad son obligatorio</small>
+			</div>
 		</div>
 
 		<div class="form-group">
-
-			<label class="control-label" for="precio_venta">precio venta</label>
-			<input type="text "class="form-control boxed" name="precio_venta" #precio_venta="ngModel" [(ngModel)]="articulo.precio_venta" required/>
-			<span class="form_error" *ngIf="precio_venta.touched && !precio_venta.valid">
-				El precio de venta es obligatorio
-			</span>
+			<label class="control-label" for="precio_venta">Precio de venta</label>
+			<input type="text" class="form-control boxed" id="precio_venta" formControlName="precio_venta"  name="precio_venta" readonly>
 		</div>
 
 		<div class="form-group">
-
-			<label class="control-label" for="iva">iva</label>
-			<input type="text "class="form-control boxed" name="iva" #iva="ngModel" [(ngModel)]="articulo.iva" required/>
-			<span class="form_error" *ngIf="iva.touched && !iva.valid">
-				El iva es obligatorio
-			</span>
+			<label class="control-label" for="iva">IVA</label>
+			<input type="text" class="form-control boxed" id="iva" formControlName="iva"  name="iva" >
+			<div *ngIf="(iva.invalid && iva.touched) || iva.dirty">
+			  <small *ngIf="iva.errors?.required" class="form_error">El iva es obligatorio</small>
+			</div>
 		</div>
 
 		<div class="form-group">
-
-			<label class="control-label" for="stock">stock</label>
-			<input type="text "class="form-control boxed" name="stock" #stock="ngModel" [(ngModel)]="articulo.stock" readonly />
-			<span class="form_error" *ngIf="stock.touched && !stock.valid">
-				El stock es obligatorio
-			</span>
+			<label class="control-label" for="stock">Stock</label>
+			<input type="text" class="form-control boxed" id="stock" formControlName="stock"  name="stock" >
+			<div *ngIf="(stock.invalid && stock.touched) || stock.dirty">
+			  <small *ngIf="stock.errors?.required" class="form_error">El stock es obligatorio</small>
+			</div>
 		</div>
 
-		<button type="submit" class="btn btn-rounded btn-secondary" [disabled]="!articuloForm.form.valid">Guardar cambios</button>
+		<button (click)="editarArticulo()" type="submit"  class="btn btn-rounded btn-secondary" [disabled]="FormularioEditarArticulo.invalid">Guardar cambios</button>
 	</form>
 </div>

@@ -9,67 +9,62 @@
 		El articulo no se ha podido editar
 	</div>
 
-	<form #datosForm="ngForm" (ngSubmit)="onSubmit(datosForm)">
-		<div class="form-group">
+	<form [formGroup]="FormularioDatos">
 
-			<label class="control-label" for="nombre">nombre</label>
-			<input type="text" class="form-control boxed" name="nombre" #nombre="ngModel" [(ngModel)]="datos.nombre" required />
-			<span class="form_error" *ngIf="nombre.touched && !nombre.valid">
-			El nombre es obligatorio
-			</span>
+		<div class="form-group">
+			<label class="control-label" for="nombre">Nombre</label>
+			<input type="text" class="form-control boxed" id="nombre" formControlName="nombre"  name="nombre" >
+			<div *ngIf="(nombre.invalid && nombre.touched) || nombre.dirty">
+			  <small *ngIf="nombre.errors?.required" class="form_error">El nombre es obligatorio</small>
+			</div>
 		</div>
 
 		<div class="form-group">
-
-			<label class="control-label" for="direccion">direccion</label>
-			<input type="text "class="form-control boxed" name="direccion" #direccion="ngModel" [(ngModel)]="datos.direccion" required/>
-			<span class="form_error" *ngIf="direccion.touched && !direccion.valid">
-				La direccion es obligatorio
-			</span>
+			<label class="control-label" for="direccion">Dirección</label>
+			<input type="text" class="form-control boxed" id="direccion" formControlName="direccion"  name="direccion" >
+			<div *ngIf="(direccion.invalid && direccion.touched) || direccion.dirty">
+			  <small *ngIf="direccion.errors?.required" class="form_error">La direccion es obligatorio</small>
+			</div>
 		</div>
 
 		<div class="form-group">
-
-			<label class="control-label" for="ciudad">ciudad</label>
-			<input type="text" class="form-control boxed" name="ciudad" #ciudad="ngModel" [(ngModel)]="datos.ciudad" required />
-			<span class="form_error" *ngIf="ciudad.touched && !ciudad.valid">
-				La ciudad es obligatoria
-			</span>
+			<label class="control-label" for="ciudad">Ciudad</label>
+			<input type="text" class="form-control boxed" id="ciudad" formControlName="ciudad"  name="ciudad" >
+			<div *ngIf="(ciudad.invalid && ciudad.touched) || ciudad.dirty">
+			  <small *ngIf="ciudad.errors?.required" class="form_error">La ciudad es obligatoria</small>
+			</div>
 		</div>
 
 		<div class="form-group">
-			<label class="control-label" for="codigo_postal">codigo postal</label>
-			<input type="text" class="form-control boxed" name="codigo_postal" #codigo_postal="ngModel" [(ngModel)]="datos.codigo_postal" required />
-			<span class="form_error" *ngIf="codigo_postal.touched && !codigo_postal.valid">
-				El codigo postal es obligatorio
-			</span>
+			<label class="control-label" for="codigo_postal">Codigo postal</label>
+			<input type="text" class="form-control boxed" id="codigo_postal" formControlName="codigo_postal"  name="codigo_postal" >
+			<div *ngIf="(codigo_postal.invalid && codigo_postal.touched) || codigo_postal.dirty">
+			  <small *ngIf="codigo_postal.errors?.required" class="form_error">El codigo postal es obligatorio</small>
+			</div>
 		</div>
 
 		<div class="form-group">
-
-			<label class="control-label" for="telefono">telefono</label>
-			<input type="text"  class="form-control boxed" name="telefono" #telefono="ngModel" [(ngModel)]="datos.telefono" required />
-			<span class="form_error" *ngIf="telefono.touched && !telefono.valid">
-				El telefono es obligatorio
-			</span>
+			<label class="control-label" for="telefono">Telefono</label>
+			<input type="text" class="form-control boxed" id="telefono" formControlName="telefono"  name="telefono" >
+			<div *ngIf="(telefono.invalid && telefono.touched) || telefono.dirty">
+			  <small *ngIf="telefono.errors?.required" class="form_error">El telefono es obligatorio</small>
+			</div>
 		</div>
 
 		<div class="form-group">
-
 			<label class="control-label" for="cif">cif</label>
-			<input type="text "class="form-control boxed" name="cif" #cif="ngModel" [(ngModel)]="datos.cif" required/>
-			<span class="form_error" *ngIf="cif.touched && !cif.valid">
-				El cif son obligatorio
-			</span>
+			<input type="text" class="form-control boxed" id="cif" formControlName="cif"  name="cif" >
+			<div *ngIf="(cif.invalid && cif.touched) || cif.dirty">
+			  <small *ngIf="cif.errors?.required" class="form_error">El cif son obligatorio</small>
+			</div>
 		</div>
 
 		<div class="form-group">
-
-			<label class="control-label" for="email">email</label>
-			<input type="text "class="form-control boxed" name="email" #email="ngModel" [(ngModel)]="datos.email" required/>
-			<span class="form_error" *ngIf="email.touched && !email.valid">
-				El email es obligatorio
-			</span>
+			<label class="control-label" for="email">Email</label>
+			<input type="text" class="form-control boxed" id="email" formControlName="email"  name="email" >
+			<div *ngIf="(email.invalid && email.touched) || email.dirty">
+			  <small *ngIf="email.errors?.required" class="form_error">El email es obligatorio</small>
+			</div>
 		</div>
 
 		<div class="form-group">
@@ -80,6 +75,6 @@
 		</div>
 
 
-		<button type="submit" class="btn btn-rounded btn-secondary" [disabled]="!datosForm.form.valid">añadir</button>
+		<button (click)="editarDatos()" type="submit"  class="btn btn-rounded btn-secondary" [disabled]="FormularioDatos.invalid">Guardar cambios</button>
 	</form>
 </div>

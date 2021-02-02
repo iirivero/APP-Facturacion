@@ -2,6 +2,8 @@
   <button [routerLink]="['/alta-usuario']" [routerLinkActive]="['actived']" class="btn-twitter col-12 mt-1" > Añadir usuario </button>
   
     <label>Filtro</label>
+    <button type="button" class="btn btn-outline-light my-2 my-sm-0" data-toggle="modal"
+                    data-target="#modalFilterForm">filtrar</button>
     <input class="form-control boxed filtro" matInput (keyup)="applyFilter($event)">
 
   <div class="mat-elevation-z8">
@@ -46,3 +48,48 @@
 </div>
 </div>
  
+
+ <!-- Aqui empieza el modal de registro -->
+<div class="modal fade" id="modalFilterForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <form  [formGroup]="FormularioFiltro">
+      <div class="modal-content container-fluid">
+        <div class="modal-header text-center">
+          <h1 id="tituloPersonal">Filtro</h1>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+     <div class="form-group">
+        <label class="control-label" for="nombre">Nombre</label>
+        <input type="text" class="form-control boxed" id="nombre" formControlName="nombre"  name="nombre" >
+      </div>
+
+      <div class="form-group">
+        <label class="control-label" for="apellidos">Apellidos</label>
+        <input type="text" class="form-control boxed" id="apellidos" formControlName="apellidos"  name="apellidos" >
+      </div>
+
+      <div class="form-group">
+        <label class="control-label" for="email">Email</label>
+        <input type="text" class="form-control boxed" id="email" formControlName="email"  name="email" >
+      </div>
+
+
+      <div class="form-group">
+        <label class="control-label" for="password">Contraseña</label>
+        <input type="password" class="form-control boxed" id="password" formControlName="password"  name="password" >
+      </div>
+
+      <div class="modal-footer d-flex justify-content-center">
+        <button  (click)="registrar()" type="submit" class=" col- btn btn-success">Registrar</button>
+        <button (click)="cerrarModal()" type="button" class=" col- offset-sm-1 btn btn-warning">Volver</button>
+      </div>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- Aqui acaba el modal de registro -->
+<!-- Aqui acaban los modales -->

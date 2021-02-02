@@ -3,7 +3,7 @@ import { Usuario } from '../../../models/usuario';
 import { UsuarioService } from '../../../services/usuarios.service';
 import { Global } from '../../../services/global';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import {FormControl,FormGroup,Validators} from '@angular/forms';
+import { FormControl,FormGroup,Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-editar-usuario',
@@ -18,11 +18,11 @@ export class EditarUsuarioComponent implements OnInit {
 	public admin: boolean;
 
   public FormularioEditarUsuario = new FormGroup({
-    nombre: new FormControl('', [
+  nombre: new FormControl('', [
       Validators.required
       ]
       ),
-    apellidos: new FormControl('',[
+  apellidos: new FormControl('',[
       Validators.required
     ]
     ),

@@ -34,6 +34,14 @@ export const ROUTES: RouteInfo[] = [
     submenu: [],
   },
   {
+    path: "/alta-pedido",
+    title: "NUEVO PEDIDO",
+    icon: "mdi mdi-message-bulleted",
+    class: "",
+    extralink: false,
+    submenu: [],
+  },
+  {
     path: "/albaranes",
     title: "ALBARANES",
     icon: "mdi mdi-view-carousel",

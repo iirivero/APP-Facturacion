@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Usuario } from '../../../models/usuario';
 import { UsuarioService } from '../../../services/usuarios.service';
 import { Global } from '../../../services/global';
-import {FormControl,FormGroup,Validators} from '@angular/forms';
+import { FormControl,FormGroup,Validators } from '@angular/forms';
 import { v4 as uuidv4 } from 'uuid';
 
 

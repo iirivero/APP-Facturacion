@@ -1,23 +1,25 @@
 import { ChangeDetectorRef, ViewChild,Component, OnInit } from '@angular/core';
 import { Cliente } from '../../../models/cliente';
 import { ClienteService } from '../../../services/cliente.service';
+import { PedidoService } from '../../../services/pedido.service';
 import { Global } from '../../../services/global';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { MatTableDataSource} from '@angular/material/table';
 import { MatPaginator,PageEvent} from '@angular/material/paginator';
-import { DialogoConfirmacionComponent } from "../../dialogo-confirmacion/dialogo-confirmacion.component"
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 @Component({
-  selector: 'app-cliente',
-  templateUrl: './cliente.component.html',
-  styleUrls: ['./cliente.component.css'],
+  selector: 'app-alta-pedido',
+  templateUrl: './alta-pedido.component.html',
+  styleUrls: ['./alta-pedido.component.css'],
   providers: [ClienteService]
 })
-export class ClienteComponent implements OnInit {
+export class AltaPedidoComponent implements OnInit {
   public logueado: boolean;
   arrayClientes: Array<Cliente>;
   //public usuario: Usuario[];
   public url: string;
+  public title: string;
   /**
    * Columnas que va a tener la tabla.
    */
@@ -38,11 +40,14 @@ export class ClienteComponent implements OnInit {
   constructor(
     private cdr : ChangeDetectorRef,
   	private _clienteService: ClienteService,
-    public dialogo: MatDialog
+    private _pedidoService: PedidoService,
+    private _router: Router,
+    private _route: ActivatedRoute
   ){
   	this.url = Global.url;
     this.arrayClientes = new Array<Cliente>();
     this.logueado= false;
+	  this.title = "Seleccione cliente";
  
   }
 
@@ -97,37 +102,31 @@ export class ClienteComponent implements OnInit {
 
 
       }
-    );
+    )
   }
 
 
+  crearPedido(cliente: Cliente): void {
+    this._pedidoService.crearPedido(cliente.id).subscribe(
+    response => {
 
-mostrarDialogo(cliente: Cliente): void {
-  this.dialogo
-    .open(DialogoConfirmacionComponent, {
-      data: `Estas seguro de querer eliminar el cliente con nombre : ` + cliente.nombre_comercial + ` ?`
-    })
-    .afterClosed()
-    .subscribe((confirmado: Boolean) => {
-      if (confirmado) {
-        this.delete(cliente);
 
-      } else {
+      if(response!=null){
+      for (let pedido of response){
+        this._router.navigate(['/rellenar-pedido',pedido.id]);
+      }
+
+
         
       }
-    });
-}
+    },
+    error => {
+      console.log(<any>error);
+    }
+  );
+  }
   
 
-private delete(cliente: Cliente) {
-  this._clienteService.eliminarCliente(cliente.id).subscribe(
-    result=>{
-      this.refresh();
-    }, error=>{
-      
-    }
-  )
-}
 
 /**
  * Aplica el filtro para poder buscar por todos los campos de la tabla.

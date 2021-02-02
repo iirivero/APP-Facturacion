@@ -10,3 +10,8 @@ table {
 .btn-twitter{
 	margin-bottom: 15px;
 }
+
+.container h2{
+	margin-left: -23px;
+    margin-bottom: 16px;
+}

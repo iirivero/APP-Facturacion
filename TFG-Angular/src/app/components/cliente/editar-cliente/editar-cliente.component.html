@@ -9,78 +9,74 @@
 		El cliente no se ha podido crear
 	</div>
 
-	<form #clienteForm="ngForm" (ngSubmit)="onSubmit(clienteForm)">
-		<div class="form-group">
+	<form [formGroup]="FormularioEditarCliente">
 
-			<label class="control-label" for="razon_social">razon social</label>
-			<input type="text" class="form-control boxed" name="razon_social" #razon_social="ngModel" [(ngModel)]="cliente.razon_social" required />
-			<span class="form_error" *ngIf="razon_social.touched && !razon_social.valid">
-				La razon social es obligatoria
-			</span>
+<div class="form-group">
+			<label class="control-label" for="razon_social">Razon social</label>
+			<input type="text" class="form-control boxed" id="razon_social" formControlName="razon_social"  name="razon_social" >
+			<div *ngIf="(razon_social.invalid && razon_social.touched) || razon_social.dirty">
+			  <small *ngIf="razon_social.errors?.required" class="form_error">La razon social es obligatoria</small>
+			</div>
 		</div>
 
 		<div class="form-group">
-
-			<label class="control-label" for="nombre_comercial">nombre comercial</label>
-			<input type="text "class="form-control boxed" name="nombre_comercial" #nombre_comercial="ngModel" [(ngModel)]="cliente.nombre_comercial" required/>
-			<span class="form_error" *ngIf="nombre_comercial.touched && !nombre_comercial.valid">
-				El nombre comercial es obligatorio
-			</span>
+			<label class="control-label" for="nombre_comercial">Nombre comercial</label>
+			<input type="text" class="form-control boxed" id="nombre_comercial" formControlName="nombre_comercial"  name="nombre_comercial" >
+			<div *ngIf="(nombre_comercial.invalid && nombre_comercial.touched) || nombre_comercial.dirty">
+			  <small *ngIf="nombre_comercial.errors?.required" class="form_error">El nombre comercial es obligatorio</small>
+			</div>
 		</div>
 
 		<div class="form-group">
+			<label class="control-label" for="direccion">Direccion</label>
+			<input type="text" class="form-control boxed" id="direccion" formControlName="direccion"  name="direccion" >
+			<div *ngIf="(direccion.invalid && direccion.touched) || direccion.dirty">
+			  <small *ngIf="direccion.errors?.required" class="form_error">La direccion es obligatoria</small>
+			</div>
+		</div>
 
-			<label class="control-label" for="direccion">direccion</label>
-			<input type="text "class="form-control boxed" name="direccion" #direccion="ngModel" [(ngModel)]="cliente.direccion" required/>
-			<span class="form_error" *ngIf="direccion.touched && !direccion.valid">
-				La direccion es obligatoria
-			</span>
+
+		<div class="form-group">
+			<label class="control-label" for="ciudad">Ciudad</label>
+			<input type="text" class="form-control boxed" id="ciudad" formControlName="ciudad"  name="ciudad" >
+			<div *ngIf="(ciudad.invalid && ciudad.touched) || ciudad.dirty">
+			  <small *ngIf="ciudad.errors?.required" class="form_error">La ciudad es obligatoria</small>
+			</div>
 		</div>
 
 		<div class="form-group">
-			<label class="control-label" for="ciudad">ciudad</label>
-			<input type="text" class="form-control boxed" name="ciudad" #ciudad="ngModel" [(ngModel)]="cliente.ciudad" required />
-			<span class="form_error" *ngIf="ciudad.touched && !ciudad.valid">
-				La ciudad es obligatoria
-			</span>
+			<label class="control-label" for="codigo_postal">Codigo postal</label>
+			<input type="text" class="form-control boxed" id="codigo_postal" formControlName="codigo_postal"  name="codigo_postal" >
+			<div *ngIf="(codigo_postal.invalid && codigo_postal.touched) || codigo_postal.dirty">
+			  <small *ngIf="codigo_postal.errors?.required" class="form_error">El codigo postal es obligatorio</small>
+			</div>
 		</div>
 
 		<div class="form-group">
-
-			<label class="control-label" for="codigo_postal">codigo postal</label>
-			<input type="text"  class="form-control boxed" name="codigo_postal" #codigo_postal="ngModel" [(ngModel)]="cliente.codigo_postal" required />
-			<span class="form_error" *ngIf="codigo_postal.touched && !codigo_postal.valid">
-				El codigo postal es obligatorio
-			</span>
+			<label class="control-label" for="telefono">Telefono</label>
+			<input type="text" class="form-control boxed" id="telefono" formControlName="telefono"  name="telefono" >
+			<div *ngIf="(telefono.invalid && telefono.touched) || telefono.dirty">
+			  <small *ngIf="telefono.errors?.required" class="form_error">El telefono son obligatorio</small>
+			</div>
 		</div>
 
 		<div class="form-group">
-
-			<label class="control-label" for="telefono">telefono</label>
-			<input type="text "class="form-control boxed" name="telefono" #telefono="ngModel" [(ngModel)]="cliente.telefono" required/>
-			<span class="form_error" *ngIf="telefono.touched && !telefono.valid">
-				El telefono son obligatorio
-			</span>
-		</div>
-
-		<div class="form-group">
-
 			<label class="control-label" for="cif">cif/dni</label>
-			<input type="text "class="form-control boxed" name="cif" #cif="ngModel" [(ngModel)]="cliente.cif" required/>
-			<span class="form_error" *ngIf="cif.touched && !cif.valid">
-				El cif/dni es obligatorio
-			</span>
+			<input type="text" class="form-control boxed" id="cif" formControlName="cif"  name="cif" >
+			<div *ngIf="(cif.invalid && cif.touched) || cif.dirty">
+			  <small *ngIf="cif.errors?.required" class="form_error">El cif/dni es obligatorio</small>
+			</div>
 		</div>
+
 
 		<div class="form-group">
+			<label class="control-label" for="email">Email</label>
+			<input type="text" class="form-control boxed" id="email" formControlName="email"  name="email" >
+			<div *ngIf="(email.invalid && email.touched) || email.dirty">
+			  <small *ngIf="email.errors?.required" class="form_error">El email es obligatorio</small>
+			</div>
+		</div> 
 
-			<label class="control-label" for="email">email</label>
-			<input type="text "class="form-control boxed" name="email" #email="ngModel" [(ngModel)]="cliente.email" required/>
-			<span class="form_error" *ngIf="email.touched && !email.valid">
-				El email es obligatorio
-			</span>
-		</div>
-
-		<button type="submit" class="btn btn-rounded btn-secondary" [disabled]="!clienteForm.form.valid">Guardar cambios</button>
+		<button (click)="editarCliente()" type="submit"  class="btn btn-rounded btn-secondary" [disabled]="FormularioEditarCliente.invalid">añadir</button>
 	</form>
 </div>

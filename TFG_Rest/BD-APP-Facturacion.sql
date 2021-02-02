@@ -30,7 +30,7 @@ USE appFacturacion;
 -- Estructura de tabla para la tabla `clientes`
 --
 
-CREATE TABLE `clientes` (
+CREATE TABLE IF NOT EXISTS `clientes` (
   `id` int(11) NOT NULL,
   `razon_social` varchar(60) NOT NULL,
   `nombre_comercial` varchar(60) NOT NULL,
@@ -46,7 +46,7 @@ CREATE TABLE `clientes` (
 -- Estructura de tabla para la tabla `datos`
 --
 
-CREATE TABLE `datos` (
+CREATE TABLE IF NOT EXISTS `datos` (
   `id` int(11) NOT NULL,
   `nombre` varchar(60) NOT NULL,
   `direccion` varchar(50) NOT NULL,
@@ -62,32 +62,62 @@ CREATE TABLE `datos` (
 -- Estructura de tabla para la tabla `articulos`
 --
 
-CREATE TABLE `articulos` (
+CREATE TABLE IF NOT EXISTS `articulos` (
   `codigo` varchar(36) NOT NULL,
   `nombre` varchar(60) NOT NULL,
   `descripcion` varchar(600) NOT NULL,
   `proveedor` varchar(20) NOT NULL,
   `precio_compra` decimal(10,2) NOT NULL,
-  `rentabilidad` decimal(3,2) NOT NULL,
-  `precio_venta` decimal(3,2) NOT NULL,
+  `rentabilidad` int(5) NOT NULL,
+  `precio_venta` decimal(10,2) NOT NULL,
   `iva` int(2) NOT NULL,
   `stock` int(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Estructura de tabla para la tabla `pedidos`
+--
 
--- --------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `pedidos` (
+  `id` int(11) NOT NULL,
+  `id_cliente` int(11) NOT NULL,
+  `fecha` DATETIME DEFAULT NULL,
+  `base_imponible` decimal(10,2) NOT NULL,
+  `iva` decimal(10,2) NOT NULL,
+  `total` decimal(10,2) NOT NULL,
+  `facturado` ENUM('Si','No') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Estructura de tabla para la tabla `linea_pedido`
+--
+
+CREATE TABLE IF NOT EXISTS `linea_pedido` (
+  `id` int(11) NOT NULL,
+  `id_pedido` int(11) NOT NULL,
+  `codigo_articulo` varchar(36) DEFAULT NULL,
+  `cantidad` int(10) NOT NULL,
+  `precio` decimal(10,2) NOT NULL,
+  `iva` int(2) NOT NULL,
+  `importe_iva` decimal(10,2) NOT NULL,
+  `descuento` ENUM('Si','No') NOT NULL,
+  `importe` decimal(10,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Estructura de tabla para la tabla `usuarios`
 --
 
-CREATE TABLE `usuarios` (
+CREATE TABLE IF NOT EXISTS `usuarios` (
   `uuid` varchar(36) NOT NULL,
   `email` varchar(45) NOT NULL,
   `password` varchar(128) NOT NULL,
   `nombre` varchar(25) NOT NULL,
   `apellidos` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- --------------------------------------------------------
 
 --
 -- Volcado de datos para la tabla `usuarios`
@@ -105,6 +135,7 @@ INSERT INTO `usuarios` (`uuid`, `email`, `password`, `nombre`, `apellidos`) VALU
 --
 ALTER TABLE `clientes`
   ADD PRIMARY KEY (`id`),
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1,
   ADD UNIQUE KEY `email` (`email`);
 
 --
@@ -121,23 +152,38 @@ ALTER TABLE `articulos`
   ADD PRIMARY KEY (`codigo`);
 
 --
+-- Indices de la tabla `pedidos`
+--
+ALTER TABLE `pedidos`
+  ADD PRIMARY KEY (`id`),
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1,
+  ADD FOREIGN KEY (`id_cliente`) REFERENCES `clientes`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Indices de la tabla `linea_pedido`
+--
+ALTER TABLE `linea_pedido`
+  ADD PRIMARY KEY (`id`),
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1,
+  ADD FOREIGN KEY (`id_pedido`) REFERENCES `pedidos`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD FOREIGN KEY (`codigo_articulo`) REFERENCES `articulos`(`codigo`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+
+--
 -- Indices de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`uuid`),
   ADD UNIQUE KEY `email` (`email`);
 
+
+
+
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
-ALTER TABLE `clientes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
-COMMIT;
 
-ALTER TABLE `datos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
-COMMIT;
 
 COMMIT;
 

@@ -2,10 +2,11 @@ import {ChangeDetectorRef, ViewChild,Component, OnInit } from '@angular/core';
 import { Usuario } from '../../../models/usuario';
 import { UsuarioService } from '../../../services/usuarios.service';
 import { Global } from '../../../services/global';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {MatTableDataSource} from '@angular/material/table';
-import {MatPaginator,PageEvent} from '@angular/material/paginator';
-import { DialogoConfirmacionComponent } from "../../dialogo-confirmacion/dialogo-confirmacion.component"
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator,PageEvent } from '@angular/material/paginator';
+import { DialogoConfirmacionComponent } from "../../dialogo-confirmacion/dialogo-confirmacion.component";
+import { FormControl,FormGroup,Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-usuario',
@@ -18,6 +19,30 @@ export class UsuarioComponent implements OnInit {
   arrayUsuarios: Array<Usuario>;
   //public usuario: Usuario[];
   public url: string;
+
+
+  public FormularioFiltro = new FormGroup({
+    nombre: new FormControl('', [
+      
+      ]
+      ),
+    apellidos: new FormControl('',[
+      
+    ]
+    ),
+    email: new FormControl('',[
+      
+    ]
+    ),
+    password: new FormControl('',[
+      
+    ]
+    )
+
+  });
+
+
+
   /**
    * Columnas que va a tener la tabla.
    */

@@ -34,6 +34,8 @@ import { EditarArticulosComponent } from './components/articulos/editar-articulo
 import { AltaArticulosComponent } from './components/articulos/alta-articulos/alta-articulos.component';
 import { DatosComponent } from './components/datos/datos.component';
 import { ActualizarStockComponent } from './components/articulos/actualizar-stock/actualizar-stock.component';
+import { AltaPedidoComponent } from './components/pedido/alta-pedido/alta-pedido.component';
+import { RellenarPedidoComponent } from './components/pedido/rellenar-pedido/rellenar-pedido.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -61,7 +63,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     EditarArticulosComponent,
     AltaArticulosComponent,
     DatosComponent,
-    ActualizarStockComponent
+    ActualizarStockComponent,
+    AltaPedidoComponent,
+    RellenarPedidoComponent
   ],
   imports: [
     BrowserModule,

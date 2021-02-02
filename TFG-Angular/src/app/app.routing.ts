@@ -15,6 +15,8 @@ import { ActualizarStockComponent } from './components/articulos/actualizar-stoc
 import { DatosComponent } from './components/datos/datos.component';
 import { AlbaranesComponent } from './components/albaranes/albaranes.component';
 import { FacturasComponent } from './components/facturas/facturas.component';
+import { AltaPedidoComponent } from './components/pedido/alta-pedido/alta-pedido.component';
+import { RellenarPedidoComponent } from './components/pedido/rellenar-pedido/rellenar-pedido.component';
 
 
 const appRoutes: Routes = [
@@ -33,6 +35,8 @@ const appRoutes: Routes = [
 	{path: 'datos', component: DatosComponent},
 	{path: 'albaranes', component: AlbaranesComponent},
 	{path: 'facturas', component: FacturasComponent},
+	{path: 'alta-pedido', component: AltaPedidoComponent},
+	{path: 'rellenar-pedido/:id', component: RellenarPedidoComponent},
 	{path: '**', component: LoginComponent},
 ];
 

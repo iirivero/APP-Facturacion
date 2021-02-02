@@ -1,1 +1,71 @@
-<p>albaranes works!</p>
+<div class="container mt-4">
+  <button [routerLink]="['/alta-cliente']" [routerLinkActive]="['actived']" class="btn-twitter col-12 mt-1" > Añadir cliente </button>
+  
+    <label>Filtro</label>
+    <input class="form-control boxed filtro" matInput (keyup)="applyFilter($event)">
+
+  <div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource">
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="razon_social">
+      <th mat-header-cell *matHeaderCellDef>razon social</th>
+      <td mat-cell *matCellDef="let pedido"> {{pedido.razon_social}} </td>
+    </ng-container>
+
+        <!-- Position Column -->
+    <ng-container matColumnDef="nombre_comercial">
+      <th mat-header-cell *matHeaderCellDef>nombre comercial</th>
+      <td mat-cell *matCellDef="let pedido"> {{pedido.nombre_comercial}} </td>
+    </ng-container>
+
+        <!-- Position Column -->
+    <ng-container matColumnDef="fecha">
+      <th mat-header-cell *matHeaderCellDef>fecha</th>
+      <td mat-cell *matCellDef="let pedido"> {{pedido.fecha | date:'dd/MM/yyyy hh:mm'}} </td>
+    </ng-container>
+
+        <!-- Position Column -->
+    <ng-container matColumnDef="base_imponible">
+      <th mat-header-cell *matHeaderCellDef>base imponible</th>
+      <td mat-cell *matCellDef="let pedido"> {{pedido.base_imponible}} </td>
+    </ng-container>
+
+        <!-- Position Column -->
+    <ng-container matColumnDef="iva">
+      <th mat-header-cell *matHeaderCellDef>iva</th>
+      <td mat-cell *matCellDef="let pedido"> {{pedido.iva}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="precio_total">
+      <th mat-header-cell *matHeaderCellDef> precio total </th>
+      <td mat-cell *matCellDef="let pedido"> {{pedido.precio_total}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="facturado">
+      <th mat-header-cell *matHeaderCellDef> facturado </th>
+      <td mat-cell *matCellDef="let pedido"> {{pedido.facturado}} </td>
+    </ng-container>
+
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="Acciones">
+      <th mat-header-cell *matHeaderCellDef> Acciones </th>
+      <td mat-cell *matCellDef="let pedido">
+        <button [routerLink]="['/editar-cliente', pedido.id]" class="btn btn-warning col-12 mt-1"> Editar </button>
+        <button (click)="mostrarDialogo(cliente)" class="btn btn-danger col-12 mb-3 mt-1"> Eliminar </button>
+      </td>
+
+    </ng-container>
+
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5,20,50]" showFirstLastButtons></mat-paginator>
+</div>
+</div>

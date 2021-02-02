@@ -3,6 +3,7 @@ import { Cliente } from '../../../models/cliente';
 import { ClienteService } from '../../../services/cliente.service';
 import { Global } from '../../../services/global';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { FormControl,FormGroup,Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-editar-cliente',
@@ -16,9 +17,45 @@ export class EditarClienteComponent implements OnInit {
 	public status: string;
 	public admin: boolean;
 
+  public FormularioEditarCliente = new FormGroup({
+  razon_social: new FormControl('', [
+      Validators.required
+      ]
+      ),
+    nombre_comercial: new FormControl('', [
+      Validators.required
+      ]
+      ),
+    direccion: new FormControl('',[
+      Validators.required
+    ]
+    ),
+  ciudad: new FormControl('',[
+      Validators.required
+    ]
+    ),
+  codigo_postal: new FormControl('',[
+      Validators.required
+    ]
+    ),
+  telefono: new FormControl('',[
+      Validators.required
+    ]
+    ),
+  cif: new FormControl('',[
+      Validators.required
+    ]
+    ),
+  email: new FormControl('',[
+      Validators.required
+    ]
+    )
+
+  });
+
   constructor(
 
-    private _clienteService: ClienteService,
+  private _clienteService: ClienteService,
 	private _route: ActivatedRoute,
 	private _router: Router
 
@@ -47,7 +84,9 @@ export class EditarClienteComponent implements OnInit {
           this.cliente = new Cliente(cliente.id,cliente.razon_social,cliente.nombre_comercial,
           	cliente.direccion,cliente.ciudad,cliente.codigo_postal,cliente.telefono,cliente.cif,cliente.email);   
         }
-  			
+
+  			this.pasarValoresFormulario();
+
   		},
   		error => {
   			console.log(<any>error);
@@ -55,25 +94,70 @@ export class EditarClienteComponent implements OnInit {
   	)
   }
 
-  onSubmit(form){
-	
-	// Guardar datos básicos
-	this._clienteService.editarCliente(this.cliente).subscribe(
-		response => {
-			if(response=="Cliente editado"){
-				
-				this.status = 'success';
+  private pasarValoresFormulario() {
+    this.razon_social.setValue(this.cliente.razon_social);
+    this.nombre_comercial.setValue(this.cliente.nombre_comercial);
+    this.direccion.setValue(this.cliente.direccion);
+    this.ciudad.setValue(this.cliente.ciudad);
+    this.codigo_postal.setValue(this.cliente.codigo_postal);
+    this.telefono.setValue(this.cliente.telefono);
+    this.cif.setValue(this.cliente.cif);
+    this.email.setValue(this.cliente.email);
+  }
 
-				
-			}else{
-				this.status = 'failed';
-			}
-		},
-		error => {
-			console.log(<any>error);
-		}
-	);
- }
+  editarCliente() {
+
+    this.cliente.razon_social= this.razon_social.value;
+    this.cliente.nombre_comercial = this.nombre_comercial.value;
+    this.cliente.direccion = this.direccion.value;
+    this.cliente.ciudad = this.ciudad.value;
+    this.cliente.codigo_postal= this.codigo_postal.value;
+    this.cliente.telefono = this.telefono.value;
+    this.cliente.cif = this.cif.value; 
+    this.cliente.email = this.email.value;
+
+    this._clienteService.editarCliente(this.cliente).subscribe(
+    response => {
+      if(response=="Cliente editado"){
+        
+        this.status = 'success';
+
+        
+      }else{
+        this.status = 'failed';
+      }
+    },
+    error => {
+      console.log(<any>error);
+    }
+  );
+
+  } 
+
+  get razon_social(){
+  return this.FormularioEditarCliente.get('razon_social');
+  }
+  get nombre_comercial(){
+  return this.FormularioEditarCliente.get('nombre_comercial');
+  }
+  get direccion(){
+  return this.FormularioEditarCliente.get('direccion');
+  }
+  get ciudad(){
+  return this.FormularioEditarCliente.get('ciudad');
+  }
+  get codigo_postal(){
+  return this.FormularioEditarCliente.get('codigo_postal');
+  }
+  get telefono(){
+  return this.FormularioEditarCliente.get('telefono');
+  }
+  get cif(){
+  return this.FormularioEditarCliente.get('cif');
+  }
+  get email(){
+  return this.FormularioEditarCliente.get('email');
+  }
 
 
 }
