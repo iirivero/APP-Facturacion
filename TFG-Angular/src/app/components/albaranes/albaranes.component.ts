@@ -110,7 +110,7 @@ export class AlbaranesComponent implements OnInit {
 mostrarDialogo(pedido: Pedido): void {
   this.dialogo
     .open(DialogoConfirmacionComponent, {
-      data: `Estas seguro de querer eliminar el albaran del cliente :  ?`
+      data: `Estas seguro de querer eliminar el albaran  del cliente ` + pedido.nombre_comercial + ` ?`
     })
     .afterClosed()
     .subscribe((confirmado: Boolean) => {

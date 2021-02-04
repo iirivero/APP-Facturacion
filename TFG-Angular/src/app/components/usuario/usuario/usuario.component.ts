@@ -17,29 +17,7 @@ import { FormControl,FormGroup,Validators } from '@angular/forms';
 export class UsuarioComponent implements OnInit {
   public logueado: boolean;
   arrayUsuarios: Array<Usuario>;
-  //public usuario: Usuario[];
   public url: string;
-
-
-  public FormularioFiltro = new FormGroup({
-    nombre: new FormControl('', [
-      
-      ]
-      ),
-    apellidos: new FormControl('',[
-      
-    ]
-    ),
-    email: new FormControl('',[
-      
-    ]
-    ),
-    password: new FormControl('',[
-      
-    ]
-    )
-
-  });
 
 
 
@@ -76,6 +54,7 @@ export class UsuarioComponent implements OnInit {
   	this.url = Global.url;
     this.arrayUsuarios = new Array<Usuario>();
     this.logueado= false;
+
  
   }
 
@@ -190,12 +169,6 @@ applyFilter(event: Event) {
   const filterValue = (event.target as HTMLInputElement).value;
   this.dataSource.filter = filterValue.trim().toLowerCase();
 }
-
-
-
-
-
-
 
 
 }

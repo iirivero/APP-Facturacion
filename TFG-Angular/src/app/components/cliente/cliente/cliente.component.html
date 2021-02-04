@@ -1,8 +1,7 @@
 <div class="container mt-4">
   <button [routerLink]="['/alta-cliente']" [routerLinkActive]="['actived']" class="btn-twitter col-12 mt-1" > Añadir cliente </button>
   
-    <label>Filtro</label>
-    <input class="form-control boxed filtro" matInput (keyup)="applyFilter($event)">
+    <input class="form-control boxed filtro" matInput (keyup)="applyFilter($event)" placeholder="FILTRO...">
 
   <div class="mat-elevation-z8">
   <table mat-table [dataSource]="dataSource">

@@ -30,7 +30,7 @@ class Pedido_Mapper {
 
     }  
 
-    public function eliminarPedidos($id){
+    public function eliminarPedido($id){
         $stmt = $this->db->prepare("DELETE from pedidos WHERE id = ?");
         $resul = $stmt->execute(array($id));
         return $resul;

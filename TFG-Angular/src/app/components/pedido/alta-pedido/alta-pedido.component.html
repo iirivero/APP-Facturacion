@@ -1,7 +1,7 @@
 <div class="container mt-4">
 <h2>{{title}}</h2>  
-    <label>Filtro</label>
-    <input class="form-control boxed filtro" matInput (keyup)="applyFilter($event)">
+
+    <input class="form-control boxed filtro" matInput (keyup)="applyFilter($event)" placeholder="FILTRO...">
 
   <div class="mat-elevation-z8">
   <table mat-table [dataSource]="dataSource">

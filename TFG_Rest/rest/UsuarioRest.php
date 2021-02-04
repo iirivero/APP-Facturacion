@@ -87,6 +87,7 @@ class UsuarioRest extends BaseRest {
         echo(json_encode($userArray));
     }
 
+
 	public function getUsuario($uuid){
         $userArray = $this->usuarioMapper->getUsuario($uuid);
         header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');

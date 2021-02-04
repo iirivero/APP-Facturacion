@@ -27,6 +27,7 @@ export class ActualizarStockComponent implements OnInit {
 
   	this.title = "Actualizar Stock";
 	  this.articulo = new Articulo('','','','',null,null,null,null,null);
+
   	this.admin = false;
    
   }
@@ -45,7 +46,6 @@ export class ActualizarStockComponent implements OnInit {
   	this._articuloService.getArticulo(codigo).subscribe(
   		articulos => {
         for (let articulo of articulos){
-
           this.articulo = new Articulo(articulo.codigo,articulo.nombre,articulo.descripcion,articulo.proveedor,articulo.precio_compra,
             	articulo.rentabilidad,articulo.precio_venta,articulo.iva,articulo.stock); 
         }
@@ -58,9 +58,8 @@ export class ActualizarStockComponent implements OnInit {
   }
 
   onSubmit(form){
+	this.articulo.stock = parseInt(this.stock_nuevo) + this.articulo.stock;
 
-	this.articulo.stock = this.stock_nuevo + this.articulo.stock;
-  console.log(this.articulo.stock);
 
 	// Guardar datos básicos
 	this._articuloService.editarArticulo(this.articulo).subscribe(

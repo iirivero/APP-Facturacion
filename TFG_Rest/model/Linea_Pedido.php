@@ -92,11 +92,11 @@ class Linea_Pedido_Model implements JsonSerializable{
 	}
 
 	public function getImporte() {
-		return $this->descuento;
+		return $this->importe;
 	}
 
-	public function setImporte($descuento) {
-		$this->descuento = $descuento;
+	public function setImporte($importe) {
+		$this->importe = $importe;
 	}
 
 

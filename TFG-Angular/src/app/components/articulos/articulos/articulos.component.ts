@@ -16,7 +16,6 @@ import { DialogoConfirmacionComponent } from "../../dialogo-confirmacion/dialogo
 })
 export class ArticulosComponent implements OnInit {
   public logueado: boolean;
-  public numeroStock: string;
   arrayArticulos: Array<Articulo>;
   //public usuario: Usuario[];
   public url: string;
@@ -45,7 +44,6 @@ export class ArticulosComponent implements OnInit {
   	this.url = Global.url;
     this.arrayArticulos = new Array<Articulo>();
     this.logueado= false;
-    this.numeroStock = '';
 
  
   }

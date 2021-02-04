@@ -12,34 +12,36 @@ require_once(__DIR__."/BaseRest.php");
 *
 */
 class Linea_PedidoRest extends BaseRest {
-	private $pedidoMapper;
+	private $lineaPedidoMapper;
 
 	public function __construct() {
 		parent::__construct();
-		$this->pedidoMapper = new Linea_Pedido_Mapper();
+		$this->lineaPedidoMapper = new Linea_Pedido_Mapper();
 	}
 	// Para registrar un nuevo pedido en el sistema
 	public function añadirLinea_Pedido() {
 		$data = $_POST['pedido'];
 		$data = json_decode($data,true);
-		$pedido = new Linea_Pedido_Model($data['codigo'],$data['nombre'],$data['descripcion'],$data['proveedor'],$data['precio_compra'],$data['rentabilidad'],$data['precio_venta'],$data['iva'],$data['stock']);
+		if($data['descuento']==null){
+		$linea_pedido = new Linea_Pedido_Model($data['id'],$data['id_pedido'],$data['codigo_articulo'],$data['cantidad'],$data['precio'],$data['iva'],$data['importe_iva'],0,$data['importe']);
+		}else{
+		$linea_pedido = new Linea_Pedido_Model($data['id'],$data['id_pedido'],$data['codigo_articulo'],$data['cantidad'],$data['precio'],$data['iva'],$data['importe_iva'],$data['descuento'],$data['importe']);
+		}
 
 
-			if($this->pedidoMapper->pedidoExiste($pedido->getCodigo())){
+			if($this->lineaPedidoMapper->lineaPedidoExiste($linea_pedido->getId_pedido(),$linea_pedido->getCodigo_articulo())){
 		
 	            http_response_code(400);
 	            header('Content-Type: application/json');
-	            echo(json_encode("El codigo ya existe"));
+	            echo(json_encode("El articulo ya esta introducido"));
 	            exit();
 			}
 	        try{
-				//$pedido->validacionRegistro();
-				//die('si valida');
 
-				$this->pedidoMapper->insertarLinea_Pedido($pedido);
+				$this->lineaPedidoMapper->insertarLinea_Pedido($linea_pedido);
 	            http_response_code(201);
 	            header('Content-Type: application/json');
-	            echo(json_encode("Linea_Pedido creado"));
+	            echo(json_encode("Linea del pedido creado"));
 			
 		}catch(ValidationException $e) {
 			http_response_code(400);
@@ -49,57 +51,30 @@ class Linea_PedidoRest extends BaseRest {
 	
 	}
 
-	public function editarLinea_Pedido() {
-        $data = json_decode($_POST['pedido'],true);
-        $pedido = new Linea_Pedido_Model($data['codigo'],$data['nombre'],$data['descripcion'],$data['proveedor'],$data['precio_compra'],$data['rentabilidad'],$data['precio_venta'],$data['iva'],$data['stock']);
-        $resul = $this->pedidoMapper->editarLinea_Pedido($pedido);
-        if($resul == 1){
-            header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
-            header('Content-Type: application/json');
-            echo(json_encode("Linea_Pedido editado"));
-
-        }
-        else{
-            http_response_code(400);
-            header('Content-Type: application/json');
-            echo(json_encode("Error al editar el pedido"));
-        }
-		
-	}
-
-	public function getLinea_Pedidos(){
-        $pedidoArray = $this->pedidoMapper->getLinea_Pedidos();
+	public function getLinea_Pedido($id_pedido){
+        $pedidoArray = $this->lineaPedidoMapper->getLinea_Pedidos($id_pedido);
         header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
         header('Content-Type: application/json');
         echo(json_encode($pedidoArray));
     }
 
-	public function getLinea_Pedido($codigo){
-        $pedidoArray = $this->pedidoMapper->getLinea_Pedido($codigo);
-        header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
-        header('Content-Type: application/json');
-        echo(json_encode($pedidoArray));
-    }
-
-    public function eliminarLinea_Pedido($codigo){
-        $pedido = $this->pedidoMapper->eliminarLinea_Pedido($codigo);
-        if($pedido == 1){
+    public function eliminarLinea_Pedido($id){
+        $lineaPedido = $this->lineaPedidoMapper->eliminarLinea_Pedido($id);
+        if($lineaPedido == 1){
             header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
             header('Content-Type: application/json');
             echo(json_encode(true));
         }else{
             http_response_code(400);
             header('Content-Type: application/json');
-            echo(json_encode("Error al eliminar el pedido"));
+            echo(json_encode("Error al eliminar la linea del pedido"));
         }
     }
 }
 // URI-MAPPING for this Rest endpoint
 $lineaPedidoRest = new Linea_PedidoRest();
 URIDispatcher::getInstance()
-->map("GET",	"/linea_pedido", array($lineaPedidoRest,"getLinea_Pedidos"))
 ->map("GET",	"/linea_pedido/$1", array($lineaPedidoRest,"getLinea_Pedido"))
 ->map("POST", "/linea_pedido", array($lineaPedidoRest,"añadirLinea_Pedido"))
-->map("POST", "/linea_pedido/editar", array($lineaPedidoRest,"editarLinea_Pedido"))
 ->map("DELETE","/linea_pedido/eliminar/$1", array($lineaPedidoRest,"eliminarLinea_Pedido"));
  

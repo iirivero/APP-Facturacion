@@ -57,7 +57,7 @@ export class AltaUsuarioComponent implements OnInit {
     this.usuario.apellidos = this.apellidos.value;
     this.usuario.email = this.email.value;
     this.usuario.password = this.password.value;
-	this._usuarioService.añadirUsuario(this.usuario).subscribe(
+	  this._usuarioService.añadirUsuario(this.usuario).subscribe(
 		response => {
 			if(response=="Usuario creado"){
 				

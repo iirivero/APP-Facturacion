@@ -21,8 +21,8 @@
 	</div>
 	<form #articuloForm="ngForm" (ngSubmit)="onSubmit(articuloForm)">
 		<div class="form-group">
-			<label class="control-label" for="precio_compra">Stock que se quiera añadir(si el numero es negativo el stock se restara)</label>
-			<input type="number" class="form-control boxed" name="stock_nuevo" [(ngModel)]="stock_nuevo" required/>
+			<label class="control-label">Stock que se quiera añadir(si el numero es negativo el stock se restara)</label>
+			<input type="text" class="form-control boxed" name="stock_nuevo" [(ngModel)]="stock_nuevo" required/>
 
 		</div>
 

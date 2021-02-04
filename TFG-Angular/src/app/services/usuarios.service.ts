@@ -49,7 +49,6 @@ export class UsuarioService{
     return this.http.get(this.url+'/'+uuid, {headers: headers,responseType:'json'});
   }
 
-
   editarUsuario(usuario: Usuario) {
     let json = JSON.stringify(usuario);
     let parametros = "usuario="+json;
