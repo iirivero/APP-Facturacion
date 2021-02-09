@@ -25,7 +25,6 @@ export class UsuarioService{
   }	
 
 
-
   añadirUsuario(usuario: Usuario): Observable<any> {
     let json = JSON.stringify(usuario);
     let parametros = "usuario="+json;

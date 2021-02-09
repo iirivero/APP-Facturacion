@@ -20,6 +20,7 @@ class ClienteRest extends BaseRest {
 	}
 	// Para registrar un nuevo cliente en el sistema
 	public function añadirCliente() {
+		$currentUser = parent::auntenticarUsuario();
 		$data = $_POST['cliente'];
 		$data = json_decode($data,true);
 		$cliente = new Cliente_Model($data['id'],$data['razon_social'],$data['nombre_comercial'],$data['direccion'],$data['ciudad'],$data['codigo_postal'],$data['telefono'],$data['cif'],$data['email']);
@@ -50,6 +51,7 @@ class ClienteRest extends BaseRest {
 	}
 
 	public function editarCliente() {
+		$currentUser = parent::auntenticarUsuario();
         $data = json_decode($_POST['cliente'],true);
         $cliente = new Cliente_Model($data['id'],$data['razon_social'],$data['nombre_comercial'],$data['direccion'],$data['ciudad'],$data['codigo_postal'],$data['telefono'],$data['cif'],$data['email']);
         $resul = $this->clienteMapper->editarCliente($cliente);
@@ -68,6 +70,7 @@ class ClienteRest extends BaseRest {
 	}
 
 	public function getClientes(){
+		$currentUser = parent::auntenticarUsuario();
         $clienteArray = $this->clienteMapper->getClientes();
         header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
         header('Content-Type: application/json');
@@ -75,6 +78,7 @@ class ClienteRest extends BaseRest {
     }
 
 	public function getCliente($id){
+		$currentUser = parent::auntenticarUsuario();
         $clienteArray = $this->clienteMapper->getCliente($id);
         header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
         header('Content-Type: application/json');
@@ -82,6 +86,7 @@ class ClienteRest extends BaseRest {
     }
 
     public function eliminarCliente($id){
+    	$currentUser = parent::auntenticarUsuario();
         $cliente = $this->clienteMapper->eliminarCliente($id);
         if($cliente == 1){
             header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');

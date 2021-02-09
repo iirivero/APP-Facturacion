@@ -20,6 +20,7 @@ class ArticuloRest extends BaseRest {
 	}
 	// Para registrar un nuevo articulo en el sistema
 	public function añadirArticulo() {
+		$currentUser = parent::auntenticarUsuario();
 		$data = $_POST['articulo'];
 		$data = json_decode($data,true);
 		$articulo = new Articulo_Model($data['codigo'],$data['nombre'],$data['descripcion'],$data['proveedor'],$data['precio_compra'],$data['rentabilidad'],$data['precio_venta'],$data['iva'],$data['stock']);
@@ -50,6 +51,7 @@ class ArticuloRest extends BaseRest {
 	}
 
 	public function editarArticulo() {
+		$currentUser = parent::auntenticarUsuario();
         $data = json_decode($_POST['articulo'],true);
         $articulo = new Articulo_Model($data['codigo'],$data['nombre'],$data['descripcion'],$data['proveedor'],$data['precio_compra'],$data['rentabilidad'],$data['precio_venta'],$data['iva'],$data['stock']);
         $resul = $this->articuloMapper->editarArticulo($articulo);
@@ -68,6 +70,7 @@ class ArticuloRest extends BaseRest {
 	}
 
 	public function getArticulos(){
+		$currentUser = parent::auntenticarUsuario();
         $articuloArray = $this->articuloMapper->getArticulos();
         header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
         header('Content-Type: application/json');
@@ -75,6 +78,7 @@ class ArticuloRest extends BaseRest {
     }
 
 	public function getArticulo($codigo){
+		$currentUser = parent::auntenticarUsuario();
         $articuloArray = $this->articuloMapper->getArticulo($codigo);
         header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
         header('Content-Type: application/json');
@@ -82,6 +86,7 @@ class ArticuloRest extends BaseRest {
     }
 
     public function eliminarArticulo($codigo){
+    	$currentUser = parent::auntenticarUsuario();
         $articulo = $this->articuloMapper->eliminarArticulo($codigo);
         if($articulo == 1){
             header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');

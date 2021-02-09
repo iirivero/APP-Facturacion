@@ -20,13 +20,12 @@ class Linea_PedidoRest extends BaseRest {
 	}
 	// Para registrar un nuevo pedido en el sistema
 	public function añadirLinea_Pedido() {
+		$currentUser = parent::auntenticarUsuario();
 		$data = $_POST['pedido'];
 		$data = json_decode($data,true);
-		if($data['descuento']==null){
-		$linea_pedido = new Linea_Pedido_Model($data['id'],$data['id_pedido'],$data['codigo_articulo'],$data['cantidad'],$data['precio'],$data['iva'],$data['importe_iva'],0,$data['importe']);
-		}else{
+
 		$linea_pedido = new Linea_Pedido_Model($data['id'],$data['id_pedido'],$data['codigo_articulo'],$data['cantidad'],$data['precio'],$data['iva'],$data['importe_iva'],$data['descuento'],$data['importe']);
-		}
+	
 
 
 			if($this->lineaPedidoMapper->lineaPedidoExiste($linea_pedido->getId_pedido(),$linea_pedido->getCodigo_articulo())){
@@ -52,6 +51,7 @@ class Linea_PedidoRest extends BaseRest {
 	}
 
 	public function getLinea_Pedido($id_pedido){
+		$currentUser = parent::auntenticarUsuario();
         $pedidoArray = $this->lineaPedidoMapper->getLinea_Pedidos($id_pedido);
         header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
         header('Content-Type: application/json');
@@ -59,6 +59,7 @@ class Linea_PedidoRest extends BaseRest {
     }
 
     public function eliminarLinea_Pedido($id){
+    	$currentUser = parent::auntenticarUsuario();
         $lineaPedido = $this->lineaPedidoMapper->eliminarLinea_Pedido($id);
         if($lineaPedido == 1){
             header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');

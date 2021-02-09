@@ -10,3 +10,11 @@ table {
 .btn-twitter{
 	margin-bottom: 15px;
 }
+
+.row{
+	margin-right: 0px;
+}
+
+th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type{
+	padding-right: 0px;
+}

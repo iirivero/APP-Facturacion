@@ -5,6 +5,7 @@ import { HttpClient} from '@angular/common/http';
 import { DatosService } from '../../services/datos.service';
 import { FormControl,FormGroup,Validators } from '@angular/forms';
 import { Global } from '../../services/global';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-datos',
@@ -19,6 +20,7 @@ export class DatosComponent implements OnInit {
 	public save_datos;
 	public status: string;
 	public archivo: Archivo;
+ 	public admin: string;
 
 	public FormularioDatos = new FormGroup({
     nombre: new FormControl('', [
@@ -53,7 +55,8 @@ export class DatosComponent implements OnInit {
   });
 
 	constructor(
-		private _datosService: DatosService
+		private _datosService: DatosService,
+		private _router: Router
 	){
 		this.title = "Modificar datos de la empresa";
 		this.datos = new Datos('','','','',0,0,'','');
@@ -61,9 +64,16 @@ export class DatosComponent implements OnInit {
 
   	ngOnInit(): void {
 
-		this.getDatos();
+	if(sessionStorage.getItem('emailLogin')!= null || sessionStorage.getItem('pass')!= null){
+	    this.admin = sessionStorage.getItem('admin');
+		this.getDatos(); 
+	}else{
+		this._router.navigate(['/login']);
+	} 
 
-  	}
+	}  		
+
+
 
   	getDatos(){
   	this._datosService.getDatos().subscribe(

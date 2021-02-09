@@ -21,6 +21,7 @@ class DatosRest extends BaseRest {
 
 
 	public function editarDatos() {
+        $currentUser = parent::auntenticarUsuario();
         $data = json_decode($_POST['datos'],true);
         $datos = new Datos_Model($data['id'],$data['nombre'],$data['direccion'],$data['ciudad'],$data['codigo_postal'],$data['telefono'],$data['cif'],$data['email']);
         $resul = $this->datosMapper->editarDatos($datos);
@@ -39,6 +40,7 @@ class DatosRest extends BaseRest {
 	}
 
     public function subirArchivo() {
+        $currentUser = parent::auntenticarUsuario();
         $data = json_decode($_POST['datos'],true);
         $dir_foto="../../../TFG-Angular/src/assets/images/".$data['nombre'];
         $resul = move_uploaded_file($data['nombre'], $dir_foto); 
@@ -57,6 +59,7 @@ class DatosRest extends BaseRest {
     }
 
 	public function getDatos(){
+        $currentUser = parent::auntenticarUsuario();
         $datosArray = $this->datosMapper->getDatos();
         header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
         header('Content-Type: application/json');

@@ -7,6 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator,PageEvent } from '@angular/material/paginator';
 import { DialogoConfirmacionComponent } from "../../dialogo-confirmacion/dialogo-confirmacion.component";
 import { FormControl,FormGroup,Validators } from '@angular/forms';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-usuario',
@@ -16,6 +17,7 @@ import { FormControl,FormGroup,Validators } from '@angular/forms';
 })
 export class UsuarioComponent implements OnInit {
   public logueado: boolean;
+  public admin: string;
   arrayUsuarios: Array<Usuario>;
   public url: string;
 
@@ -49,6 +51,7 @@ export class UsuarioComponent implements OnInit {
   constructor(
     private cdr : ChangeDetectorRef,
   	private _usuarioService: UsuarioService,
+    private _router: Router,
     public dialogo: MatDialog
   ){
   	this.url = Global.url;
@@ -59,12 +62,13 @@ export class UsuarioComponent implements OnInit {
   }
 
   ngOnInit(){
-  	
   if(sessionStorage.getItem('emailLogin')!= null || sessionStorage.getItem('pass')!= null){
-
+    this.admin = sessionStorage.getItem('admin');
     this.logueado = true;
 
     this.getUsuarios();
+  }else{
+    this._router.navigate(['/login']);
   } 
 
     
@@ -75,7 +79,7 @@ export class UsuarioComponent implements OnInit {
   	this._usuarioService.getUsuarios().subscribe(usuarios=>{
       (usuarios);
           for (let usuario of usuarios){
-            this.arrayUsuarios.push(new Usuario(usuario.uuid,usuario.email,usuario.password,usuario.nombre,usuario.apellidos));    
+            this.arrayUsuarios.push(new Usuario(usuario.uuid,usuario.email,usuario.password,usuario.nombre,usuario.apellidos,usuario.administrador));    
           }
 
         this.dataSource = new MatTableDataSource<Usuario>(this.arrayUsuarios);
@@ -99,7 +103,7 @@ export class UsuarioComponent implements OnInit {
       usuarios=>{
       (usuarios);
           for (let usuario of usuarios){
-            this.arrayUsuarios.push(new Usuario(usuario.uuid,usuario.email,usuario.password,usuario.nombre,usuario.apellidos));    
+            this.arrayUsuarios.push(new Usuario(usuario.uuid,usuario.email,usuario.password,usuario.nombre,usuario.apellidos,usuario.administrador));    
           }
 
         this.dataSource = new MatTableDataSource<Usuario>(this.arrayUsuarios);
@@ -114,25 +118,6 @@ export class UsuarioComponent implements OnInit {
   }
 
 
-
-  /**
-   * Abrimos el dialogo de confirmación de borrado para confirmar que queremos eliminar la noticia.
-   * @param noticia
-   */
-/*  openConfirmationDialogE(usuario: usuario) {
-    this.dialogRef2 = this.dialog.open(DialogoConfirmacionComponent, {
-      disableClose: false
-    });
-    this.dialogRef2.componentInstance.confirmMessage = "Estas seguro de que quieres eliminar la noticia";
-
-    this.dialogRef2.afterClosed().subscribe(result => {
-      if(result) {
-        this.eliminarNoticia(noticia);
-      }
-      this.dialogRef2 = null;
-    });
-  }
-*/
 mostrarDialogo(usuario: Usuario): void {
   this.dialogo
     .open(DialogoConfirmacionComponent, {

@@ -35,7 +35,7 @@ class BaseRest {
 				$_SERVER['PHP_AUTH_USER'], 
 				$_SERVER['PHP_AUTH_PW'])) {
 				$userArray = $usuarioMapper->getUsuarioByEmail($_SERVER['PHP_AUTH_USER']);
-                return new Usuario_Model($userArray['uuid'],$userArray['email'],$userArray['password'],$userArray['nombre'],$userArray['apellidos']);
+                return new Usuario_Model($userArray['uuid'],$userArray['email'],$userArray['password'],$userArray['nombre'],$userArray['apellidos'],$userArray['administrador']);
 			} else {
 				header($_SERVER['SERVER_PROTOCOL'].' 401 Unauthorized');
 				header('WWW-Authenticate: Basic realm="Rest API of TFG"');

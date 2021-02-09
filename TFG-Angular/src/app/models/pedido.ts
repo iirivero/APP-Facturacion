@@ -7,7 +7,8 @@ export class Pedido{
 		public base_imponible: number,
 		public iva: number,
 		public precio_total: number,
-		public facturado: string
+		public facturado: string,
+		public id_factura: string
 	){}
 
 

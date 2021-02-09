@@ -1,6 +1,8 @@
 import {ChangeDetectorRef, ViewChild,Component, OnInit } from '@angular/core';
 import { Articulo } from '../../../models/articulo';
 import { ArticuloService } from '../../../services/articulos.service';
+import { Pedido } from '../../../models/pedido';
+import { PedidoService } from '../../../services/pedido.service';
 import { Linea_Pedido } from '../../../models/linea_pedido';
 import { LineaPedidoService } from '../../../services/linea_pedido.service';
 import { Global } from '../../../services/global';
@@ -24,6 +26,7 @@ export class RellenarPedidoComponent implements OnInit {
   arrayLineaPedido:Array<Linea_Pedido>;
   public linea_Pedido: Linea_Pedido;
   public articulo: Articulo;
+  public pedido: Pedido;
   public url: string;
   public id_pedido: string;
 
@@ -60,6 +63,7 @@ public FormularioPedido = new FormGroup({
   constructor(
     private cdr : ChangeDetectorRef,
   	private _articuloService: ArticuloService,
+    private _pedidoService: PedidoService,
     private _lineaPedidoService: LineaPedidoService,
     public dialogo: MatDialog,
     private _route: ActivatedRoute,
@@ -68,7 +72,7 @@ public FormularioPedido = new FormGroup({
   	this.url = Global.url;
     this.arrayArticulos = new Array<Articulo>();
     this.arrayLineaPedido = new Array<Linea_Pedido>();
-    this.linea_Pedido = new Linea_Pedido('','','','',null,null,null,null,null,null);
+    this.linea_Pedido = new Linea_Pedido('','','','',null,null,null,null,0,null);
     this.logueado= false;
 
  
@@ -87,6 +91,9 @@ public FormularioPedido = new FormGroup({
 
     this.getArticulos();
     this.getLineaPedido();
+    this.getPedido();
+  }else{
+    this._router.navigate(['/login']);
   } 
 
   }
@@ -109,6 +116,19 @@ public FormularioPedido = new FormGroup({
 
     }
   	);
+  }
+
+  getPedido(){
+    this._pedidoService.getPedido(this.id_pedido).subscribe(pedido=>{
+      (pedido);
+
+        this.pedido = new Pedido(pedido[0].id,pedido[0].id_cliente,'',pedido[0].fecha,parseInt(pedido[0].base_imponible),parseInt(pedido[0].iva),parseInt(pedido[0].total),pedido[0].facturado,pedido[0].id_factura);
+
+    },
+    error =>{
+
+    }
+    );
   }
 
   getLineaPedido(){
@@ -168,6 +188,23 @@ mostrarDialogo(linea: Linea_Pedido): void {
 private delete(linea: Linea_Pedido) {
   this._lineaPedidoService.eliminarLinea(linea.id).subscribe(
     result=>{
+
+      this.pedido.base_imponible = this.pedido.base_imponible - this.linea_Pedido.importe;
+      this.pedido.iva = this.pedido.iva - this.linea_Pedido.importe_iva;
+      this.pedido.precio_total = this.pedido.base_imponible + this.pedido.iva;
+
+      
+      this._pedidoService.actualizarPedido(this.pedido).subscribe(response=>{
+      
+
+      
+      },
+      error =>{
+
+
+      }
+      );
+
       this.refresh();
     }, error=>{
       
@@ -182,29 +219,43 @@ almacenarArticulo(articulo:Articulo){
 agregarArticulo() {
 
 
-
-  this.linea_Pedido.id= '1';
   this.linea_Pedido.id_pedido = this.id_pedido;
   this.linea_Pedido.codigo_articulo = this.articulo.codigo;
   this.linea_Pedido.cantidad = this.cantidad.value;
   this.linea_Pedido.precio= this.articulo.precio_venta;
   this.linea_Pedido.iva = this.articulo.iva;
-  this.linea_Pedido.importe_iva = (this.cantidad.value*this.articulo.precio_venta)*(this.articulo.iva/100); 
-  this.linea_Pedido.descuento = this.descuento.value;
+  this.linea_Pedido.importe_iva = (this.cantidad.value*this.articulo.precio_venta-this.descuento.value)*(this.articulo.iva/100);
+  if(this.descuento.value == '' || this.linea_Pedido.descuento == 0){
+    this.linea_Pedido.descuento = 0;
+  }else{
+  this.linea_Pedido.descuento = this.descuento.value;  
+  } 
   this.linea_Pedido.importe = this.cantidad.value*this.articulo.precio_venta-this.descuento.value;
-  console.log(this.linea_Pedido);
-
+  
+  this.FormularioPedido.reset();
+  
   this._lineaPedidoService.crearLinea(this.linea_Pedido).subscribe(
   response => {
     if(response=="Linea del pedido creado"){
       
-      this.FormularioPedido.reset();
       this.refresh();
 
+      this.pedido.base_imponible = this.pedido.base_imponible + this.linea_Pedido.importe;
+      this.pedido.iva = this.pedido.iva + this.linea_Pedido.importe_iva;
+      this.pedido.precio_total = this.pedido.base_imponible + this.pedido.iva;
+
       
-    }else{
+      this._pedidoService.actualizarPedido(this.pedido).subscribe(response=>{
       
-    }
+
+      
+      },
+      error =>{
+
+
+      }
+      );
+  }
   },
   error => {
     console.log(<any>error);

@@ -1,4 +1,9 @@
-<div class="container"> 
+<div *ngIf="admin == 'No'" class="mensaje_error">
+  <h2>Usted no tiene permisos para acceder a este módulo, solo el administrador puede hacerlo.</h2>
+</div>
+
+
+<div *ngIf="admin == 'Si'" class="container"> 
 	<h2>{{title}}</h2>
 
 	<div class="message success" *ngIf="status == 'success'">
@@ -66,14 +71,14 @@
 			  <small *ngIf="email.errors?.required" class="form_error">El email es obligatorio</small>
 			</div>
 		</div>
-
+<!--
 		<div class="form-group">
 
 			<label class="control-label" for="logo">Logo nuevo</label><br>
 			<input type="file" accept="image/*" (change)="fileEvent($event)"/>
 			<button class="btn btn-rounded btn-info" (click)="subirLogo($event)">Subir logo</button>
 		</div>
-
+-->
 
 		<button (click)="editarDatos()" type="submit"  class="btn btn-rounded btn-secondary" [disabled]="FormularioDatos.invalid">Guardar cambios</button>
 	</form>

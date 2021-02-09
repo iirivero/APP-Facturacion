@@ -1,5 +1,4 @@
 <div class="container mt-4">
-  <button [routerLink]="['/alta-cliente']" [routerLinkActive]="['actived']" class="btn-twitter col-12 mt-1" > Añadir cliente </button>
 
     <input class="form-control boxed filtro" matInput (keyup)="applyFilter($event)" placeholder="FILTRO...">
 
@@ -53,8 +52,10 @@
     <ng-container matColumnDef="Acciones">
       <th mat-header-cell *matHeaderCellDef> Acciones </th>
       <td mat-cell *matCellDef="let pedido">
-        <button [routerLink]="['/rellenar-pedido', pedido.id]" class="btn btn-warning col-12 mt-1"> Editar </button>
-        <button (click)="mostrarDialogo(pedido)" class="btn btn-danger col-12 mb-3 mt-1"> Eliminar </button>
+      <div class="row">        
+        <button [routerLink]="['/rellenar-pedido', pedido.id]" class="btn btn-warning col-4 mr-1 my-1"> Editar </button>
+        <button (click)="mostrarDialogo(pedido)" class="btn btn-danger col-5 my-1"> Eliminar </button>
+      </div>
       </td>
 
     </ng-container>

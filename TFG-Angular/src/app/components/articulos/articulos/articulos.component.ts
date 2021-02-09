@@ -6,6 +6,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialo
 import { MatTableDataSource} from '@angular/material/table';
 import { MatPaginator,PageEvent} from '@angular/material/paginator';
 import { DialogoConfirmacionComponent } from "../../dialogo-confirmacion/dialogo-confirmacion.component"
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 
 @Component({
@@ -39,6 +40,7 @@ export class ArticulosComponent implements OnInit {
   constructor(
     private cdr : ChangeDetectorRef,
   	private _articuloService: ArticuloService,
+    private _router: Router,
     public dialogo: MatDialog
   ){
   	this.url = Global.url;
@@ -55,6 +57,8 @@ export class ArticulosComponent implements OnInit {
     this.logueado = true;
 
     this.getArticulos();
+  }else{
+    this._router.navigate(['/login']);
   } 
 
     

@@ -58,11 +58,13 @@ export class AltaPedidoComponent implements OnInit {
     this.logueado = true;
 
     this.getClientes();
-  } 
+  }else{
+    this._router.navigate(['/login']);
+  }
 
-    
 
   }
+
   getClientes(){
   	this._clienteService.getClientes().subscribe(clientes=>{
       (clientes);

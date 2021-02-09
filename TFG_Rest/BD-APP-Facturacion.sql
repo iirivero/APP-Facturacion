@@ -78,6 +78,19 @@ CREATE TABLE IF NOT EXISTS `articulos` (
 -- Estructura de tabla para la tabla `pedidos`
 --
 
+CREATE TABLE IF NOT EXISTS `facturas` (
+  `id` int(11) NOT NULL,
+  `id_cliente` int(11) NOT NULL,
+  `fecha_factura` DATETIME DEFAULT NULL,
+  `pagado` ENUM('Si','No') NOT NULL,
+  `fecha_pagado` DATETIME DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+--
+-- Estructura de tabla para la tabla `pedidos`
+--
+
 CREATE TABLE IF NOT EXISTS `pedidos` (
   `id` int(11) NOT NULL,
   `id_cliente` int(11) NOT NULL,
@@ -85,7 +98,8 @@ CREATE TABLE IF NOT EXISTS `pedidos` (
   `base_imponible` decimal(10,2) NOT NULL,
   `iva` decimal(10,2) NOT NULL,
   `total` decimal(10,2) NOT NULL,
-  `facturado` ENUM('Si','No') NOT NULL
+  `facturado` ENUM('Si','No') NOT NULL,
+  `id_factura` int(11) NULL  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -100,7 +114,7 @@ CREATE TABLE IF NOT EXISTS `linea_pedido` (
   `precio` decimal(10,2) NOT NULL,
   `iva` int(2) NOT NULL,
   `importe_iva` decimal(10,2) NOT NULL,
-  `descuento` ENUM('Si','No') NOT NULL,
+  `descuento` decimal(10,2) NOT NULL,
   `importe` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -113,8 +127,10 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `email` varchar(45) NOT NULL,
   `password` varchar(128) NOT NULL,
   `nombre` varchar(25) NOT NULL,
-  `apellidos` varchar(25) NOT NULL
+  `apellidos` varchar(25) NOT NULL,
+  `administrador` ENUM('Si','No') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 
 -- --------------------------------------------------------
@@ -123,8 +139,10 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`uuid`, `email`, `password`, `nombre`, `apellidos`) VALUES
-(1, 'ivan@gmail.com', '1234', 'ivan', 'iglesias');
+INSERT INTO `usuarios` (`uuid`, `email`, `password`, `nombre`, `apellidos`,`administrador`) VALUES
+(1, 'admin@gmail.com', '1234', 'admin', 'admin','Si');
+INSERT INTO `usuarios` (`uuid`, `email`, `password`, `nombre`, `apellidos`,`administrador`) VALUES
+(2, 'ivan@gmail.com', '1234', 'ivan', 'iglesias','No');
 
 --
 -- Índices para tablas volcadas
@@ -152,12 +170,21 @@ ALTER TABLE `articulos`
   ADD PRIMARY KEY (`codigo`);
 
 --
+-- Indices de la tabla `facturas`
+--
+ALTER TABLE `facturas`
+  ADD PRIMARY KEY (`id`),
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1,
+  ADD FOREIGN KEY (`id_cliente`) REFERENCES `clientes`(`id`);
+
+--
 -- Indices de la tabla `pedidos`
 --
 ALTER TABLE `pedidos`
   ADD PRIMARY KEY (`id`),
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1,
-  ADD FOREIGN KEY (`id_cliente`) REFERENCES `clientes`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD FOREIGN KEY (`id_cliente`) REFERENCES `clientes`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD FOREIGN KEY (`id_factura`) REFERENCES `facturas`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Indices de la tabla `linea_pedido`
@@ -175,7 +202,6 @@ ALTER TABLE `linea_pedido`
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`uuid`),
   ADD UNIQUE KEY `email` (`email`);
-
 
 
 

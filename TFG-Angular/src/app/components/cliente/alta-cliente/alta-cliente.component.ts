@@ -3,6 +3,8 @@ import { Cliente } from '../../../models/cliente';
 import { ClienteService } from '../../../services/cliente.service';
 import { FormControl,FormGroup,Validators } from '@angular/forms';
 import { Global } from '../../../services/global';
+import { Router, ActivatedRoute, Params } from '@angular/router';
+
 
 
 @Component({
@@ -17,6 +19,8 @@ export class AltaClienteComponent implements OnInit {
 	public cliente: Cliente;
 	public save_cliente;
 	public status: string;
+	public logueado: boolean;
+ 	public admin: string;
 
 	public FormularioAltaCliente = new FormGroup({
 	razon_social: new FormControl('', [
@@ -57,14 +61,24 @@ export class AltaClienteComponent implements OnInit {
 
 
 	constructor(
-		private _clienteService: ClienteService
+		private _clienteService: ClienteService,
+		private _router: Router
 	){
 	
 		this.title = "Añadir cliente";
 		this.cliente = new Cliente('','','','','',null,null,'','');
+		this.logueado = false;
 	}
 
 	ngOnInit() {
+
+	if(sessionStorage.getItem('emailLogin')!= null || sessionStorage.getItem('pass')!= null){
+	    this.admin = sessionStorage.getItem('admin');
+		this.logueado = true;
+	}else{
+		this._router.navigate(['/login']);
+	} 
+
 	}
 
 	onSubmit(form){

@@ -12,6 +12,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class MenuComponent implements OnInit {
 
   public logueado: boolean;
+  public admin: string;
   showMenu = '';
   showSubMenu = '';
   public sidebarnavItems:RouteInfo[]=[];
@@ -34,9 +35,12 @@ export class MenuComponent implements OnInit {
    }
 
   ngOnInit(): void {
+
   this.sidebarnavItems = ROUTES.filter(sidebarnavItem => sidebarnavItem); 
     if(sessionStorage.getItem('emailLogin')!= null || sessionStorage.getItem('pass')!= null){
-this.logueado = true;
+    this.admin = sessionStorage.getItem('admin');
+    console.log(this.admin);
+    this.logueado = true;
   }
   }
 

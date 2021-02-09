@@ -3,18 +3,17 @@
 	<div id="recuadro">
 		<h1> Información del pedido </h1>
     <div *ngIf="arrayLineaPedido?.length!=0"  class="row header">
-      <div class="col-sm">nombre</div>
+      <div class="col-sm texto">nombre</div>
       <div class="col-sm">cantidad</div>
       <div class="col-sm">descuento</div>
-      <div class="col-sm">importe</div>
-      <div class="col-sm"></div>
+      <div class="col-sm texto">importe</div>
     </div>
     <div *ngFor="let linea of arrayLineaPedido" class="row lineas">
-      <div class="col-sm">{{linea.nombre_articulo}}</div>
+      <div class="col-sm texto">{{linea.nombre_articulo}}</div>
       <div class="col-sm">{{linea.cantidad}}</div>
       <div class="col-sm">{{linea.descuento}}</div>
-      <div class="col-sm">{{linea.importe}}€</div>
-      <div class="col-sm"><button (click)="mostrarDialogo(linea)" class="btn btn-danger"> Eliminar </button></div>
+      <div class="col-sm texto">{{linea.importe}}€<button (click)="mostrarDialogo(linea)" class="btn btn-danger"> Eliminar </button></div>
+
     </div>						
 	</div>
 
@@ -127,7 +126,8 @@
             </div>
                   
           <div class="modal-footer d-flex justify-content-center">
-            <button [disabled]="FormularioPedido.invalid" type="button" (click)="agregarArticulo()" class="btn btn-outline-success">Añadir</button>
+            <button [disabled]="FormularioPedido.invalid" type="button" (click)="agregarArticulo()" class="btn btn-outline-success" >Añadir</button>
+            <button  data-dismiss="modal" aria-label="Close" type="button" class="btn btn-outline-success">Cerrar</button>
           </div>
         </div>
       </div>

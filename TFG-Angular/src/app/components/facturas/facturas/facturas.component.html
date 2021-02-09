@@ -1,0 +1,56 @@
+<div class="container mt-4">
+    <input class="form-control boxed filtro" matInput (keyup)="applyFilter($event)" placeholder="FILTRO...">
+
+  <div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource">
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="razon_social">
+      <th mat-header-cell *matHeaderCellDef>razon social</th>
+      <td mat-cell *matCellDef="let factura"> {{factura.razon_social}} </td>
+    </ng-container>
+
+        <!-- Position Column -->
+    <ng-container matColumnDef="nombre_comercial">
+      <th mat-header-cell *matHeaderCellDef>nombre comercial</th>
+      <td mat-cell *matCellDef="let factura"> {{factura.nombre_comercial}} </td>
+    </ng-container>
+
+        <!-- Position Column -->
+    <ng-container matColumnDef="fecha_factura">
+      <th mat-header-cell *matHeaderCellDef>fecha factura</th>
+      <td mat-cell *matCellDef="let factura"> {{factura.fecha_factura | date:'dd/MM/yyyy hh:mm'}} </td>
+    </ng-container>
+
+        <!-- Position Column -->
+    <ng-container matColumnDef="pagado">
+      <th mat-header-cell *matHeaderCellDef>pagado</th>
+      <td mat-cell *matCellDef="let factura"> {{factura.pagado}} </td>
+    </ng-container>
+
+        <!-- Position Column -->
+    <ng-container matColumnDef="fecha_pagado">
+      <th mat-header-cell *matHeaderCellDef>fecha pagado</th>
+      <td mat-cell *matCellDef="let factura"> {{factura.fecha_pagado}} </td>
+    </ng-container>
+
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="Acciones">
+      <th mat-header-cell *matHeaderCellDef> Acciones </th>
+      <td mat-cell *matCellDef="let factura">
+        <button [routerLink]="['/rellenar-factura', factura.id]" class="btn btn-warning col-12 mt-1"> Editar </button>
+        <button (click)="mostrarDialogo(factura)" class="btn btn-danger col-12 mb-3 mt-1"> Eliminar </button>
+      </td>
+
+    </ng-container>
+
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5,20,50]" showFirstLastButtons></mat-paginator>
+</div>
+</div>

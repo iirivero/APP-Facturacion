@@ -10,9 +10,10 @@ class Pedido_Model implements JsonSerializable{
 	private $iva;
 	private $total;
 	private $facturado;
+	private $id_factura;
 
 	// Constructor de Cliente
-	public function __construct($id=NULL,$id_cliente=NULL, $fecha=NULL, $base_imponible=NULL, $iva=NULL, $total=NULL, $facturado=NULL) {
+	public function __construct($id=NULL,$id_cliente=NULL, $fecha=NULL, $base_imponible=NULL, $iva=NULL, $total=NULL, $facturado=NULL,$id_factura=NULL) {
 		$this->id = $id;
 		$this->id_cliente = $id_cliente;
 		$this->fecha = $fecha;
@@ -20,6 +21,7 @@ class Pedido_Model implements JsonSerializable{
 		$this->iva = $iva;
 		$this->total = $total;
 		$this->facturado = $facturado;
+		$this->id_factura = $id_factura;
 	}
 // Métodos observadores y modificadores de los atributos de la entidad usurio
 	public function getId() {
@@ -76,6 +78,14 @@ class Pedido_Model implements JsonSerializable{
 
 	public function setFacturado($facturado) {
 		$this->facturado = $facturado;
+	}
+
+	public function getId_factura() {
+		return $this->id_factura;
+	}	
+
+	public function setId_factura($id_factura) {
+		$this->id_factura = $id_factura;
 	}
 
     public function jsonSerialize()

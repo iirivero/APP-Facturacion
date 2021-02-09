@@ -4,6 +4,7 @@ import { UsuarioService } from '../../../services/usuarios.service';
 import { Global } from '../../../services/global';
 import { FormControl,FormGroup,Validators } from '@angular/forms';
 import { v4 as uuidv4 } from 'uuid';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 
 @Component({
@@ -18,6 +19,8 @@ export class AltaUsuarioComponent implements OnInit {
 	public usuario: Usuario;
 	public save_usuario;
 	public status: string;
+  public logueado: boolean;
+  public admin: string;
 
 	public FormularioAltaUsuario = new FormGroup({
     nombre: new FormControl('', [
@@ -35,20 +38,36 @@ export class AltaUsuarioComponent implements OnInit {
 	password: new FormControl('',[
       Validators.required
     ]
-    )
+    ),
+  administrador: new FormControl('',[
+      Validators.required
+    ]
+    )  
 
   });
 
 
 	constructor(
-		private _usuarioService: UsuarioService
+		private _usuarioService: UsuarioService,
+    private _router: Router
 	){
 	
 		this.title = "Añadir usuario";
-		this.usuario = new Usuario(uuidv4(),'','','','');
+		this.usuario = new Usuario(uuidv4(),'','','','','No');
+    this.logueado= false;
 	}
 
 	ngOnInit() {
+
+  if(sessionStorage.getItem('emailLogin')!= null || sessionStorage.getItem('pass')!= null){
+    this.admin = sessionStorage.getItem('admin');
+    this.logueado = true;
+
+  }else{
+    this._router.navigate(['/login']);
+  } 
+
+
 	}
 
 	altaUsuario() {
@@ -57,6 +76,7 @@ export class AltaUsuarioComponent implements OnInit {
     this.usuario.apellidos = this.apellidos.value;
     this.usuario.email = this.email.value;
     this.usuario.password = this.password.value;
+    this.usuario.administrador = this.administrador.value;
 	  this._usuarioService.añadirUsuario(this.usuario).subscribe(
 		response => {
 			if(response=="Usuario creado"){
@@ -89,5 +109,8 @@ export class AltaUsuarioComponent implements OnInit {
   }
   get password(){
     return this.FormularioAltaUsuario.get('password');
+  }
+  get administrador(){
+    return this.FormularioAltaUsuario.get('administrador');
   }
 }

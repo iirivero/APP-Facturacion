@@ -1,4 +1,9 @@
-<div class="container">
+<div *ngIf="admin == 'No'" class="mensaje_error">
+  <h2>Usted no tiene permisos para acceder a este módulo, solo el administrador puede hacerlo.</h2>
+</div>
+
+
+<div *ngIf="admin == 'Si'"class="container">
 	<h2>{{title}}</h2>
 
 	<div class="message success" *ngIf="status == 'success'">
@@ -42,6 +47,17 @@
 			<div *ngIf="(password.invalid && password.touched) || password.dirty">
 			  <small *ngIf="password.errors?.required" class="form_error">La contraseña es obligatoria</small>
 			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="control-label" for="administrador">Administrador</label>
+			<select  class="form-control boxed" id="administrador" formControlName="administrador"  name="administrador" >
+				<option value="No">No</option>
+				<option value="Si">Si</option>
+			</select>
+			<div *ngIf="(administrador.invalid && administrador.touched) || administrador.dirty">
+			  <small *ngIf="administrador.errors?.required" class="form_error">El campo no puede estar vacio</small>
+			</div>	
 		</div>
 
 		<button (click)="altaUsuario()" type="submit"  class="btn btn-rounded btn-secondary" [disabled]="FormularioAltaUsuario.invalid">añadir</button>

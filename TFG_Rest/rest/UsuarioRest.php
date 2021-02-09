@@ -20,9 +20,10 @@ class UsuarioRest extends BaseRest {
 	}
 	// Para registrar un nuevo usuario en el sistema
 	public function añadirUsuario() {
+		$currentUser = parent::auntenticarUsuario();
 		$data = $_POST['usuario'];
 		$data = json_decode($data,true);
-		$usuario = new Usuario_Model($data['uuid'],$data['email'],$data['password'],$data['nombre'],$data['apellidos']);
+		$usuario = new Usuario_Model($data['uuid'],$data['email'],$data['password'],$data['nombre'],$data['apellidos'],$data['administrador']);
 
 
 			if($this->usuarioMapper->usuarioExiste($usuario->getEmail())){
@@ -50,6 +51,7 @@ class UsuarioRest extends BaseRest {
 	}
 
 	public function editarUsuario() {
+		$currentUser = parent::auntenticarUsuario();
         $data = json_decode($_POST['usuario'],true);
         $usuario = new Usuario_Model($data['uuid'],$data['email'],$data['password'],$data['nombre'],$data['apellidos']);
         $resul = $this->usuarioMapper->editarUsuario($usuario);
@@ -80,7 +82,9 @@ class UsuarioRest extends BaseRest {
 		}
 	}
 
+
 	public function getUsuarios(){
+		$currentUser = parent::auntenticarUsuario();
         $userArray = $this->usuarioMapper->getUsuarios();
         header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
         header('Content-Type: application/json');
@@ -89,6 +93,7 @@ class UsuarioRest extends BaseRest {
 
 
 	public function getUsuario($uuid){
+		$currentUser = parent::auntenticarUsuario();
         $userArray = $this->usuarioMapper->getUsuario($uuid);
         header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
         header('Content-Type: application/json');
@@ -96,6 +101,7 @@ class UsuarioRest extends BaseRest {
     }
 
     public function eliminarUsuario($uuid){
+    	$currentUser = parent::auntenticarUsuario();
         $user = $this->usuarioMapper->eliminarUsuario($uuid);
         if($user == 1){
             header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');

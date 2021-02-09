@@ -20,7 +20,7 @@ import { UsuarioComponent } from './components/usuario/usuario/usuario.component
 import { ClienteComponent } from './components/cliente/cliente/cliente.component';
 import { ArticulosComponent } from './components/articulos/articulos/articulos.component';
 import { AlbaranesComponent } from './components/albaranes/albaranes.component';
-import { FacturasComponent } from './components/facturas/facturas.component';
+import { FacturasComponent } from './components/facturas/facturas/facturas.component';
 import { AltaUsuarioComponent } from './components/usuario/alta-usuario/alta-usuario.component';
 import { EditarUsuarioComponent } from './components/usuario/editar-usuario/editar-usuario.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -36,6 +36,8 @@ import { DatosComponent } from './components/datos/datos.component';
 import { ActualizarStockComponent } from './components/articulos/actualizar-stock/actualizar-stock.component';
 import { AltaPedidoComponent } from './components/pedido/alta-pedido/alta-pedido.component';
 import { RellenarPedidoComponent } from './components/pedido/rellenar-pedido/rellenar-pedido.component';
+import { CrearFacturaComponent } from './components/facturas/crear-factura/crear-factura.component';
+import { RellenarFacturaComponent } from './components/facturas/rellenar-factura/rellenar-factura.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -65,7 +67,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     DatosComponent,
     ActualizarStockComponent,
     AltaPedidoComponent,
-    RellenarPedidoComponent
+    RellenarPedidoComponent,
+    CrearFacturaComponent,
+    RellenarFacturaComponent
   ],
   imports: [
     BrowserModule,

@@ -16,6 +16,7 @@ export class EditarClienteComponent implements OnInit {
 	public cliente: Cliente;
 	public status: string;
 	public admin: boolean;
+  public admin: string;
 
   public FormularioEditarCliente = new FormGroup({
   razon_social: new FormControl('', [
@@ -68,11 +69,19 @@ export class EditarClienteComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  	this._route.params.subscribe(params => {
-  		let id = params.id;
 
-  		this.getCliente(id);
-  	});
+
+  if(sessionStorage.getItem('emailLogin')!= null || sessionStorage.getItem('pass')!= null){
+    this.admin = sessionStorage.getItem('admin');
+    this._route.params.subscribe(params => {
+      let id = params.id;
+
+      this.getCliente(id);
+    });
+  }else{
+    this._router.navigate(['/login']);
+  } 
+      
   }
 
 

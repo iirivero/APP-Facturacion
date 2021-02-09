@@ -3,6 +3,7 @@ import { Articulo } from '../../../models/articulo';
 import { ArticuloService } from '../../../services/articulos.service';
 import { FormControl,FormGroup,Validators } from '@angular/forms';
 import { Global } from '../../../services/global';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 
 @Component({
@@ -17,6 +18,7 @@ export class AltaArticulosComponent implements OnInit {
 	public articulo: Articulo;
 	public save_articulo;
 	public status: string;
+	public logueado: boolean;
 
 	public FormularioAltaArticulo = new FormGroup({
 	codigo: new FormControl('', [
@@ -56,14 +58,25 @@ export class AltaArticulosComponent implements OnInit {
 
 
 	constructor(
-		private _articuloService: ArticuloService
+		private _articuloService: ArticuloService,
+		private _router: Router
 	){
 	
 		this.title = "Añadir articulo";
 		this.articulo = new Articulo('','','','',null,null,null,null,null);
+		this.logueado = false;
 	}
 
 	ngOnInit() {
+
+	if(sessionStorage.getItem('emailLogin')!= null || sessionStorage.getItem('pass')!= null){
+
+	this.logueado = true;
+
+	}else{
+	this._router.navigate(['/login']);
+	} 
+
 	}
 
 

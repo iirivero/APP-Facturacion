@@ -14,7 +14,7 @@ import { EditarArticulosComponent } from './components/articulos/editar-articulo
 import { ActualizarStockComponent } from './components/articulos/actualizar-stock/actualizar-stock.component';
 import { DatosComponent } from './components/datos/datos.component';
 import { AlbaranesComponent } from './components/albaranes/albaranes.component';
-import { FacturasComponent } from './components/facturas/facturas.component';
+import { FacturasComponent } from './components/facturas/facturas/facturas.component';
 import { AltaPedidoComponent } from './components/pedido/alta-pedido/alta-pedido.component';
 import { RellenarPedidoComponent } from './components/pedido/rellenar-pedido/rellenar-pedido.component';
 

@@ -14,3 +14,23 @@ table {
 	margin-bottom: 15px;
 	text-align: center;
 }
+
+.row{
+	margin-right: 0px;
+}
+
+th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type{
+		padding-right: 0px;
+}
+
+.mensaje_error{
+	border: 5px solid #67757c;
+	border-radius: 20px;
+	margin-bottom: 20px;
+	box-shadow: 0px 7px 10px gray;
+}
+
+.mensaje_error h2{
+	padding: 25px;
+    font-size: 22px;
+}

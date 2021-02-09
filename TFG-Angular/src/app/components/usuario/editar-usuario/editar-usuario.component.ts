@@ -29,10 +29,6 @@ export class EditarUsuarioComponent implements OnInit {
   email: new FormControl('',[
       Validators.required
     ]
-    ),
-  password: new FormControl('',[
-      Validators.required
-    ]
     )
 
   });
@@ -46,17 +42,26 @@ export class EditarUsuarioComponent implements OnInit {
   	){
 
   	this.title = "Editar usuario";
-    this.usuario = new Usuario('','','','','');
+    this.usuario = new Usuario('','','','','','');
   	this.admin = false;
    
   }
 
   ngOnInit(): void {
-  	this._route.params.subscribe(params => {
-  		let uuid = params.uuid;
 
-  		this.getUsuario(uuid);
-  	});
+  if(sessionStorage.getItem('emailLogin')!= null || sessionStorage.getItem('pass')!= null){
+    this.admin = sessionStorage.getItem('admin');
+    this._route.params.subscribe(params => {
+      let uuid = params.uuid;
+
+      this.getUsuario(uuid);
+    });
+
+  }else{
+    this._router.navigate(['/login']);
+  } 
+    
+
   }
 
   getUsuario(uuid){
@@ -64,7 +69,7 @@ export class EditarUsuarioComponent implements OnInit {
   		usuarios => {
         for (let usuario of usuarios){
 
-          this.usuario = new Usuario(usuario.uuid,usuario.email,usuario.password,usuario.nombre,usuario.apellidos);   
+          this.usuario = new Usuario(usuario.uuid,usuario.email,usuario.password,usuario.nombre,usuario.apellidos,usuario.administrador);   
         }
   			
         this.pasarValoresFormulario();
@@ -79,7 +84,7 @@ export class EditarUsuarioComponent implements OnInit {
     this.nombre.setValue(this.usuario.nombre);
     this.apellidos.setValue(this.usuario.apellidos);
     this.email.setValue(this.usuario.email);
-    this.password.setValue(this.usuario.password);
+
   }
 
   editarUsuario() {
@@ -87,7 +92,7 @@ export class EditarUsuarioComponent implements OnInit {
     this.usuario.nombre= this.nombre.value;
     this.usuario.apellidos = this.apellidos.value;
     this.usuario.email = this.email.value;
-    this.usuario.password = this.password.value;
+
     this._usuarioService.editarUsuario(this.usuario).subscribe(
     response => {
       if(response=="Usuario editado"){
@@ -114,9 +119,6 @@ export class EditarUsuarioComponent implements OnInit {
   }
   get email(){
     return this.FormularioEditarUsuario.get('email');
-  }
-  get password(){
-    return this.FormularioEditarUsuario.get('password');
   }
 
 }

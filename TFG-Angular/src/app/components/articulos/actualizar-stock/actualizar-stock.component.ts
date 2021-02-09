@@ -15,7 +15,7 @@ export class ActualizarStockComponent implements OnInit {
 	public articulo: Articulo;
 	public status: string;
 	public admin: boolean;
-  public stock_nuevo: number;
+  public stock_nuevo: string;
 
   constructor(
 
@@ -26,19 +26,26 @@ export class ActualizarStockComponent implements OnInit {
   	){
 
   	this.title = "Actualizar Stock";
-	  this.articulo = new Articulo('','','','',null,null,null,null,null);
+	  this.articulo = new Articulo('','','','',null,null,null,null,'');
 
   	this.admin = false;
    
   }
 
   ngOnInit(): void {
-  	this._route.params.subscribe(params => {
-  		let codigo = params.codigo;
 
-  		this.getArticulo(codigo);
+  if(sessionStorage.getItem('emailLogin')!= null || sessionStorage.getItem('pass')!= null){
+    this._route.params.subscribe(params => {
+      let codigo = params.codigo;
 
-  	});
+      this.getArticulo(codigo);
+
+    });
+  }else{
+    this._router.navigate(['/login']);
+  } 
+
+
   }
 
 
@@ -58,7 +65,7 @@ export class ActualizarStockComponent implements OnInit {
   }
 
   onSubmit(form){
-	this.articulo.stock = parseInt(this.stock_nuevo) + this.articulo.stock;
+	this.articulo.stock = (parseInt(this.stock_nuevo) + parseInt(this.articulo.stock)).toString();
 
 
 	// Guardar datos básicos

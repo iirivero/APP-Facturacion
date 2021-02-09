@@ -9,7 +9,7 @@ class Pedido_Mapper {
     
 
 	public function insertarPedido($pedido) {
-		$stmt = $this->db->prepare("INSERT INTO pedidos values('',?,?,0,0,0,'No')"); 
+		$stmt = $this->db->prepare("INSERT INTO pedidos values('',?,?,0,0,0,'No',null)"); 
 		$stmt->execute(array($pedido->getId_cliente(), $pedido->getFecha()));
 	}
 
@@ -28,11 +28,26 @@ class Pedido_Mapper {
         $resul = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $resul;
 
-    }  
+    }
+
+    public function getPedido($id) {
+
+        $stmt = $this->db->prepare("SELECT * FROM pedidos WHERE id =?");
+        $stmt->execute(array($id));
+        $resul = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $resul;
+
+    }    
 
     public function eliminarPedido($id){
         $stmt = $this->db->prepare("DELETE from pedidos WHERE id = ?");
         $resul = $stmt->execute(array($id));
+        return $resul;
+    }
+
+    public function actualizarPedido($base_imponible,$iva,$total,$id){
+        $stmt = $this->db->prepare("UPDATE pedidos SET base_imponible = ?, iva = ?, total = ? WHERE id= ?");
+        $resul = $stmt->execute(array($base_imponible,$iva,$total,$id));
         return $resul;
     }
 }

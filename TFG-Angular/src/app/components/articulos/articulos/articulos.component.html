@@ -58,9 +58,11 @@
     <ng-container matColumnDef="Acciones">
       <th mat-header-cell *matHeaderCellDef> Acciones </th>
       <td mat-cell *matCellDef="let articulo">
-        <button [routerLink]="['/actualizar-stock', articulo.codigo]" class="btn btn-warning col-12 mt-1"> Añadir stock </button>
-        <button [routerLink]="['/editar-articulos', articulo.codigo]" class="btn btn-warning col-12 mt-1"> Editar </button>
-        <button (click)="mostrarDialogo(articulo)" class="btn btn-danger col-12 mb-3 mt-1"> Eliminar </button>
+      <div class="row">
+        <button [routerLink]="['/actualizar-stock', articulo.codigo]" class="btn btn-warning col-4 mr-1 my-1"> Añadir stock </button>
+        <button [routerLink]="['/editar-articulos', articulo.codigo]" class="btn btn-warning col-3 mr-1 my-1"> Editar </button>
+        <button (click)="mostrarDialogo(articulo)" class="btn btn-danger col-4 my-1"> Eliminar </button>
+      </div>
       </td>
 
     </ng-container>

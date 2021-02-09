@@ -8,8 +8,8 @@ class Usuario_Mapper {
 	}
 	// Para insertar un nuevo usuario en el sistema
 	public function insertarUsuario($usuario) {
-		$stmt = $this->db->prepare("INSERT INTO usuarios values(?,?,?,?,?)"); 
-		$stmt->execute(array($usuario->getUuid(),$usuario->getEmail(), $usuario->getPassword(), $usuario->getNombre(), $usuario->getApellidos()));
+		$stmt = $this->db->prepare("INSERT INTO usuarios values(?,?,?,?,?,?)"); 
+		$stmt->execute(array($usuario->getUuid(),$usuario->getEmail(), $usuario->getPassword(), $usuario->getNombre(), $usuario->getApellidos(), $usuario->getAdministrador()));
 	}
 
     public function editarUsuario($usuario){
@@ -19,9 +19,9 @@ class Usuario_Mapper {
 
     }
 	// Para saber si ya existe un usuario registrado en el sistema con el email indicado (sólo un usuario por email)
-	public function usuarioExiste($emailusuario) {
+	public function usuarioExiste($emailUsuario) {
 		$stmt = $this->db->prepare("SELECT count(email) FROM usuarios where email=?");
-		$stmt->execute(array($emailusuario));
+		$stmt->execute(array($emailUsuario));
 		if ($stmt->fetchColumn() > 0) {
 			return true;
 		}
@@ -66,4 +66,5 @@ class Usuario_Mapper {
         $resul = $stmt->execute(array($uuid));
         return $resul;
     }
+
 }

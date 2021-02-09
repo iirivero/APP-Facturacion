@@ -5,6 +5,7 @@ import { Global } from '../../../services/global';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { FormControl,FormGroup,Validators } from '@angular/forms';
 
+
 @Component({
   selector: 'app-editar-articulos',
   templateUrl: './editar-articulos.component.html',
@@ -74,11 +75,19 @@ export class EditarArticulosComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  	this._route.params.subscribe(params => {
-  		let codigo = params.codigo;
 
-  		this.getArticulo(codigo);
-  	});
+  if(sessionStorage.getItem('emailLogin')!= null || sessionStorage.getItem('pass')!= null){
+
+    this._route.params.subscribe(params => {
+      let codigo = params.codigo;
+
+      this.getArticulo(codigo);
+    });
+  }else{
+    this._router.navigate(['/login']);
+  } 
+    
+
   }
 
 

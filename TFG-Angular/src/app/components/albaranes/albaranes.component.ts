@@ -7,7 +7,9 @@ import { Global } from '../../services/global';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { MatTableDataSource} from '@angular/material/table';
 import { MatPaginator,PageEvent} from '@angular/material/paginator';
-import { DialogoConfirmacionComponent } from "../dialogo-confirmacion/dialogo-confirmacion.component"
+import { DialogoConfirmacionComponent } from "../dialogo-confirmacion/dialogo-confirmacion.component";
+import { Router, ActivatedRoute, Params } from '@angular/router';
+
 
 @Component({
   selector: 'app-albaranes',
@@ -42,6 +44,7 @@ export class AlbaranesComponent implements OnInit {
     private cdr : ChangeDetectorRef,
   	private _pedidoService: PedidoService,
     private _clienteService: ClienteService,
+    private _router: Router,
     public dialogo: MatDialog
   ){
   	this.url = Global.url;
@@ -57,6 +60,8 @@ export class AlbaranesComponent implements OnInit {
     this.logueado = true;
 
     this.getPedidos();
+  }else{
+    this._router.navigate(['/login']);
   } 
 
 
@@ -66,7 +71,7 @@ export class AlbaranesComponent implements OnInit {
       (pedidos);
           for (let pedido of pedidos){
 
-            this.arrayPedidos.push(new Pedido(pedido.id,pedido.razon_social,pedido.nombre_comercial,pedido.fecha,pedido.base_imponible,pedido.iva,pedido.total,pedido.facturado));
+            this.arrayPedidos.push(new Pedido(pedido.id,pedido.razon_social,pedido.nombre_comercial,pedido.fecha,pedido.base_imponible,pedido.iva,pedido.total,pedido.facturado,pedido.id_factura));
           
           }
 
@@ -90,7 +95,7 @@ export class AlbaranesComponent implements OnInit {
   	this._pedidoService.getPedidos().subscribe(pedidos=>{
       (pedidos);
           for (let pedido of pedidos){
-            this.arrayPedidos.push(new Pedido(pedido.id,pedido.razon_social,pedido.nombre_comercial,pedido.fecha,pedido.base_imponible,pedido.iva,pedido.total,pedido.facturado));
+            this.arrayPedidos.push(new Pedido(pedido.id,pedido.razon_social,pedido.nombre_comercial,pedido.fecha,pedido.base_imponible,pedido.iva,pedido.total,pedido.facturado,pedido.id_factura));
           }
 
         this.dataSource = new MatTableDataSource<Pedido>(this.arrayPedidos);

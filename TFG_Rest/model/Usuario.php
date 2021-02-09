@@ -8,13 +8,15 @@ class Usuario_Model implements JsonSerializable{
 	private $password;
 	private $nombre;
 	private $apellidos;
+	private $administrador;
 	// Constructor de Usuario
-	public function __construct($uuid=NULL,$email=NULL, $password=NULL, $nombre=NULL, $apellidos=NULL) {
+	public function __construct($uuid=NULL,$email=NULL, $password=NULL, $nombre=NULL, $apellidos=NULL, $administrador=NULL) {
 		$this->uuid = $uuid;
 		$this->email = $email;
 		$this->password = $password;
 		$this->nombre = $nombre;
 		$this->apellidos = $apellidos;
+		$this->administrador = $administrador;
 	}
 // Métodos observadores y modificadores de los atributos de la entidad usurio
 	public function getUuid() {
@@ -55,6 +57,14 @@ class Usuario_Model implements JsonSerializable{
 
 	public function setApellidos($apellidos) {
 		$this->apellidos = $apellidos;
+	}
+
+	public function getAdministrador() {
+		return $this->administrador;
+	}	
+
+	public function setAdministrador($administrador) {
+		$this->administrador = $administrador;
 	}
 	
 
