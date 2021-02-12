@@ -15,19 +15,22 @@ export class EditarUsuarioComponent implements OnInit {
 	public title: string;
 	public usuario: Usuario;
 	public status: string;
-	public admin: boolean;
+	public admin: string;
 
   public FormularioEditarUsuario = new FormGroup({
-  nombre: new FormControl('', [
-      Validators.required
+    nombre: new FormControl('', [
+      Validators.required,
+      Validators.pattern("[A-Za-zÁÉÍÓÚñáéíóúÑ ]*")
       ]
       ),
-  apellidos: new FormControl('',[
-      Validators.required
+    apellidos: new FormControl('',[
+      Validators.required,
+      Validators.pattern("[A-Za-zÁÉÍÓÚñáéíóúÑ ]*")
     ]
     ),
-  email: new FormControl('',[
-      Validators.required
+    email: new FormControl('',[
+      Validators.required,
+      Validators.pattern("^[a-zA-Z0-9ÁÉÍÓÚñáéíóúÑ._%+-]+@[a-zA-Z0-9ÁÉÍÓÚñáéíóúÑ.-]+\\.[a-z]{2,4}$")
     ]
     )
 
@@ -43,7 +46,6 @@ export class EditarUsuarioComponent implements OnInit {
 
   	this.title = "Editar usuario";
     this.usuario = new Usuario('','','','','','');
-  	this.admin = false;
    
   }
 

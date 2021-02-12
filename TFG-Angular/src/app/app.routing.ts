@@ -13,7 +13,8 @@ import { AltaArticulosComponent } from './components/articulos/alta-articulos/al
 import { EditarArticulosComponent } from './components/articulos/editar-articulos/editar-articulos.component';
 import { ActualizarStockComponent } from './components/articulos/actualizar-stock/actualizar-stock.component';
 import { DatosComponent } from './components/datos/datos.component';
-import { AlbaranesComponent } from './components/albaranes/albaranes.component';
+import { AlbaranesComponent } from './components/albaranes/albaranes/albaranes.component';
+import { GenerarAlbaranComponent } from './components/albaranes/generar-albaran/generar-albaran.component';
 import { FacturasComponent } from './components/facturas/facturas/facturas.component';
 import { AltaPedidoComponent } from './components/pedido/alta-pedido/alta-pedido.component';
 import { RellenarPedidoComponent } from './components/pedido/rellenar-pedido/rellenar-pedido.component';
@@ -34,6 +35,7 @@ const appRoutes: Routes = [
 	{path: 'actualizar-stock/:codigo', component: ActualizarStockComponent},
 	{path: 'datos', component: DatosComponent},
 	{path: 'albaranes', component: AlbaranesComponent},
+	{path: 'generar-albaran/:id', component: GenerarAlbaranComponent},
 	{path: 'facturas', component: FacturasComponent},
 	{path: 'alta-pedido', component: AltaPedidoComponent},
 	{path: 'rellenar-pedido/:id', component: RellenarPedidoComponent},

@@ -13,9 +13,8 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 export class ActualizarStockComponent implements OnInit {
 	public title: string;
 	public articulo: Articulo;
-	public status: string;
 	public admin: boolean;
-  public stock_nuevo: string;
+  public stock_nuevo: number;
 
   constructor(
 
@@ -26,7 +25,7 @@ export class ActualizarStockComponent implements OnInit {
   	){
 
   	this.title = "Actualizar Stock";
-	  this.articulo = new Articulo('','','','',null,null,null,null,'');
+	  this.articulo = new Articulo('','','','',null,null,null,null,null);
 
   	this.admin = false;
    
@@ -65,19 +64,14 @@ export class ActualizarStockComponent implements OnInit {
   }
 
   onSubmit(form){
-	this.articulo.stock = (parseInt(this.stock_nuevo) + parseInt(this.articulo.stock)).toString();
+	this.articulo.stock =this.stock_nuevo + this.articulo.stock;
 
 
 	// Guardar datos básicos
 	this._articuloService.editarArticulo(this.articulo).subscribe(
 		response => {
 			if(response=="Articulo editado"){
-
-				this.status = 'success';
-        form.reset();
-				
-			}else{
-				this.status = 'failed';
+        form.reset();	
 			}
 		},
 		error => {

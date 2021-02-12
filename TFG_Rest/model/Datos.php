@@ -9,18 +9,18 @@ class Datos_Model implements JsonSerializable{
 	private $ciudad;
 	private $codigo_postal;
 	private $telefono;
-	private $cif;
+	private $nif;
 	private $email;
 
 	// Constructor de Cliente
-	public function __construct($id=NULL,$nombre=NULL, $direccion=NULL, $ciudad=NULL, $codigo_postal=NULL, $telefono=NULL, $cif=NULL, $email=NULL) {
+	public function __construct($id=NULL,$nombre=NULL, $direccion=NULL, $ciudad=NULL, $codigo_postal=NULL, $telefono=NULL, $nif=NULL, $email=NULL) {
 		$this->id = $id;
 		$this->nombre = $nombre;
 		$this->direccion = $direccion;
 		$this->ciudad = $ciudad;
 		$this->codigo_postal = $codigo_postal;
 		$this->telefono = $telefono;
-		$this->cif = $cif;
+		$this->nif = $nif;
 		$this->email = $email;
 	}
 // Métodos observadores y modificadores de los atributos de la entidad usurio
@@ -73,11 +73,11 @@ class Datos_Model implements JsonSerializable{
 	}
 
 	public function getCif() {
-		return $this->cif;
+		return $this->nif;
 	}	
 
-	public function setCif($cif) {
-		$this->cif = $cif;
+	public function setCif($nif) {
+		$this->nif = $nif;
 	}
 
 	public function getEmail() {

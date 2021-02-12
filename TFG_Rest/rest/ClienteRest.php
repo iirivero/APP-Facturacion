@@ -23,7 +23,7 @@ class ClienteRest extends BaseRest {
 		$currentUser = parent::auntenticarUsuario();
 		$data = $_POST['cliente'];
 		$data = json_decode($data,true);
-		$cliente = new Cliente_Model($data['id'],$data['razon_social'],$data['nombre_comercial'],$data['direccion'],$data['ciudad'],$data['codigo_postal'],$data['telefono'],$data['cif'],$data['email']);
+		$cliente = new Cliente_Model($data['id'],$data['razon_social'],$data['nombre_comercial'],$data['direccion'],$data['ciudad'],$data['codigo_postal'],$data['telefono'],$data['nif'],$data['email']);
 
 
 			if($this->clienteMapper->clienteExiste($cliente->getEmail())){
@@ -53,7 +53,7 @@ class ClienteRest extends BaseRest {
 	public function editarCliente() {
 		$currentUser = parent::auntenticarUsuario();
         $data = json_decode($_POST['cliente'],true);
-        $cliente = new Cliente_Model($data['id'],$data['razon_social'],$data['nombre_comercial'],$data['direccion'],$data['ciudad'],$data['codigo_postal'],$data['telefono'],$data['cif'],$data['email']);
+        $cliente = new Cliente_Model($data['id'],$data['razon_social'],$data['nombre_comercial'],$data['direccion'],$data['ciudad'],$data['codigo_postal'],$data['telefono'],$data['nif'],$data['email']);
         $resul = $this->clienteMapper->editarCliente($cliente);
         if($resul == 1){
             header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');

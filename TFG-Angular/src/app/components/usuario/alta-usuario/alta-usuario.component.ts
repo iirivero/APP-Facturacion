@@ -24,28 +24,31 @@ export class AltaUsuarioComponent implements OnInit {
 
 	public FormularioAltaUsuario = new FormGroup({
     nombre: new FormControl('', [
-      Validators.required
+      Validators.required,
+      Validators.pattern("[A-Za-zÁÉÍÓÚñáéíóúÑ ]*")
       ]
       ),
     apellidos: new FormControl('',[
-      Validators.required
+      Validators.required,
+      Validators.pattern("[A-Za-zÁÉÍÓÚñáéíóúÑ ]*")
     ]
     ),
-	email: new FormControl('',[
-      Validators.required
+    email: new FormControl('',[
+      Validators.required,
+      Validators.pattern("^[a-zA-Z0-9ÁÉÍÓÚñáéíóúÑ._%+-]+@[a-zA-Z0-9ÁÉÍÓÚñáéíóúÑ.-]+\\.[a-z]{2,4}$")
     ]
     ),
-	password: new FormControl('',[
-      Validators.required
+    password: new FormControl('',[
+      Validators.required,
+      Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[$@$!%*?&])([A-Za-z\\d$@$!%*?&]|[^ ]){8,15}$")
     ]
     ),
-  administrador: new FormControl('',[
+    administrador: new FormControl('',[
       Validators.required
     ]
     )  
 
   });
-
 
 	constructor(
 		private _usuarioService: UsuarioService,

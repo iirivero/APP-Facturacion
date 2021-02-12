@@ -19,40 +19,41 @@ export class EditarArticulosComponent implements OnInit {
 	public admin: boolean;
 
   public FormularioEditarArticulo = new FormGroup({
-  codigo: new FormControl('', [
-      Validators.required
-      ]
-      ),
   nombre: new FormControl('', [
-      Validators.required
+      Validators.required,
+      Validators.pattern("[A-Za-zÁÉÍÓÚñáéíóúÑ ]*")
       ]
       ),
   descripcion: new FormControl('',[
-      Validators.required
+
     ]
     ),
   proveedor: new FormControl('',[
-      Validators.required
+      Validators.required,
+      Validators.pattern("[A-Za-zÁÉÍÓÚñáéíóúÑ ]*")
     ]
     ),
   precio_compra: new FormControl('',[
-      Validators.required
+      Validators.required,
+      Validators.pattern("^[0-9]+([.][0-9]{1,2})?$")
     ]
     ),
   rentabilidad: new FormControl('',[
-      Validators.required
+      Validators.required,
+      Validators.pattern("[0-9]*")
     ]
     ),
   precio_venta: new FormControl('',[
-      Validators.required
+
     ]
     ),
   iva: new FormControl('',[
-      Validators.required
+      Validators.required,
+      Validators.pattern("[0-9]*")
     ]
     ),
   stock: new FormControl('',[
-      Validators.required
+
     ]
     )
 
@@ -94,6 +95,7 @@ export class EditarArticulosComponent implements OnInit {
   getArticulo(codigo){
   	this._articuloService.getArticulo(codigo).subscribe(
   		articulos => {
+
         for (let articulo of articulos){
 
           this.articulo = new Articulo(articulo.codigo,articulo.nombre,articulo.descripcion,articulo.proveedor,articulo.precio_compra,
@@ -104,13 +106,13 @@ export class EditarArticulosComponent implements OnInit {
 
   		},
   		error => {
-  			console.log(<any>error);
+        this._router.navigate(['/articulos']);
+
   		}
   	)
   }
 
   private pasarValoresFormulario() {
-    this.codigo.setValue(this.articulo.codigo);
     this.nombre.setValue(this.articulo.nombre);
     this.descripcion.setValue(this.articulo.descripcion);
     this.proveedor.setValue(this.articulo.proveedor);
@@ -124,7 +126,6 @@ export class EditarArticulosComponent implements OnInit {
 
    editarArticulo() {
 
-    this.articulo.codigo= this.codigo.value;
     this.articulo.nombre = this.nombre.value;
     this.articulo.descripcion = this.descripcion.value;
     this.articulo.proveedor = this.proveedor.value;
@@ -152,9 +153,6 @@ export class EditarArticulosComponent implements OnInit {
 
   } 
 
-  get codigo(){
-  return this.FormularioEditarArticulo.get('codigo');
-  }
   get nombre(){
   return this.FormularioEditarArticulo.get('nombre');
   }

@@ -23,7 +23,7 @@ export class ClienteComponent implements OnInit {
   /**
    * Columnas que va a tener la tabla.
    */
-  displayedColumns: string[] = ['razon_social', 'nombre_comercial', 'direccion', 'ciudad', 'codigo_postal', 'telefono', 'cif', 'email', 'Acciones'];
+  displayedColumns: string[] = ['razon_social', 'nombre_comercial', 'direccion', 'ciudad', 'codigo_postal', 'telefono', 'nif', 'email', 'Acciones'];
 
   /**
    * Empleado para pasar los datos a la tabla.
@@ -53,6 +53,9 @@ export class ClienteComponent implements OnInit {
   	
   if(sessionStorage.getItem('emailLogin')!= null || sessionStorage.getItem('pass')!= null){
     this.admin = sessionStorage.getItem('admin');
+    if(this.admin == 'No'){
+      this._router.navigate(['/articulos']);
+    }
     this.logueado = true;
 
     this.getClientes();
@@ -67,7 +70,7 @@ export class ClienteComponent implements OnInit {
   	this._clienteService.getClientes().subscribe(clientes=>{
       (clientes);
           for (let cliente of clientes){
-            this.arrayClientes.push(new Cliente(cliente.id,cliente.razon_social,cliente.nombre_comercial,cliente.direccion,cliente.ciudad,cliente.codigo_postal,cliente.telefono,cliente.cif,cliente.email));    
+            this.arrayClientes.push(new Cliente(cliente.id,cliente.razon_social,cliente.nombre_comercial,cliente.direccion,cliente.ciudad,cliente.codigo_postal,cliente.telefono,cliente.nif,cliente.email));    
           }
 
         this.dataSource = new MatTableDataSource<Cliente>(this.arrayClientes);
@@ -91,7 +94,7 @@ export class ClienteComponent implements OnInit {
       clientes=>{
       (clientes);
           for (let cliente of clientes){
-            this.arrayClientes.push(new Cliente(cliente.id,cliente.razon_social,cliente.nombre_comercial,cliente.direccion,cliente.ciudad,cliente.codigo_postal,cliente.telefono,cliente.cif,cliente.email));    
+            this.arrayClientes.push(new Cliente(cliente.id,cliente.razon_social,cliente.nombre_comercial,cliente.direccion,cliente.ciudad,cliente.codigo_postal,cliente.telefono,cliente.nif,cliente.email));    
           }
 
         this.dataSource = new MatTableDataSource<Cliente>(this.arrayClientes);

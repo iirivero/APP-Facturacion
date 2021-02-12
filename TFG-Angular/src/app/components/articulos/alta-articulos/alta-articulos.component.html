@@ -12,10 +12,11 @@
 	<form [formGroup]="FormularioAltaArticulo">
 
 		<div class="form-group">
-			<label class="control-label" for="codigo">Codigo</label>
+			<label class="control-label" for="codigo">Código</label>
 			<input type="text" class="form-control boxed" id="codigo" formControlName="codigo"  name="codigo" >
 			<div *ngIf="(codigo.invalid && codigo.touched) || codigo.dirty">
-			  <small *ngIf="codigo.errors?.required" class="form_error">El codigo es obligatorio</small>
+			  <small *ngIf="codigo.errors?.required" class="form_error">El código es obligatorio</small>
+  			  <small *ngIf="codigo.errors?.pattern" class="form_error">El código solo puede tener letras y dígitos</small>
 			</div>
 		</div>
 
@@ -24,15 +25,13 @@
 			<input type="text" class="form-control boxed" id="nombre" formControlName="nombre"  name="nombre" >
 			<div *ngIf="(nombre.invalid && nombre.touched) || nombre.dirty">
 			  <small *ngIf="nombre.errors?.required" class="form_error">El nombre es obligatorio</small>
+			  <small *ngIf="nombre.errors?.pattern" class="form_error">El nombre solo puede tener letras y espacios</small>
 			</div>
 		</div>
 
 		<div class="form-group">
 			<label class="control-label" for="descripcion">Descripcion</label>
 			<textarea class="form-control boxed" id="descripcion" formControlName="descripcion"  name="descripcion"></textarea>
-			<div *ngIf="(descripcion.invalid && descripcion.touched) || descripcion.dirty">
-			  <small *ngIf="descripcion.errors?.required" class="form_error">La descripcion es obligatoria</small>
-			</div>
 		</div>
 
 		<div class="form-group">
@@ -40,6 +39,7 @@
 			<input type="text" class="form-control boxed" id="proveedor" formControlName="proveedor"  name="proveedor" >
 			<div *ngIf="(proveedor.invalid && proveedor.touched) || proveedor.dirty">
 			  <small *ngIf="proveedor.errors?.required" class="form_error">El proveedor es obligatorio</small>
+			  <small *ngIf="proveedor.errors?.pattern" class="form_error">El proveedor solo puede tener letras y espacios</small>
 			</div>
 		</div>
 
@@ -48,6 +48,7 @@
 			<input type="text" class="form-control boxed" id="precio_compra" formControlName="precio_compra"  name="precio_compra" >
 			<div *ngIf="(precio_compra.invalid && precio_compra.touched) || precio_compra.dirty">
 			  <small *ngIf="precio_compra.errors?.required" class="form_error">El precio de compra es obligatorio</small>
+			  <small *ngIf="precio_compra.errors?.pattern" class="form_error">Solo puedes introducir dígitos con dos decimales</small>
 			</div>
 		</div>
 
@@ -56,6 +57,7 @@
 			<input type="text" class="form-control boxed" id="rentabilidad" formControlName="rentabilidad"  name="rentabilidad" >
 			<div *ngIf="(rentabilidad.invalid && rentabilidad.touched) || rentabilidad.dirty">
 			  <small *ngIf="rentabilidad.errors?.required" class="form_error">La rentabilidad son obligatorio</small>
+			  <small *ngIf="rentabilidad.errors?.pattern" class="form_error">Solo puedes introducir dígitos</small>
 			</div>
 		</div>
 
@@ -64,6 +66,7 @@
 			<input type="text" class="form-control boxed" id="iva" formControlName="iva"  name="iva" >
 			<div *ngIf="(iva.invalid && iva.touched) || iva.dirty">
 			  <small *ngIf="iva.errors?.required" class="form_error">El iva es obligatorio</small>
+			  <small *ngIf="iva.errors?.pattern" class="form_error">Solo puedes introducir dígitos</small>
 			</div>
 		</div>
 
@@ -72,6 +75,7 @@
 			<input type="text" class="form-control boxed" id="stock" formControlName="stock"  name="stock" >
 			<div *ngIf="(stock.invalid && stock.touched) || stock.dirty">
 			  <small *ngIf="stock.errors?.required" class="form_error">El stock es obligatorio</small>
+			  <small *ngIf="stock.errors?.pattern" class="form_error">Solo puedes introducir dígitos</small>
 			</div>
 		</div>
 		

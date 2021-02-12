@@ -8,7 +8,7 @@ export class Articulo{
 		public rentabilidad: number,
 		public precio_venta: number,
 		public iva: number,
-		public stock: string
+		public stock: number
 	){}
 
 

@@ -6,7 +6,7 @@ export class Datos{
 		public ciudad: string,
 		public codigo_postal: number,
 		public telefono: number,
-		public cif: string,
+		public nif: string,
 		public email: string
 	){}
 

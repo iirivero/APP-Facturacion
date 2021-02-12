@@ -14,7 +14,7 @@ class Cliente_Mapper {
 
 
     public function editarCliente($cliente){
-        $stmt = $this->db->prepare("UPDATE clientes SET razon_social = ? , nombre_comercial=?, direccion=?, ciudad=?, codigo_postal=?, telefono=?, cif=?, email=? WHERE id = ?");
+        $stmt = $this->db->prepare("UPDATE clientes SET razon_social = ? , nombre_comercial=?, direccion=?, ciudad=?, codigo_postal=?, telefono=?, nif=?, email=? WHERE id = ?");
         $resul = $stmt->execute(array($cliente->getRazon_social(), $cliente->getNombre_comercial(), $cliente->getDireccion(), $cliente->getCiudad(),$cliente->getCodigo_postal(),$cliente->getTelefono(),$cliente->getCif(),$cliente->getEmail(),$cliente->getId()));
         return $resul;
 

@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, ViewChild,Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, ViewChild,Component, OnInit } from '@angular/core';
 import { Articulo } from '../../../models/articulo';
 import { ArticuloService } from '../../../services/articulos.service';
 import { Pedido } from '../../../models/pedido';
@@ -29,15 +29,30 @@ export class RellenarPedidoComponent implements OnInit {
   public pedido: Pedido;
   public url: string;
   public id_pedido: string;
-
+  public stock: number;
+  public precio_venta: number;
+  public mensaje_error_stock: boolean;
+  public mensaje_error_descuento: boolean;
 
 public FormularioPedido = new FormGroup({
   cantidad: new FormControl('', [
-    Validators.required
+    Validators.required,
+    Validators.pattern("[0-9]*")
+    ]
+    ),
+  opcion: new FormControl('', [
+    ]
+    ),
+  precio_nuevo: new FormControl('', [
+    Validators.pattern("^[0-9]+([.][0-9]{1,2})?$")
+    ]
+    ),
+  porcentaje_descuento: new FormControl('', [
+    Validators.pattern("^[0-9]+")
     ]
     ),
   descuento: new FormControl('', [ 
-
+  Validators.pattern("^[0-9]+([.][0-9]{1,2})?$")
     ]
     )
   });
@@ -46,7 +61,7 @@ public FormularioPedido = new FormGroup({
   /**
    * Columnas que va a tener la tabla.
    */
-  displayedColumns: string[] = ['codigo', 'nombre', 'proveedor', 'precio_compra', 'rentabilidad', 'precio_venta', 'iva', 'stock', 'Acciones'];
+  displayedColumns: string[] = ['codigo', 'nombre', 'proveedor', 'precio_venta', 'iva', 'stock', 'Acciones'];
 
   /**
    * Empleado para pasar los datos a la tabla.
@@ -74,7 +89,8 @@ public FormularioPedido = new FormGroup({
     this.arrayLineaPedido = new Array<Linea_Pedido>();
     this.linea_Pedido = new Linea_Pedido('','','','',null,null,null,null,0,null);
     this.logueado= false;
-
+    this.mensaje_error_stock = false;
+    this.mensaje_error_descuento = false;
  
   }
 
@@ -135,6 +151,7 @@ public FormularioPedido = new FormGroup({
     this._lineaPedidoService.getLinea(this.id_pedido).subscribe(lineas=>{
       (lineas);
           for (let linea of lineas){
+
             this.arrayLineaPedido.push(new Linea_Pedido(linea.id,linea.id_pedido,linea.codigo_articulo,linea.nombre,linea.cantidad,linea.precio,
               linea.iva,linea.importe_iva,linea.descuento,linea.importe));    
           }
@@ -188,20 +205,20 @@ mostrarDialogo(linea: Linea_Pedido): void {
 private delete(linea: Linea_Pedido) {
   this._lineaPedidoService.eliminarLinea(linea.id).subscribe(
     result=>{
-
-      this.pedido.base_imponible = this.pedido.base_imponible - this.linea_Pedido.importe;
-      this.pedido.iva = this.pedido.iva - this.linea_Pedido.importe_iva;
+      this.pedido.base_imponible = this.pedido.base_imponible - linea.importe;
+      this.pedido.iva = this.pedido.iva - linea.importe_iva;
       this.pedido.precio_total = this.pedido.base_imponible + this.pedido.iva;
-
-      
-      this._pedidoService.actualizarPedido(this.pedido).subscribe(response=>{
       
 
-      
+      this._pedidoService.actualizarPedido(this.pedido).subscribe(response=>{ 
       },
       error =>{
-
-
+      }
+      );
+      this.articulo.stock = this.articulo.stock + linea.cantidad;
+      this._articuloService.editarArticulo(this.articulo).subscribe(response=>{
+      },
+      error =>{
       }
       );
 
@@ -213,24 +230,64 @@ private delete(linea: Linea_Pedido) {
 }
 
 almacenarArticulo(articulo:Articulo){
+  this.FormularioPedido.reset();
   this.articulo = articulo;
+  this.stock = articulo.stock;
+  this.precio_venta = articulo.precio_venta;
 }
 
 agregarArticulo() {
 
-
+if(this.cantidad.value > this.stock){
+  this.mensaje_error_stock = true;
+}else{
+if(this.descuento.value > (this.cantidad.value * this.precio_venta)){
+  this.mensaje_error_descuento = true;
+}else{
+  this.mensaje_error_stock = false;
+  this.mensaje_error_descuento = false;
   this.linea_Pedido.id_pedido = this.id_pedido;
   this.linea_Pedido.codigo_articulo = this.articulo.codigo;
   this.linea_Pedido.cantidad = this.cantidad.value;
-  this.linea_Pedido.precio= this.articulo.precio_venta;
   this.linea_Pedido.iva = this.articulo.iva;
   this.linea_Pedido.importe_iva = (this.cantidad.value*this.articulo.precio_venta-this.descuento.value)*(this.articulo.iva/100);
-  if(this.descuento.value == '' || this.linea_Pedido.descuento == 0){
-    this.linea_Pedido.descuento = 0;
+
+
+//IF-ELSE para controlar el tipo de descuento que se aplica al añadir un articulo a un pedido.
+
+  if(this.opcion.value== 'precio_nuevo'){
+
+    this.linea_Pedido.precio= this.precio_nuevo.value;
+    this.linea_Pedido.importe_iva = (this.cantidad.value*this.precio_nuevo.value)*(this.articulo.iva/100);
+    this.linea_Pedido.descuento = (this.cantidad.value*this.articulo.precio_venta)-(this.cantidad.value*this.precio_nuevo.value);
+    this.linea_Pedido.importe = this.cantidad.value*this.precio_nuevo.value;
   }else{
-  this.linea_Pedido.descuento = this.descuento.value;  
-  } 
-  this.linea_Pedido.importe = this.cantidad.value*this.articulo.precio_venta-this.descuento.value;
+  if(this.opcion.value== 'porcentaje_descuento'){
+  
+    this.linea_Pedido.precio= this.articulo.precio_venta;
+    this.linea_Pedido.importe_iva = (this.cantidad.value*this.articulo.precio_venta-this.descuento.value)*(this.articulo.iva/100);
+    this.linea_Pedido.descuento = (this.porcentaje_descuento.value/100)*(this.cantidad.value*this.articulo.precio_venta);
+    this.linea_Pedido.importe = this.cantidad.value*this.articulo.precio_venta-this.linea_Pedido.descuento;
+
+  }else{
+  if(this.opcion.value== 'descuento'){
+
+    this.linea_Pedido.precio= this.articulo.precio_venta;
+    this.linea_Pedido.importe_iva = (this.cantidad.value*this.articulo.precio_venta-this.descuento.value)*(this.articulo.iva/100);
+    this.linea_Pedido.descuento = this.descuento.value;
+    this.linea_Pedido.importe = this.cantidad.value*this.articulo.precio_venta-this.descuento.value;
+
+  }else{
+
+    this.linea_Pedido.precio= this.articulo.precio_venta;
+    this.linea_Pedido.importe_iva = (this.cantidad.value*this.articulo.precio_venta-this.descuento.value)*(this.articulo.iva/100);
+    this.linea_Pedido.descuento = 0;
+    this.linea_Pedido.importe = this.cantidad.value*this.articulo.precio_venta;
+  }
+  }
+  }
+
+  
   
   this.FormularioPedido.reset();
   
@@ -246,13 +303,14 @@ agregarArticulo() {
 
       
       this._pedidoService.actualizarPedido(this.pedido).subscribe(response=>{
-      
-
-      
       },
       error =>{
-
-
+      }
+      );
+      this.articulo.stock = this.stock - this.linea_Pedido.cantidad;
+      this._articuloService.editarArticulo(this.articulo).subscribe(response=>{
+      },
+      error =>{
       }
       );
   }
@@ -260,8 +318,10 @@ agregarArticulo() {
   error => {
     console.log(<any>error);
   }
-);
-
+  );  
+}
+  
+}
 } 
 
 
@@ -277,6 +337,15 @@ applyFilter(event: Event) {
 
 get cantidad(){
 return this.FormularioPedido.get('cantidad');
+}
+get opcion(){
+return this.FormularioPedido.get('opcion');
+}
+get precio_nuevo(){
+return this.FormularioPedido.get('precio_nuevo');
+}
+get porcentaje_descuento(){
+return this.FormularioPedido.get('porcentaje_descuento');
 }
 get descuento(){
 return this.FormularioPedido.get('descuento');

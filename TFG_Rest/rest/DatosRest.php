@@ -23,7 +23,7 @@ class DatosRest extends BaseRest {
 	public function editarDatos() {
         $currentUser = parent::auntenticarUsuario();
         $data = json_decode($_POST['datos'],true);
-        $datos = new Datos_Model($data['id'],$data['nombre'],$data['direccion'],$data['ciudad'],$data['codigo_postal'],$data['telefono'],$data['cif'],$data['email']);
+        $datos = new Datos_Model($data['id'],$data['nombre'],$data['direccion'],$data['ciudad'],$data['codigo_postal'],$data['telefono'],$data['nif'],$data['email']);
         $resul = $this->datosMapper->editarDatos($datos);
         if($resul == 1){
             header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');

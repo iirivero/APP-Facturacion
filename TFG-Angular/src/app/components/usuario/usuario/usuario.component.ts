@@ -64,6 +64,9 @@ export class UsuarioComponent implements OnInit {
   ngOnInit(){
   if(sessionStorage.getItem('emailLogin')!= null || sessionStorage.getItem('pass')!= null){
     this.admin = sessionStorage.getItem('admin');
+    if(this.admin == 'No'){
+      this._router.navigate(['/articulos']);
+    }
     this.logueado = true;
 
     this.getUsuarios();

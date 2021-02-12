@@ -21,36 +21,42 @@ export class AltaArticulosComponent implements OnInit {
 	public logueado: boolean;
 
 	public FormularioAltaArticulo = new FormGroup({
-	codigo: new FormControl('', [
-      Validators.required
+  	codigo: new FormControl('', [
+      Validators.required,
+      Validators.pattern("[A-Za-z0-9]*")
       ]
       ),
-    nombre: new FormControl('', [
-      Validators.required
+  	nombre: new FormControl('', [
+      Validators.required,
+      Validators.pattern("[A-Za-zÁÉÍÓÚñáéíóúÑ ]*")
       ]
       ),
-    descripcion: new FormControl('',[
-      Validators.required
+  	descripcion: new FormControl('',[
     ]
     ),
-	proveedor: new FormControl('',[
-      Validators.required
+  	proveedor: new FormControl('',[
+      Validators.required,
+      Validators.pattern("[A-Za-zÁÉÍÓÚñáéíóúÑ ]*")
     ]
     ),
-	precio_compra: new FormControl('',[
-      Validators.required
+  	precio_compra: new FormControl('',[
+      Validators.required,
+      Validators.pattern("^[0-9]+([.][0-9]{1,2})?$")
     ]
     ),
-	rentabilidad: new FormControl('',[
-      Validators.required
+  	rentabilidad: new FormControl('',[
+      Validators.required,
+      Validators.pattern("[0-9]*")
     ]
     ),
-	iva: new FormControl('',[
-      Validators.required
+  	iva: new FormControl('',[
+      Validators.required,
+      Validators.pattern("[0-9]*")
     ]
     ),
-	stock: new FormControl('',[
-      Validators.required
+  	stock: new FormControl('',[
+      Validators.required,
+      Validators.pattern("[0-9]*")
     ]
     )
 

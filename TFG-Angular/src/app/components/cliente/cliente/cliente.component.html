@@ -1,9 +1,4 @@
-<div *ngIf="admin == 'No'" class="mensaje_error">
-  <h2>Usted no tiene permisos para acceder a este módulo, solo el administrador puede hacerlo.</h2>
-</div>
-
-
-<div *ngIf="admin == 'Si'"class="container mt-4">
+<div class="container mt-4">
   <button [routerLink]="['/alta-cliente']" [routerLinkActive]="['actived']" class="btn-twitter col-12 mt-1" > Añadir cliente </button>
   
     <input class="form-control boxed filtro" matInput (keyup)="applyFilter($event)" placeholder="FILTRO...">
@@ -48,9 +43,9 @@
     </ng-container>
 
     <!-- Name Column -->
-    <ng-container matColumnDef="cif">
-      <th mat-header-cell *matHeaderCellDef> cif </th>
-      <td mat-cell *matCellDef="let cliente"> {{cliente.cif}} </td>
+    <ng-container matColumnDef="nif">
+      <th mat-header-cell *matHeaderCellDef> NIF </th>
+      <td mat-cell *matCellDef="let cliente"> {{cliente.nif}} </td>
     </ng-container>
 
     <!-- Name Column -->

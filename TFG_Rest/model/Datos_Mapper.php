@@ -9,7 +9,7 @@ class Datos_Mapper {
     
 
     public function editarDatos($datos){
-        $stmt = $this->db->prepare("UPDATE datos SET nombre=? , direccion=? , ciudad=? , codigo_postal=? , telefono=? , cif=? , email=? WHERE id = ?");
+        $stmt = $this->db->prepare("UPDATE datos SET nombre=? , direccion=? , ciudad=? , codigo_postal=? , telefono=? , nif=? , email=? WHERE id = ?");
         $resul = $stmt->execute(array($datos->getNombre(), $datos->getDireccion(),$datos->getCiudad(), $datos->getCodigo_postal(), $datos->getTelefono(), $datos->getCif(), $datos->getEmail(),$datos->getId()));
         return $resul;
 

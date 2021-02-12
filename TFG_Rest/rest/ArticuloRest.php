@@ -79,6 +79,15 @@ class ArticuloRest extends BaseRest {
 
 	public function getArticulo($codigo){
 		$currentUser = parent::auntenticarUsuario();
+		
+		if(!$this->articuloMapper->articuloExiste($codigo)){
+	
+            http_response_code(400);
+            header('Content-Type: application/json');
+            echo(json_encode("El codigo no existe"));
+            exit();
+		}
+
         $articuloArray = $this->articuloMapper->getArticulo($codigo);
         header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
         header('Content-Type: application/json');

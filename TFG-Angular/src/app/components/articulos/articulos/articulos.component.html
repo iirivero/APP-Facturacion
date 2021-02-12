@@ -59,7 +59,7 @@
       <th mat-header-cell *matHeaderCellDef> Acciones </th>
       <td mat-cell *matCellDef="let articulo">
       <div class="row">
-        <button [routerLink]="['/actualizar-stock', articulo.codigo]" class="btn btn-warning col-4 mr-1 my-1"> Añadir stock </button>
+        <button [routerLink]="['/actualizar-stock', articulo.codigo]" class="btn btn-warning col-3 ml-1 mr-1 my-1"> Stock </button>
         <button [routerLink]="['/editar-articulos', articulo.codigo]" class="btn btn-warning col-3 mr-1 my-1"> Editar </button>
         <button (click)="mostrarDialogo(articulo)" class="btn btn-danger col-4 my-1"> Eliminar </button>
       </div>

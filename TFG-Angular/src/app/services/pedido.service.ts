@@ -26,7 +26,6 @@ export class PedidoService{
   }
 
   actualizarPedido(pedido: Pedido): Observable<any> {
-    console.log(pedido);
     let json = JSON.stringify(pedido);
     let parametros = "pedido="+json;
     let headers = new HttpHeaders().set('Content-Type','application/x-www-form-urlencoded')

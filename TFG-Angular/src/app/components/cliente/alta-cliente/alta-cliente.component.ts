@@ -23,36 +23,44 @@ export class AltaClienteComponent implements OnInit {
  	public admin: string;
 
 	public FormularioAltaCliente = new FormGroup({
-	razon_social: new FormControl('', [
-      Validators.required
+  razon_social: new FormControl('', [
+      Validators.required,
+      Validators.pattern("[A-Za-zÁÉÍÓÚñáéíóúÑ ]*")
       ]
       ),
     nombre_comercial: new FormControl('', [
-      Validators.required
+      Validators.required,
+      Validators.pattern("[A-Za-zÁÉÍÓÚñáéíóúÑ ,.]*")
       ]
       ),
     direccion: new FormControl('',[
-      Validators.required
+      Validators.required,
+      Validators.pattern("[A-Za-z0-9ÁÉÍÓÚñáéíóúÑº ,.]*")
     ]
     ),
-	ciudad: new FormControl('',[
-      Validators.required
+  	ciudad: new FormControl('',[
+      Validators.required,
+      Validators.pattern("[A-Za-zÁÉÍÓÚñáéíóúÑ ]*")
     ]
     ),
-	codigo_postal: new FormControl('',[
-      Validators.required
+  	codigo_postal: new FormControl('',[
+      Validators.required,
+      Validators.pattern("[0-9]{5}")
     ]
     ),
-	telefono: new FormControl('',[
-      Validators.required
+  	telefono: new FormControl('',[
+      Validators.required,
+      Validators.pattern("^[679]{1}[0-9]{8}$")
     ]
     ),
-	cif: new FormControl('',[
-      Validators.required
+  	nif: new FormControl('',[
+      Validators.required,
+      Validators.pattern("^[a-zA-Z]{1}\\d{8}$")
     ]
     ),
-	email: new FormControl('',[
-      Validators.required
+  	email: new FormControl('',[
+      Validators.required,
+      Validators.pattern("^[a-zA-Z0-9ÁÉÍÓÚñáéíóúÑ._%+-]+@[a-zA-Z0-9ÁÉÍÓÚñáéíóúÑ.-]+\\.[a-z]{2,4}$")
     ]
     )
 
@@ -110,7 +118,7 @@ export class AltaClienteComponent implements OnInit {
     this.cliente.ciudad = this.ciudad.value;
     this.cliente.codigo_postal= this.codigo_postal.value;
     this.cliente.telefono = this.telefono.value;
-    this.cliente.cif = this.cif.value; 
+    this.cliente.nif = this.nif.value; 
     this.cliente.email = this.email.value;
 
 	this._clienteService.añadirCliente(this.cliente).subscribe(
@@ -151,8 +159,8 @@ export class AltaClienteComponent implements OnInit {
 	get telefono(){
 	return this.FormularioAltaCliente.get('telefono');
 	}
-	get cif(){
-	return this.FormularioAltaCliente.get('cif');
+	get nif(){
+	return this.FormularioAltaCliente.get('nif');
 	}
 	get email(){
 	return this.FormularioAltaCliente.get('email');

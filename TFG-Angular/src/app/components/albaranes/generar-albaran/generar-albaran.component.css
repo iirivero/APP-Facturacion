@@ -1,0 +1,9 @@
+.derecha{
+	border:1px solid blue;
+}
+
+.izquierda{
+	border:1px solid black;
+	margin-left: 20px;
+
+}

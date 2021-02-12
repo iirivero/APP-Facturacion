@@ -24,31 +24,38 @@ export class DatosComponent implements OnInit {
 
 	public FormularioDatos = new FormGroup({
     nombre: new FormControl('', [
-      Validators.required
+      Validators.required,
+      Validators.pattern("[A-Za-z0-9ÁÉÍÓÚñáéíóúÑ ,.]*")
       ]
       ),
     direccion: new FormControl('', [
-      Validators.required
+      Validators.required,
+      Validators.pattern("[A-Za-z0-9ÁÉÍÓÚñáéíóúÑº ,.]*")
       ]
       ),
     ciudad: new FormControl('', [
-      Validators.required
+      Validators.required,
+      Validators.pattern("[A-Za-zÁÉÍÓÚñáéíóúÑ ]*")
       ]
       ),
     codigo_postal: new FormControl('', [
-      Validators.required
+      Validators.required,
+      Validators.pattern("[0-9]{5}")
       ]
       ),
     telefono: new FormControl('',[
-      Validators.required
+      Validators.required,
+      Validators.pattern("^[679]{1}[0-9]{8}$")
     ]
     ),
-	cif: new FormControl('',[
-      Validators.required
+	nif: new FormControl('',[
+      Validators.required,
+      Validators.pattern("^[a-zA-Z]{1}-?\\d{8}$")
     ]
     ),
 	email: new FormControl('',[
-      Validators.required
+      Validators.required,
+      Validators.pattern("^[a-zA-Z0-9ÁÉÍÓÚñáéíóúÑ._%+-]+@[a-zA-Z0-9ÁÉÍÓÚñáéíóúÑ.-]+\\.[a-z]{2,4}$")
     ]
     )
 
@@ -81,7 +88,7 @@ export class DatosComponent implements OnInit {
         for (let dato of datos){
 
           this.datos = new Datos(dato.id,dato.nombre,dato.direccion,
-          	dato.ciudad,dato.codigo_postal,dato.telefono,dato.cif,dato.email);   
+          	dato.ciudad,dato.codigo_postal,dato.telefono,dato.nif,dato.email);   
         }
 
         this.pasarValoresFormulario();	
@@ -90,7 +97,7 @@ export class DatosComponent implements OnInit {
   		error => {
   			console.log(<any>error);
   		}
-  	)
+  	);
  	}
 
 	private pasarValoresFormulario() {
@@ -99,7 +106,7 @@ export class DatosComponent implements OnInit {
 	    this.ciudad.setValue(this.datos.ciudad);
 	    this.codigo_postal.setValue(this.datos.codigo_postal);
 	    this.telefono.setValue(this.datos.telefono);
-	    this.cif.setValue(this.datos.cif);
+	    this.nif.setValue(this.datos.nif);
 	    this.email.setValue(this.datos.email);
 	  }
 
@@ -131,7 +138,7 @@ export class DatosComponent implements OnInit {
     this.datos.ciudad = this.ciudad.value;
     this.datos.codigo_postal = this.codigo_postal.value;
     this.datos.telefono = this.telefono.value;
-    this.datos.cif = this.cif.value;
+    this.datos.nif = this.nif.value;
     this.datos.email = this.email.value;
 
 	this._datosService.editarDatos(this.datos).subscribe(
@@ -182,8 +189,8 @@ export class DatosComponent implements OnInit {
 	get telefono(){
 	return this.FormularioDatos.get('telefono');
 	}
-	get cif(){
-	return this.FormularioDatos.get('cif');
+	get nif(){
+	return this.FormularioDatos.get('nif');
 	}
 	get email(){
 	return this.FormularioDatos.get('email');

@@ -1,13 +1,13 @@
 import { ChangeDetectorRef, ViewChild,Component, OnInit } from '@angular/core';
-import { Pedido } from '../../models/pedido';
-import { PedidoService } from '../../services/pedido.service';
-import { Cliente } from '../../models/cliente';
-import { ClienteService } from '../../services/cliente.service';
-import { Global } from '../../services/global';
+import { Pedido } from '../../../models/pedido';
+import { PedidoService } from '../../../services/pedido.service';
+import { Cliente } from '../../../models/cliente';
+import { ClienteService } from '../../../services/cliente.service';
+import { Global } from '../../../services/global';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { MatTableDataSource} from '@angular/material/table';
 import { MatPaginator,PageEvent} from '@angular/material/paginator';
-import { DialogoConfirmacionComponent } from "../dialogo-confirmacion/dialogo-confirmacion.component";
+import { DialogoConfirmacionComponent } from "../../dialogo-confirmacion/dialogo-confirmacion.component";
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 

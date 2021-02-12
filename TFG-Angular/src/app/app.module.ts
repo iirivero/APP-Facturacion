@@ -19,7 +19,7 @@ import { LoginComponent } from './components/login/login.component';
 import { UsuarioComponent } from './components/usuario/usuario/usuario.component';
 import { ClienteComponent } from './components/cliente/cliente/cliente.component';
 import { ArticulosComponent } from './components/articulos/articulos/articulos.component';
-import { AlbaranesComponent } from './components/albaranes/albaranes.component';
+import { AlbaranesComponent } from './components/albaranes/albaranes/albaranes.component';
 import { FacturasComponent } from './components/facturas/facturas/facturas.component';
 import { AltaUsuarioComponent } from './components/usuario/alta-usuario/alta-usuario.component';
 import { EditarUsuarioComponent } from './components/usuario/editar-usuario/editar-usuario.component';

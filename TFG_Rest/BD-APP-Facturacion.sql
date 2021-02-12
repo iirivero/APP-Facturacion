@@ -38,8 +38,8 @@ CREATE TABLE IF NOT EXISTS `clientes` (
   `ciudad` varchar(20) NOT NULL,
   `codigo_postal` int(5) NOT NULL,
   `telefono` int(9) NOT NULL,
-  `cif` varchar(20) NOT NULL,
-  `email` varchar(45) NOT NULL
+  `nif` varchar(20) NOT NULL,
+  `email` varchar(65) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -53,8 +53,8 @@ CREATE TABLE IF NOT EXISTS `datos` (
   `ciudad` varchar(20) NOT NULL,
   `codigo_postal` int(5) NOT NULL,
   `telefono` int(9) NOT NULL,
-  `cif` varchar(20) NOT NULL,
-  `email` varchar(45) NOT NULL,
+  `nif` varchar(20) NOT NULL,
+  `email` varchar(65) NOT NULL,
   `logo` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `datos` (
 CREATE TABLE IF NOT EXISTS `articulos` (
   `codigo` varchar(36) NOT NULL,
   `nombre` varchar(60) NOT NULL,
-  `descripcion` varchar(600) NOT NULL,
+  `descripcion` varchar(600) NULL,
   `proveedor` varchar(20) NOT NULL,
   `precio_compra` decimal(10,2) NOT NULL,
   `rentabilidad` int(5) NOT NULL,
@@ -124,10 +124,10 @@ CREATE TABLE IF NOT EXISTS `linea_pedido` (
 
 CREATE TABLE IF NOT EXISTS `usuarios` (
   `uuid` varchar(36) NOT NULL,
-  `email` varchar(45) NOT NULL,
+  `email` varchar(65) NOT NULL,
   `password` varchar(128) NOT NULL,
   `nombre` varchar(25) NOT NULL,
-  `apellidos` varchar(25) NOT NULL,
+  `apellidos` varchar(45) NOT NULL,
   `administrador` ENUM('Si','No') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
