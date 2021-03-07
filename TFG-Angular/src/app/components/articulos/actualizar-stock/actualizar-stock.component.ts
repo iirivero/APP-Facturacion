@@ -11,11 +11,19 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
   providers: [ArticuloService]
 })
 export class ActualizarStockComponent implements OnInit {
-	public title: string;
-	public articulo: Articulo;
-	public admin: boolean;
-  public stock_nuevo: number;
 
+  //Creación de todas las variables para actualizar el stock.
+
+  public title: string;              //Titulo del componente.
+  public articulo: Articulo;         //Objeto empleado para guardar el nuevo artículo.
+  public stock_nuevo: number;        //Variable para almacenar el nuevo valor del stock.
+
+
+  /**
+   * En el constructor inicializamos los servicios que vamos a usar para comunicarnos con la API REST:
+   * _articuloService: Para poder añadir artículos.
+   * _router: Para poder navegar entre los componentes.
+   */
   constructor(
 
   private _articuloService: ArticuloService,
@@ -24,19 +32,22 @@ export class ActualizarStockComponent implements OnInit {
 
   	){
 
+    //Inicializamos las diferentes variables.
   	this.title = "Actualizar Stock";
 	  this.articulo = new Articulo('','','','',null,null,null,null,null);
-
-  	this.admin = false;
    
   }
 
+//Función que se ejecuta en el momento de cargar el componente.
+//En esta función se hace una comprobación para saber si el usuario que esta accediendo a este modulo
+//esta identificado en el sistena. Ademas se almacena el valor del codigo del artículo.
   ngOnInit(): void {
 
   if(sessionStorage.getItem('emailLogin')!= null || sessionStorage.getItem('pass')!= null){
     this._route.params.subscribe(params => {
       let codigo = params.codigo;
 
+      //Se llama al metodo getArticulo para obtener, de la base de datos, el artículo que se quiere modificar.
       this.getArticulo(codigo);
 
     });
@@ -47,11 +58,15 @@ export class ActualizarStockComponent implements OnInit {
 
   }
 
-
+//Función para recuperar los datos de los artículos que se quiere modificar el stock, estos datos se le pasan al formulario.
+//Los datos del artículo se recuperan utilizando el servicio de artículos, que se comunica con la base de datos
+//mediente el metodo getArticulo.
   getArticulo(codigo){
   	this._articuloService.getArticulo(codigo).subscribe(
   		articulos => {
         for (let articulo of articulos){
+
+          //Almacena los datos recibidos de la base de datos en un objeto de tipo artículo.
           this.articulo = new Articulo(articulo.codigo,articulo.nombre,articulo.descripcion,articulo.proveedor,articulo.precio_compra,
             	articulo.rentabilidad,articulo.precio_venta,articulo.iva,articulo.stock); 
         }
@@ -63,11 +78,12 @@ export class ActualizarStockComponent implements OnInit {
   	)
   }
 
+  //Metodo que se ejecuta cuando el usuario presiona el boton de enviar del formulario.
   onSubmit(form){
-	this.articulo.stock =this.stock_nuevo + this.articulo.stock;
+	this.articulo.stock =this.stock_nuevo + this.articulo.stock;   //Se almacena el valor nuevo del stock.
 
 
-	// Guardar datos básicos
+	// Guardar datos del stock nuevo.
 	this._articuloService.editarArticulo(this.articulo).subscribe(
 		response => {
 			if(response=="Articulo editado"){

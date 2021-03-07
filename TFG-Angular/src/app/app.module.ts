@@ -38,6 +38,8 @@ import { AltaPedidoComponent } from './components/pedido/alta-pedido/alta-pedido
 import { RellenarPedidoComponent } from './components/pedido/rellenar-pedido/rellenar-pedido.component';
 import { CrearFacturaComponent } from './components/facturas/crear-factura/crear-factura.component';
 import { RellenarFacturaComponent } from './components/facturas/rellenar-factura/rellenar-factura.component';
+import { GenerarAlbaranComponent } from './components/albaranes/generar-albaran/generar-albaran.component';
+
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -69,7 +71,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     AltaPedidoComponent,
     RellenarPedidoComponent,
     CrearFacturaComponent,
-    RellenarFacturaComponent
+    RellenarFacturaComponent,
+    GenerarAlbaranComponent
   ],
   imports: [
     BrowserModule,

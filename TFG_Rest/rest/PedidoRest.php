@@ -27,8 +27,6 @@ class PedidoRest extends BaseRest {
 		$pedido = new Pedido_Model(null,$data,$fecha);
 
 	        try{
-				//$pedido->validacionRegistro();
-				//die('si valida');
 
 				$this->pedidoMapper->insertarPedido($pedido);
 				$id_pedido = $this->pedidoMapper->getIdPedido($data,$fecha);
@@ -44,7 +42,7 @@ class PedidoRest extends BaseRest {
 	
 	}
 
-	// Para registrar un nuevo cliente en el sistema
+	// Para modificar un cliente en el sistema
 	public function actualizarPedido() {
 		$currentUser = parent::auntenticarUsuario();
 		$data = $_POST['pedido'];
@@ -65,7 +63,7 @@ class PedidoRest extends BaseRest {
 	
 	}
 
-
+	//Devuelve todos los pedidos del sistema.
 	public function getPedidos(){
 		$currentUser = parent::auntenticarUsuario();		
         $pedidoArray = $this->pedidoMapper->getPedidos();
@@ -74,6 +72,7 @@ class PedidoRest extends BaseRest {
         echo(json_encode($pedidoArray));
     }
 
+    //Devuelve los datos de un único pedido.
 	public function getPedido($id){
 		$currentUser = parent::auntenticarUsuario();
         $pedido = $this->pedidoMapper->getPedido($id);
@@ -82,6 +81,8 @@ class PedidoRest extends BaseRest {
         echo(json_encode($pedido));
     }
 
+
+    //Elimina un pedido de la base de datos.
     public function eliminarPedido($id){
     	$currentUser = parent::auntenticarUsuario();
         $pedido = $this->pedidoMapper->eliminarPedido($id);

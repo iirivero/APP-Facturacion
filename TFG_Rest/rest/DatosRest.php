@@ -19,7 +19,7 @@ class DatosRest extends BaseRest {
 		$this->datosMapper = new Datos_Mapper();
 	}
 
-
+    //Modifica los datos de la empresa.
 	public function editarDatos() {
         $currentUser = parent::auntenticarUsuario();
         $data = json_decode($_POST['datos'],true);
@@ -39,25 +39,10 @@ class DatosRest extends BaseRest {
 		
 	}
 
-    public function subirArchivo() {
-        $currentUser = parent::auntenticarUsuario();
-        $data = json_decode($_POST['datos'],true);
-        $dir_foto="../../../TFG-Angular/src/assets/images/".$data['nombre'];
-        $resul = move_uploaded_file($data['nombre'], $dir_foto); 
-        if($resul == true){
-            header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
-            header('Content-Type: application/json');
-            echo(json_encode("Datos editado"));
 
-        }
-        else{
-            http_response_code(400);
-            header('Content-Type: application/json');
-            echo(json_encode($dir_foto));
-        }
-        
     }
 
+    //Devuelve los datos de la empresa.
 	public function getDatos(){
         $currentUser = parent::auntenticarUsuario();
         $datosArray = $this->datosMapper->getDatos();
@@ -72,6 +57,5 @@ class DatosRest extends BaseRest {
 $datosRest = new DatosRest();
 URIDispatcher::getInstance()
 ->map("GET",	"/datos", array($datosRest,"getDatos"))
-->map("POST",    "/datos/subirArchivo", array($datosRest,"subirArchivo"))
 ->map("POST", "/datos/editar", array($datosRest,"editarDatos"));
  

@@ -13,11 +13,14 @@ import { FormControl,FormGroup,Validators } from '@angular/forms';
   providers: [ArticuloService]
 })
 export class EditarArticulosComponent implements OnInit {
-	public title: string;
-	public articulo: Articulo;
-	public status: string;
-	public admin: boolean;
 
+  //Creación de todas las variables para editar un artículo.
+  public title: string;            //Titulo del componente.
+  public articulo: Articulo;         //Objeto empleado para guardar el articulo que se quiere modificar.
+  public status: string;           //Variable para mostar los mensajes del sistema.
+
+//Creación de un formGroup que se utiliza para realizar todas las validaciones para los campos del formulario.
+//Este formGroup tiene como variables : nombre, descripcion, proveedor, precio_compra, rentabilidad, precio_venta, iva y stock.
   public FormularioEditarArticulo = new FormGroup({
   nombre: new FormControl('', [
       Validators.required,
@@ -60,7 +63,11 @@ export class EditarArticulosComponent implements OnInit {
   });
 
 
-
+  /**
+   * En el constructor inicializamos los servicios que vamos a usar para comunicarnos con la API REST:
+   * _articuloService: Para poder editar articulos.
+   * _router: Para poder navegar entre los componentes.
+   */
   constructor(
 
     private _articuloService: ArticuloService,
@@ -69,12 +76,16 @@ export class EditarArticulosComponent implements OnInit {
 
   	){
 
+   //Inicializamos las diferentes variables.
   	this.title = "Editar articulo";
     this.articulo = new Articulo('','','','',null,null,null,null,null);
-  	this.admin = false;
    
   }
 
+
+//Función que se ejecuta en el momento de cargar el componente.
+//En esta función se hace una comprobación para saber si el usuario que esta accediendo a este modulo
+//esta identificado en el sistena. Ademas se almacena el valor del codigo del artículo.
   ngOnInit(): void {
 
   if(sessionStorage.getItem('emailLogin')!= null || sessionStorage.getItem('pass')!= null){
@@ -82,6 +93,7 @@ export class EditarArticulosComponent implements OnInit {
     this._route.params.subscribe(params => {
       let codigo = params.codigo;
 
+      //Se llama al metodo getArticulo para obtener, de la base de datos, el artículo que se quiere modificar.
       this.getArticulo(codigo);
     });
   }else{
@@ -92,16 +104,21 @@ export class EditarArticulosComponent implements OnInit {
   }
 
 
+//Función para recuperar los datos de los artículos que se quiere modificar, estos datos se le pasan al formulario.
+//Los datos del artículo se recuperan utilizando el servicio de artículos, que se comunica con la base de datos
+//mediente el metodo getArticulo.
   getArticulo(codigo){
   	this._articuloService.getArticulo(codigo).subscribe(
   		articulos => {
 
         for (let articulo of articulos){
 
+          //Almacena los datos recibidos de la base de datos en un objeto de tipo artículo.
           this.articulo = new Articulo(articulo.codigo,articulo.nombre,articulo.descripcion,articulo.proveedor,articulo.precio_compra,
             	articulo.rentabilidad,articulo.precio_venta,articulo.iva,articulo.stock);   
         }
   			
+        //Se llama a una función para poder pasarle los datos al formulario para mostrarselos al usuario.
         this.pasarValoresFormulario();
 
   		},
@@ -112,6 +129,8 @@ export class EditarArticulosComponent implements OnInit {
   	)
   }
 
+
+//Función para pasarle los datos del artículo al formulario para poder modificarlos.
   private pasarValoresFormulario() {
     this.nombre.setValue(this.articulo.nombre);
     this.descripcion.setValue(this.articulo.descripcion);
@@ -124,8 +143,13 @@ export class EditarArticulosComponent implements OnInit {
   }
 
 
+
+  //Función para modificar los diferentes artículos en el sistema, en esta función se añaden todos
+  //los datos del formulario en una variable de tipo artículo, pasandole esta variable al servicio
+  //para que este se comunique con la API REST para poder modificar el artículo en la base de datos.
    editarArticulo() {
 
+  //Se leen los datos del formulario y se almacenan en una variable de tipo artículo.
     this.articulo.nombre = this.nombre.value;
     this.articulo.descripcion = this.descripcion.value;
     this.articulo.proveedor = this.proveedor.value;
@@ -135,6 +159,8 @@ export class EditarArticulosComponent implements OnInit {
     this.articulo.iva = this.iva.value;
     this.articulo.stock = this.stock.value;
 
+    //Se llama al metodo editarArticulo de _articuloService, se espera la respuesta del servicio
+    //y dependiendo de esta respuesta, mostramos el mensaje correspondiente.
     this._articuloService.editarArticulo(this.articulo).subscribe(
     response => {
       if(response=="Articulo editado"){
@@ -153,30 +179,44 @@ export class EditarArticulosComponent implements OnInit {
 
   } 
 
+  //Permite obtener el valor del nombre del artículo del formulario.
   get nombre(){
   return this.FormularioEditarArticulo.get('nombre');
   }
+
+  //Permite obtener el valor de la descripción del artículo del formulario.
   get descripcion(){
   return this.FormularioEditarArticulo.get('descripcion');
   }
+
+  //Permite obtener el valor del proveedor del artículo del formulario.
   get proveedor(){
   return this.FormularioEditarArticulo.get('proveedor');
   }
+
+  //Permite obtener el valor del precio de compra del artículo del formulario.
   get precio_compra(){
   return this.FormularioEditarArticulo.get('precio_compra');
   }
+
+  //Permite obtener el valor de la rentabilidad del artículo del formulario.
   get rentabilidad(){
   return this.FormularioEditarArticulo.get('rentabilidad');
   }
+
+  //Permite obtener el valor del precio de venta del artículo del formulario.
   get precio_venta(){
   return this.FormularioEditarArticulo.get('precio_venta');
   }
+
+  //Permite obtener el valor del porcentaje de iva que contiene el artículo del formulario.
   get iva(){
   return this.FormularioEditarArticulo.get('iva');
   }
+
+  //Permite obtener el valor del stock del artículo del formulario.
   get stock(){
   return this.FormularioEditarArticulo.get('stock');
   }
-
 
 }

@@ -1,9 +1,4 @@
-<div *ngIf="admin == 'No'" class="mensaje_error">
-  <h2>Usted no tiene permisos para acceder a este módulo, solo el administrador puede hacerlo.</h2>
-</div>
-
-
-<div *ngIf="admin == 'Si'"class="container">
+<div class="container">
 	<h2>{{title}}</h2>
 
 	<div class="message success" *ngIf="status == 'success'">

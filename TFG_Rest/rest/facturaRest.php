@@ -27,8 +27,6 @@ class FacturaRest extends BaseRest {
 		$factura = new Factura_Model(null,$data,$fecha);
 
 	        try{
-				//$factura->validacionRegistro();
-				//die('si valida');
 
 				$this->facturaMapper->insertarFactura($factura);
 				$id_factura = $this->facturaMapper->getIdFactura($data,$fecha);
@@ -44,7 +42,7 @@ class FacturaRest extends BaseRest {
 	
 	}
 
-	// Para registrar un nuevo cliente en el sistema
+	// Para modificar una factura del sistema.
 	public function actualizarFactura() {
 		$currentUser = parent::auntenticarUsuario();
 		$data = $_POST['factura'];
@@ -65,7 +63,7 @@ class FacturaRest extends BaseRest {
 	
 	}
 
-
+	//Devuelve todas las facturas de la base de datos.
 	public function getFacturas(){
 		$currentUser = parent::auntenticarUsuario();
         $facturaArray = $this->facturaMapper->getFacturas();
@@ -74,6 +72,7 @@ class FacturaRest extends BaseRest {
         echo(json_encode($facturaArray));
     }
 
+    //Devuelve una única factura pasandole el id.
 	public function getFactura($id){
 		$currentUser = parent::auntenticarUsuario();
         $factura = $this->facturaMapper->getFactura($id);
@@ -82,6 +81,8 @@ class FacturaRest extends BaseRest {
         echo(json_encode($factura));
     }
 
+
+    //Elimina una factura de la base de datos.
     public function eliminarFactura($id){
     	$currentUser = parent::auntenticarUsuario();
         $factura = $this->facturaMapper->eliminarFactura($id);

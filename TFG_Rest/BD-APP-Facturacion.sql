@@ -39,14 +39,15 @@ CREATE TABLE IF NOT EXISTS `clientes` (
   `codigo_postal` int(5) NOT NULL,
   `telefono` int(9) NOT NULL,
   `nif` varchar(20) NOT NULL,
-  `email` varchar(65) NOT NULL
+  `email` varchar(65) NOT NULL,
+  `numero_cuenta` varchar(24) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Estructura de tabla para la tabla `datos`
 --
 
-CREATE TABLE IF NOT EXISTS `datos` (
+CREATE TABLE IF NOT EXISTS `datos_empresa` (
   `id` int(11) NOT NULL,
   `nombre` varchar(60) NOT NULL,
   `direccion` varchar(50) NOT NULL,
@@ -54,8 +55,7 @@ CREATE TABLE IF NOT EXISTS `datos` (
   `codigo_postal` int(5) NOT NULL,
   `telefono` int(9) NOT NULL,
   `nif` varchar(20) NOT NULL,
-  `email` varchar(65) NOT NULL,
-  `logo` varchar(45) NOT NULL
+  `email` varchar(65) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS `articulos` (
   `codigo` varchar(36) NOT NULL,
   `nombre` varchar(60) NOT NULL,
   `descripcion` varchar(600) NULL,
-  `proveedor` varchar(20) NOT NULL,
+  `proveedor` varchar(30) NOT NULL,
   `precio_compra` decimal(10,2) NOT NULL,
   `rentabilidad` int(5) NOT NULL,
   `precio_venta` decimal(10,2) NOT NULL,
@@ -81,7 +81,7 @@ CREATE TABLE IF NOT EXISTS `articulos` (
 CREATE TABLE IF NOT EXISTS `facturas` (
   `id` int(11) NOT NULL,
   `id_cliente` int(11) NOT NULL,
-  `fecha_factura` DATETIME DEFAULT NULL,
+  `fecha_factura` DATETIME NOT NULL,
   `pagado` ENUM('Si','No') NOT NULL,
   `fecha_pagado` DATETIME DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS `facturas` (
 CREATE TABLE IF NOT EXISTS `pedidos` (
   `id` int(11) NOT NULL,
   `id_cliente` int(11) NOT NULL,
-  `fecha` DATETIME DEFAULT NULL,
+  `fecha` DATETIME NOT NULL,
   `base_imponible` decimal(10,2) NOT NULL,
   `iva` decimal(10,2) NOT NULL,
   `total` decimal(10,2) NOT NULL,
@@ -109,7 +109,7 @@ CREATE TABLE IF NOT EXISTS `pedidos` (
 CREATE TABLE IF NOT EXISTS `linea_pedido` (
   `id` int(11) NOT NULL,
   `id_pedido` int(11) NOT NULL,
-  `codigo_articulo` varchar(36) DEFAULT NULL,
+  `codigo_articulo` varchar(36) NOT NULL,
   `cantidad` int(10) NOT NULL,
   `precio` decimal(10,2) NOT NULL,
   `iva` int(2) NOT NULL,
@@ -140,9 +140,12 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 --
 
 INSERT INTO `usuarios` (`uuid`, `email`, `password`, `nombre`, `apellidos`,`administrador`) VALUES
-(1, 'admin@gmail.com', '1234', 'admin', 'admin','Si');
+(1, 'admin@gmail.com', '1f17a3253fa9090f21f48f6aa64909a4', 'admin', 'admin','Si');
 INSERT INTO `usuarios` (`uuid`, `email`, `password`, `nombre`, `apellidos`,`administrador`) VALUES
-(2, 'ivan@gmail.com', '1234', 'ivan', 'iglesias','No');
+(2, 'ivan@gmail.com', '1f17a3253fa9090f21f48f6aa64909a4', 'ivan', 'iglesias','No');
+INSERT INTO `datos_empresa` (`id`,`nombre`,`direccion`,`ciudad`,`codigo_postal`,`telefono`,`nif`,`email`) VALUES
+(1,'COFFEE GROUP 1889 BY GALICIA, S.L.','CL. VELÁZQUEZ, Nº 15 BAJO D','OURENSE',32002,660407908,'B-32497455','coffeegroup1889bygalicia@gmail.com');
+
 
 --
 -- Índices para tablas volcadas
@@ -159,7 +162,7 @@ ALTER TABLE `clientes`
 --
 -- Indices de la tabla `datos`
 --
-ALTER TABLE `datos`
+ALTER TABLE `datos_empresa`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`);
 

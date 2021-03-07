@@ -1,7 +1,7 @@
 <?php
 
 require_once(__DIR__."/../core/ValidationException.php");
-// Modelo de la entidad cliente de la BD
+// Modelo de la entidad artículo de la BD
 class Articulo_Model implements JsonSerializable{
 	private $codigo;
 	private $nombre;
@@ -13,7 +13,7 @@ class Articulo_Model implements JsonSerializable{
 	private $iva;
 	private $stock;
 
-	// Constructor de Cliente
+	// Constructor de artículo
 	public function __construct($codigo=NULL,$nombre=NULL, $descripcion=NULL, $proveedor=NULL, $precio_compra=NULL, $rentabilidad=NULL, $precio_venta=NULL, $iva=NULL, $stock=NULL) {
 		$this->codigo = $codigo;
 		$this->nombre = $nombre;
@@ -25,7 +25,7 @@ class Articulo_Model implements JsonSerializable{
 		$this->iva = $iva;
 		$this->stock = $stock;
 	}
-// Métodos observadores y modificadores de los atributos de la entidad usurio
+// Métodos observadores y modificadores de los atributos de la entidad artículo
 	public function getCodigo() {
 		return $this->codigo;
 	}
@@ -105,4 +105,4 @@ class Articulo_Model implements JsonSerializable{
         return $vars;
     }
 	
-} // Fin del modelo de cliente
+} // Fin del modelo de artículo

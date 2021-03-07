@@ -12,6 +12,7 @@ class Usuario_Mapper {
 		$stmt->execute(array($usuario->getUuid(),$usuario->getEmail(), $usuario->getPassword(), $usuario->getNombre(), $usuario->getApellidos(), $usuario->getAdministrador()));
 	}
 
+    //Para editar los datos de un usuario.
     public function editarUsuario($usuario){
         $stmt = $this->db->prepare("UPDATE usuarios SET email = ? , nombre=?, apellidos=? WHERE uuid = ?");
         $resul = $stmt->execute(array($usuario->getEmail(),$usuario->getNombre(),$usuario->getApellidos(), $usuario->getUuid()));
@@ -36,6 +37,8 @@ class Usuario_Mapper {
 		}
 	}
 
+
+    //Devuelve todos los usuarios del sistema.
 	public function getUsuarios() {
         $stmt = $this->db->prepare("SELECT * from usuarios");
         $stmt->execute();
@@ -44,6 +47,7 @@ class Usuario_Mapper {
 
     } 
 
+    //Devuelve los datos de un único usuario.
 	public function getUsuario($uuid) {
         $stmt = $this->db->prepare("SELECT * from usuarios where uuid=?");
         $stmt->execute(array($uuid));
@@ -52,6 +56,8 @@ class Usuario_Mapper {
 
     } 
 
+
+    //Devuelve el usuario perteneciente a un email.
     public function getUsuarioByEmail($email)
     {
         $stmt = $this->db->prepare("SELECT * FROM usuarios where email=?");
@@ -60,6 +66,8 @@ class Usuario_Mapper {
         return $resul;
     }
 
+
+    //Elimina un usuario de la base de datos.
     public function eliminarUsuario($uuid)
     {
         $stmt = $this->db->prepare("DELETE from usuarios WHERE uuid = ?");

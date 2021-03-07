@@ -18,7 +18,7 @@ class Usuario_Model implements JsonSerializable{
 		$this->apellidos = $apellidos;
 		$this->administrador = $administrador;
 	}
-// Métodos observadores y modificadores de los atributos de la entidad usurio
+// Métodos observadores y modificadores de los atributos de la entidad usuario
 	public function getUuid() {
 		return $this->uuid;
 	}

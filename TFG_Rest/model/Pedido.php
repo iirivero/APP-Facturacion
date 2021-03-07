@@ -1,7 +1,7 @@
 <?php
 
 require_once(__DIR__."/../core/ValidationException.php");
-// Modelo de la entidad cliente de la BD
+// Modelo de la entidad pedido de la BD
 class Pedido_Model implements JsonSerializable{
 	private $id;
 	private $id_cliente;
@@ -12,7 +12,7 @@ class Pedido_Model implements JsonSerializable{
 	private $facturado;
 	private $id_factura;
 
-	// Constructor de Cliente
+	// Constructor de pedido
 	public function __construct($id=NULL,$id_cliente=NULL, $fecha=NULL, $base_imponible=NULL, $iva=NULL, $total=NULL, $facturado=NULL,$id_factura=NULL) {
 		$this->id = $id;
 		$this->id_cliente = $id_cliente;
@@ -23,7 +23,7 @@ class Pedido_Model implements JsonSerializable{
 		$this->facturado = $facturado;
 		$this->id_factura = $id_factura;
 	}
-// Métodos observadores y modificadores de los atributos de la entidad usurio
+// Métodos observadores y modificadores de los atributos de la entidad pedido
 	public function getId() {
 		return $this->id;
 	}
@@ -94,4 +94,4 @@ class Pedido_Model implements JsonSerializable{
         return $vars;
     }
 	
-} // Fin del modelo de cliente
+} // Fin del modelo de pedido

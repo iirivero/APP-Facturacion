@@ -1,14 +1,14 @@
 <?php
 
 require_once(__DIR__."/../core/ValidationException.php");
-// Modelo de la entidad cliente de la BD
+// Modelo de la entidad factura de la BD
 class Factura_Model implements JsonSerializable{
 	private $id;
 	private $fecha_factura;
 	private $pagado;
 	private $fecha_pagado;
 
-	// Constructor de Cliente
+	// Constructor de factura
 	public function __construct($id=NULL,$fecha_factura=NULL, $pagado=NULL, $fecha_pagado=NULL) {
 		$this->id = $id;
 		$this->fecha_factura = $fecha_factura;
@@ -16,7 +16,7 @@ class Factura_Model implements JsonSerializable{
 		$this->fecha_pagado = $fecha_pagado;
 	}
 
-// Métodos observadores y modificadores de los atributos de la entidad usurio
+// Métodos observadores y modificadores de los atributos de la entidad factura
 	public function getId() {
 		return $this->id;
 	}
@@ -56,4 +56,4 @@ class Factura_Model implements JsonSerializable{
         return $vars;
     }
 	
-} // Fin del modelo de cliente
+} // Fin del modelo de factura

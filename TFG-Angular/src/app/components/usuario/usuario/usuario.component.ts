@@ -16,75 +16,80 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
   providers: [UsuarioService]
 })
 export class UsuarioComponent implements OnInit {
-  public logueado: boolean;
-  public admin: string;
+
+  //Array donde se almacenan todos los usuarios del sistema.
   arrayUsuarios: Array<Usuario>;
-  public url: string;
+
+  //Variable utilizada para mostrar los datos necesarios al administrador.
+  public admin: string;
 
 
 
-  /**
-   * Columnas que va a tener la tabla.
-   */
+
+  //Columnas que va a tener la tabla.
   displayedColumns: string[] = ['nombre', 'apellidos', 'email', 'Acciones'];
-  /**
-   * Empleado para pasar los datos a la tabla.
-   */
+
+  //Empleado para pasar los datos a la tabla.
   dataSource = new MatTableDataSource<Usuario>();
 
-  /**
-   * Empleado para mostrar un dialogo informativo.
-   */
-  //dialogRef: MatDialogRef<DialogoInformativoComponent>;
-  /**
-   * Empleado para mostrar un dialogo de confiramción
-   */
-  dialogRef2: any ;
 
-  /**
-   * Contiene un componente hijo, que es un paginador para poder dividir las noticias comodamente.
-   */
+  //Contiene un componente hijo, que es un paginador para poder dividir los usuarios.
+
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
 
-
+  /**
+   * En el constructor inicializamos los servicios que vamos a usar para comunicarnos con la API REST:
+   * cdr: Para detectar todos los cambios del componente.
+   * _usuarioService: Para poder listar usuarios.
+   * _router: Para poder navegar entre los componentes.
+   * dialogo: Empleado para poder generar un dialogo de confirmación de borrado.
+   */
   constructor(
     private cdr : ChangeDetectorRef,
   	private _usuarioService: UsuarioService,
     private _router: Router,
     public dialogo: MatDialog
   ){
-  	this.url = Global.url;
+
+    //Se inicializa el array de usuarios.
     this.arrayUsuarios = new Array<Usuario>();
-    this.logueado= false;
 
  
   }
 
+//Función que se ejecuta en el momento de cargar el componente.
+//En esta funcioón se hace una comprobación para saber si el usuario que esta accediendo a este modulo
+//esta identificado en el sistena.
   ngOnInit(){
   if(sessionStorage.getItem('emailLogin')!= null || sessionStorage.getItem('pass')!= null){
     this.admin = sessionStorage.getItem('admin');
     if(this.admin == 'No'){
       this._router.navigate(['/articulos']);
     }
-    this.logueado = true;
 
+    //Se llama al metodo getUsuarios, este devuelve todos los usuarios del sistema.
     this.getUsuarios();
   }else{
-    this._router.navigate(['/login']);
+    this._router.navigate(['/login']);      //Se redirecciona al usuario a la página de login cuando esta accediendo a un modulo sin estar identificado.
   } 
-
-    
 
   }
 
+
+//Función para recuperar los datos de los usuario que se quieren listar, estos datos se le pasan a a la tabla.
+//Los datos del usuario se recuperar utilizando el servicio de usuarios, que se comunica con la base de datos
+//mediente el metodo getUsuario.
   getUsuarios(){
   	this._usuarioService.getUsuarios().subscribe(usuarios=>{
       (usuarios);
           for (let usuario of usuarios){
+
+            //Almacena los datos recibidos de la base de datos en un array de objetos de tipo usuario.
             this.arrayUsuarios.push(new Usuario(usuario.uuid,usuario.email,usuario.password,usuario.nombre,usuario.apellidos,usuario.administrador));    
           }
 
+        //Se genera el paginador de la tabla.
         this.dataSource = new MatTableDataSource<Usuario>(this.arrayUsuarios);
         this.dataSource.paginator = this.paginator;
         this.dataSource.paginator._intl.itemsPerPageLabel="Usuarios por pagina";
@@ -97,18 +102,21 @@ export class UsuarioComponent implements OnInit {
   	);
   }
 
-  /**
-   * Metodo empleado para refrescar el array de noticias y el paginator.
-   */
+  
+  //Metodo empleado para refrescar el array de usuarios y el paginator.
+   
   refresh() {
     this.arrayUsuarios = [];
     this._usuarioService.getUsuarios().subscribe(
       usuarios=>{
       (usuarios);
           for (let usuario of usuarios){
+
+            //Almacena los datos recibidos de la base de datos en un array de objetos de tipo usuario.
             this.arrayUsuarios.push(new Usuario(usuario.uuid,usuario.email,usuario.password,usuario.nombre,usuario.apellidos,usuario.administrador));    
           }
 
+        //Se genera el paginador de la tabla.
         this.dataSource = new MatTableDataSource<Usuario>(this.arrayUsuarios);
         this.dataSource.paginator = this.paginator;
         this.dataSource.paginator._intl.itemsPerPageLabel="Noticias por pagina";
@@ -121,6 +129,7 @@ export class UsuarioComponent implements OnInit {
   }
 
 
+//Función para mostrar un dialogo de confirmación para el borrado de un usuario.
 mostrarDialogo(usuario: Usuario): void {
   this.dialogo
     .open(DialogoConfirmacionComponent, {
@@ -129,7 +138,6 @@ mostrarDialogo(usuario: Usuario): void {
     .afterClosed()
     .subscribe((confirmado: Boolean) => {
       if (confirmado) {
-        console.log(usuario.uuid);
         this.delete(usuario);
 
       } else {
@@ -138,7 +146,7 @@ mostrarDialogo(usuario: Usuario): void {
     });
 }
   
-
+//Función para eliminar un usuario, el servicio se comunica con la API REST y borra el usuarios de la base de datos.
 private delete(usuario: Usuario) {
   this._usuarioService.eliminarUsuario(usuario.uuid).subscribe(
     result=>{
@@ -149,10 +157,9 @@ private delete(usuario: Usuario) {
   )
 }
 
-/**
- * Aplica el filtro para poder buscar por todos los campos de la tabla.
- * @param event
- */
+
+ // Aplica el filtro para poder buscar por todos los campos de la tabla.
+ 
 applyFilter(event: Event) {
   const filterValue = (event.target as HTMLInputElement).value;
   this.dataSource.filter = filterValue.trim().toLowerCase();

@@ -68,7 +68,7 @@ export class CrearFacturaComponent implements OnInit {
   	this._clienteService.getClientes().subscribe(clientes=>{
       (clientes);
           for (let cliente of clientes){
-            this.arrayClientes.push(new Cliente(cliente.id,cliente.razon_social,cliente.nombre_comercial,cliente.direccion,cliente.ciudad,cliente.codigo_postal,cliente.telefono,cliente.cif,cliente.email));    
+            this.arrayClientes.push(new Cliente(cliente.id,cliente.razon_social,cliente.nombre_comercial,cliente.direccion,cliente.ciudad,cliente.codigo_postal,cliente.telefono,cliente.cif,cliente.email,cliente.numero_cuenta));    
           }
 
         this.dataSource = new MatTableDataSource<Cliente>(this.arrayClientes);
@@ -92,7 +92,7 @@ export class CrearFacturaComponent implements OnInit {
       clientes=>{
       (clientes);
           for (let cliente of clientes){
-            this.arrayClientes.push(new Cliente(cliente.id,cliente.razon_social,cliente.nombre_comercial,cliente.direccion,cliente.ciudad,cliente.codigo_postal,cliente.telefono,cliente.cif,cliente.email));    
+            this.arrayClientes.push(new Cliente(cliente.id,cliente.razon_social,cliente.nombre_comercial,cliente.direccion,cliente.ciudad,cliente.codigo_postal,cliente.telefono,cliente.cif,cliente.email,cliente.numero_cuenta));    
           }
 
         this.dataSource = new MatTableDataSource<Cliente>(this.arrayClientes);

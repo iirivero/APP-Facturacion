@@ -18,7 +18,7 @@ class Linea_PedidoRest extends BaseRest {
 		parent::__construct();
 		$this->lineaPedidoMapper = new Linea_Pedido_Mapper();
 	}
-	// Para registrar un nuevo pedido en el sistema
+	// Para registrar una nueva linea de pedido en el sistema.
 	public function añadirLinea_Pedido() {
 		$currentUser = parent::auntenticarUsuario();
 		$data = $_POST['pedido'];
@@ -50,6 +50,8 @@ class Linea_PedidoRest extends BaseRest {
 	
 	}
 
+
+	//Devuelve una unica linea de pedido.
 	public function getLinea_Pedido($id_pedido){
 		$currentUser = parent::auntenticarUsuario();
         $pedidoArray = $this->lineaPedidoMapper->getLinea_Pedidos($id_pedido);
@@ -58,6 +60,8 @@ class Linea_PedidoRest extends BaseRest {
         echo(json_encode($pedidoArray));
     }
 
+
+    //Elimina una linea de pedido de la base de datos.
     public function eliminarLinea_Pedido($id){
     	$currentUser = parent::auntenticarUsuario();
         $lineaPedido = $this->lineaPedidoMapper->eliminarLinea_Pedido($id);

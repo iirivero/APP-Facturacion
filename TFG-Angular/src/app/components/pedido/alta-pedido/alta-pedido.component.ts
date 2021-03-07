@@ -15,28 +15,30 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
   providers: [ClienteService]
 })
 export class AltaPedidoComponent implements OnInit {
-  public logueado: boolean;
+
+  //Array donde se almacenan todos los clientes del sistema.
   arrayClientes: Array<Cliente>;
-  //public usuario: Usuario[];
-  public url: string;
+
+  //Titulo del componente.
   public title: string;
-  /**
-   * Columnas que va a tener la tabla.
-   */
+
+  //Columnas que va a tener la tabla.
   displayedColumns: string[] = ['razon_social', 'nombre_comercial', 'direccion', 'ciudad', 'codigo_postal', 'telefono', 'cif', 'email', 'Acciones'];
 
-  /**
-   * Empleado para pasar los datos a la tabla.
-   */
+  //Empleado para pasar los datos a la tabla.
   dataSource = new MatTableDataSource<Cliente>();
 
-  /**
-   * Contiene un componente hijo, que es un paginador para poder dividir las noticias comodamente.
-   */
+  //Contiene un componente hijo, que es un paginador para poder dividir los clientes.
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
 
-
+  /**
+   * En el constructor inicializamos los servicios que vamos a usar para comunicarnos con la API REST:
+   * cdr: Para detectar todos los cambios del componente.
+   * _clienteService: Para poder listar clientes.
+   * _pedidoService: Para crear un nuevo pedido.
+   * _router: Para poder navegar entre los componentes.
+   */
   constructor(
     private cdr : ChangeDetectorRef,
   	private _clienteService: ClienteService,
@@ -44,34 +46,43 @@ export class AltaPedidoComponent implements OnInit {
     private _router: Router,
     private _route: ActivatedRoute
   ){
-  	this.url = Global.url;
+
+    //Se inicializa el array de usuarios.
     this.arrayClientes = new Array<Cliente>();
-    this.logueado= false;
 	  this.title = "Seleccione cliente";
  
   }
 
+
+//Función que se ejecuta en el momento de cargar el componente.
+//En esta funcioón se hace una comprobación para saber si el usuario que esta accediendo a este modulo
+//esta identificado en el sistena.
   ngOnInit(){
   	
   if(sessionStorage.getItem('emailLogin')!= null || sessionStorage.getItem('pass')!= null){
 
-    this.logueado = true;
-
+    //Se llama al metodo getClientes, este devuelve todos los clientes del sistema.
     this.getClientes();
   }else{
-    this._router.navigate(['/login']);
+    this._router.navigate(['/login']);      //Se redirecciona al usuario a la página de login cuando esta accediendo a un modulo sin estar identificado.
+  }
+
   }
 
 
-  }
-
+//Función para recuperar los datos de los cliente que se quieren listar, estos datos se le pasan a la tabla.
+//Los datos del cliente se recuperar utilizando el servicio de clientes, que se comunica con la base de datos
+//mediente el metodo getClientes.
   getClientes(){
   	this._clienteService.getClientes().subscribe(clientes=>{
       (clientes);
           for (let cliente of clientes){
-            this.arrayClientes.push(new Cliente(cliente.id,cliente.razon_social,cliente.nombre_comercial,cliente.direccion,cliente.ciudad,cliente.codigo_postal,cliente.telefono,cliente.cif,cliente.email));    
+
+            //Almacena los datos recibidos de la base de datos en un array de objetos de tipo cliente.
+            this.arrayClientes.push(new Cliente(cliente.id,cliente.razon_social,cliente.nombre_comercial,cliente.direccion,cliente.ciudad,cliente.codigo_postal,cliente.telefono,cliente.cif,cliente.email,cliente.numero_cuenta));    
           }
 
+        //Se genera el paginador de la tabla.
         this.dataSource = new MatTableDataSource<Cliente>(this.arrayClientes);
         this.dataSource.paginator = this.paginator;
         this.dataSource.paginator._intl.itemsPerPageLabel="Clientes por pagina";
@@ -84,16 +95,15 @@ export class AltaPedidoComponent implements OnInit {
   	);
   }
 
-  /**
-   * Metodo empleado para refrescar el array de noticias y el paginator.
-   */
+
+  //Metodo empleado para refrescar el array de clientes y el paginator.
   refresh() {
     this.arrayClientes = [];
     this._clienteService.getClientes().subscribe(
       clientes=>{
       (clientes);
           for (let cliente of clientes){
-            this.arrayClientes.push(new Cliente(cliente.id,cliente.razon_social,cliente.nombre_comercial,cliente.direccion,cliente.ciudad,cliente.codigo_postal,cliente.telefono,cliente.cif,cliente.email));    
+            this.arrayClientes.push(new Cliente(cliente.id,cliente.razon_social,cliente.nombre_comercial,cliente.direccion,cliente.ciudad,cliente.codigo_postal,cliente.telefono,cliente.cif,cliente.email,cliente.numero_cuenta));    
           }
 
         this.dataSource = new MatTableDataSource<Cliente>(this.arrayClientes);
@@ -107,7 +117,9 @@ export class AltaPedidoComponent implements OnInit {
     )
   }
 
-
+//Función para crear los diferentes pedidos en el sistema, en esta función se añaden todos
+//los datos del cliente, pasandole el id de ese cliente al servicio
+//para que este se comunique con la API REST para poder añadir el pedido en la base de datos.
   crearPedido(cliente: Cliente): void {
     this._pedidoService.crearPedido(cliente.id).subscribe(
     response => {
@@ -115,6 +127,8 @@ export class AltaPedidoComponent implements OnInit {
 
       if(response!=null){
       for (let pedido of response){
+
+        //Te redirecciona a otra pagina para rellenar los datos del pedido.
         this._router.navigate(['/rellenar-pedido',pedido.id]);
       }
 
@@ -130,10 +144,7 @@ export class AltaPedidoComponent implements OnInit {
   
 
 
-/**
- * Aplica el filtro para poder buscar por todos los campos de la tabla.
- * @param event
- */
+ //Aplica el filtro para poder buscar por todos los campos de la tabla.
 applyFilter(event: Event) {
   const filterValue = (event.target as HTMLInputElement).value;
   this.dataSource.filter = filterValue.trim().toLowerCase();

@@ -18,7 +18,7 @@ class ArticuloRest extends BaseRest {
 		parent::__construct();
 		$this->articuloMapper = new Articulo_Mapper();
 	}
-	// Para registrar un nuevo articulo en el sistema
+	// Para registrar un nuevo artículo en el sistema
 	public function añadirArticulo() {
 		$currentUser = parent::auntenticarUsuario();
 		$data = $_POST['articulo'];
@@ -34,8 +34,6 @@ class ArticuloRest extends BaseRest {
 	            exit();
 			}
 	        try{
-				//$articulo->validacionRegistro();
-				//die('si valida');
 
 				$this->articuloMapper->insertarArticulo($articulo);
 	            http_response_code(201);
@@ -50,6 +48,7 @@ class ArticuloRest extends BaseRest {
 	
 	}
 
+	//Para editar un artículo.
 	public function editarArticulo() {
 		$currentUser = parent::auntenticarUsuario();
         $data = json_decode($_POST['articulo'],true);
@@ -69,6 +68,8 @@ class ArticuloRest extends BaseRest {
 		
 	}
 
+
+	//Devuelve todos los artículo del sistema
 	public function getArticulos(){
 		$currentUser = parent::auntenticarUsuario();
         $articuloArray = $this->articuloMapper->getArticulos();
@@ -77,6 +78,8 @@ class ArticuloRest extends BaseRest {
         echo(json_encode($articuloArray));
     }
 
+
+    //Devuelve un único artículo.
 	public function getArticulo($codigo){
 		$currentUser = parent::auntenticarUsuario();
 		
@@ -94,6 +97,8 @@ class ArticuloRest extends BaseRest {
         echo(json_encode($articuloArray));
     }
 
+
+    //Elimina un artículo de la base de datos.
     public function eliminarArticulo($codigo){
     	$currentUser = parent::auntenticarUsuario();
         $articulo = $this->articuloMapper->eliminarArticulo($codigo);

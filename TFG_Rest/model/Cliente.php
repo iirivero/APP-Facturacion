@@ -12,9 +12,10 @@ class Cliente_Model implements JsonSerializable{
 	private $telefono;
 	private $nif;
 	private $email;
+	private $numero_cuenta;
 
 	// Constructor de Cliente
-	public function __construct($id=NULL,$razon_social=NULL, $nombre_comercial=NULL, $direccion=NULL, $ciudad=NULL, $codigo_postal=NULL, $telefono=NULL, $nif=NULL, $email=NULL) {
+	public function __construct($id=NULL,$razon_social=NULL, $nombre_comercial=NULL, $direccion=NULL, $ciudad=NULL, $codigo_postal=NULL, $telefono=NULL, $nif=NULL, $email=NULL,$numero_cuenta) {
 		$this->id = $id;
 		$this->razon_social = $razon_social;
 		$this->nombre_comercial = $nombre_comercial;
@@ -24,8 +25,9 @@ class Cliente_Model implements JsonSerializable{
 		$this->telefono = $telefono;
 		$this->nif = $nif;
 		$this->email = $email;
+		$this->numero_cuenta = $numero_cuenta;
 	}
-// Métodos observadores y modificadores de los atributos de la entidad usurio
+// Métodos observadores y modificadores de los atributos de la entidad cliente
 	public function getId() {
 		return $this->id;
 	}
@@ -96,6 +98,15 @@ class Cliente_Model implements JsonSerializable{
 
 	public function setEmail($email) {
 		$this->email = $email;
+	}
+
+
+	public function getNumeroCuenta() {
+		return $this->numero_cuenta;
+	}
+
+	public function setNumero_cuenta($numero_cuenta) {
+		$this->numero_cuenta = $numero_cuenta;
 	}
 	
 

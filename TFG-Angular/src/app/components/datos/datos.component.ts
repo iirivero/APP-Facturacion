@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Datos } from '../../models/datos';
-import { Archivo } from '../../models/archivo';
 import { HttpClient} from '@angular/common/http';
 import { DatosService } from '../../services/datos.service';
 import { FormControl,FormGroup,Validators } from '@angular/forms';
@@ -15,13 +14,13 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 })
 export class DatosComponent implements OnInit {
 
-	public title: string;
-	public datos: Datos;
-	public save_datos;
-	public status: string;
-	public archivo: Archivo;
- 	public admin: string;
+	//Creación de todas las variables para editar los datos de la empresa.
+	public title: string;			 //Titulo del componente.
+	public datos: Datos;        	 //Objeto empleado para guardar los datos de la empresa que se quiere modificar.
+	public status: string;           //Variable para mostar los mensajes del sistema.		
 
+	//Creación de un formGroup que se utiliza para realizar todas las validaciones para los campos del formulario.
+	//Este formGroup tiene como variables : nombre, direccion, ciudad, codigo_postal, telefono, nif y email.
 	public FormularioDatos = new FormGroup({
     nombre: new FormControl('', [
       Validators.required,
@@ -61,18 +60,31 @@ export class DatosComponent implements OnInit {
 
   });
 
+
+  /**
+   * En el constructor inicializamos los servicios que vamos a usar para comunicarnos con la API REST:
+   * _datosService: Para poder editar los datos de la empresa.
+   * _router: Para poder navegar entre los componentes.
+   */
 	constructor(
 		private _datosService: DatosService,
 		private _router: Router
 	){
+
+		//Inicializamos las diferentes variables.
 		this.title = "Modificar datos de la empresa";
 		this.datos = new Datos('','','','',0,0,'','');
 	}
 
+
+	//Función que se ejecuta en el momento de cargar el componente.
+	//En esta función se hace una comprobación para saber si el usuario que esta accediendo a este modulo
+	// esta identificado en el sistena.
   	ngOnInit(): void {
 
 	if(sessionStorage.getItem('emailLogin')!= null || sessionStorage.getItem('pass')!= null){
-	    this.admin = sessionStorage.getItem('admin');
+
+        //Se llama al metodo getDatos para obtener, de la base de datos, los datos actuales de la empresa que se quiere modificar.
 		this.getDatos(); 
 	}else{
 		this._router.navigate(['/login']);
@@ -81,16 +93,20 @@ export class DatosComponent implements OnInit {
 	}  		
 
 
-
+	//Función para recuperar los datos de la empresa que se quieren modificar, estos datos se le pasan al formulario.
+	//Los datos de la empresa se recuperan utilizando el servicio de datos, que se comunica con la base de datos
+	//mediente el metodo getDatos.
   	getDatos(){
   	this._datosService.getDatos().subscribe(
   		datos => {
         for (let dato of datos){
 
+          //Almacena los datos recibidos de la base de datos en un objeto de tipo datos.
           this.datos = new Datos(dato.id,dato.nombre,dato.direccion,
           	dato.ciudad,dato.codigo_postal,dato.telefono,dato.nif,dato.email);   
         }
 
+		//Se llama a una función para poder pasarle los datos al formulario para mostrarselos al usuario.
         this.pasarValoresFormulario();	
 
   		},
@@ -100,6 +116,7 @@ export class DatosComponent implements OnInit {
   	);
  	}
 
+	//Función para pasarle los datos de la empresa al formulario para poder modificarlos.
 	private pasarValoresFormulario() {
 	    this.nombre.setValue(this.datos.nombre);
 	    this.direccion.setValue(this.datos.direccion);
@@ -111,28 +128,12 @@ export class DatosComponent implements OnInit {
 	  }
 
 
-	onSubmit(form){
-
-		// Guardar datos básicos
-		this._datosService.editarDatos(this.datos).subscribe(
-			response => {
-				if(response=="datos editados"){
-					
-					this.status = 'success';
-
-					
-				}else{
-					this.status = 'failed';
-				}
-			},
-			error => {
-				console.log(<any>error);
-			}
-		);
-	}
-
+	//Función para modificar los datos de la empresa en el sistema, en esta función se añaden todos
+	//los datos del formulario en una variable de tipo datos, pasandole esta variable al servicio
+	//para que este se comunique con la API REST para poder modificar los datos de la empresa en la base de datos.
   	editarDatos() {
 
+  	//Se leen los datos del formulario y se almacenan en una variable de tipo datos.
     this.datos.nombre= this.nombre.value;
     this.datos.direccion = this.direccion.value;
     this.datos.ciudad = this.ciudad.value;
@@ -141,6 +142,8 @@ export class DatosComponent implements OnInit {
     this.datos.nif = this.nif.value;
     this.datos.email = this.email.value;
 
+    //Se llama al metodo editarDatos de _datosService, se espera la respuesta del servicio
+    //y dependiendo de esta respuesta, mostramos el mensaje correspondiente.
 	this._datosService.editarDatos(this.datos).subscribe(
 	response => {
 		if(response=="datos editados"){
@@ -160,41 +163,39 @@ export class DatosComponent implements OnInit {
   } 
 
 
-
-	fileEvent(fileInput: Event){
-		let file = (<HTMLInputElement>fileInput.target).files[0];
-
-		if(file.type == "image/jpeg" || file.type == "image/png"){
-			this.archivo = new Archivo(file.name, file.type);
-		}
-	}
-
-	subirLogo(archivo: Archivo){
-		this._datosService.subirArchivo(this.archivo).subscribe(response => {});
-	}
-
-
+	//Permite obtener el valor del nombre de la empresa del formulario.
 	get nombre(){
 	return this.FormularioDatos.get('nombre');
 	}
+
+	//Permite obtener el valor de la dirección de la empresa del formulario.
 	get direccion(){
 	return this.FormularioDatos.get('direccion');
 	}
+
+	//Permite obtener el valor de la ciudad de la empresa del formulario.
 	get ciudad(){
 	return this.FormularioDatos.get('ciudad');
 	}
+
+	//Permite obtener el valor del código postal de la empresa del formulario.
 	get codigo_postal(){
 	return this.FormularioDatos.get('codigo_postal');
 	}
+
+	//Permite obtener el valor del teléfono de la empresa del formulario.
 	get telefono(){
 	return this.FormularioDatos.get('telefono');
 	}
+
+	//Permite obtener el valor del nif de la empresa del formulario.
 	get nif(){
 	return this.FormularioDatos.get('nif');
 	}
+
+	//Permite obtener el valor del email de la empresa del formulario.
 	get email(){
 	return this.FormularioDatos.get('email');
 	}
-
 
 }

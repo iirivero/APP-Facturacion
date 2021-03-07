@@ -23,7 +23,7 @@ class ClienteRest extends BaseRest {
 		$currentUser = parent::auntenticarUsuario();
 		$data = $_POST['cliente'];
 		$data = json_decode($data,true);
-		$cliente = new Cliente_Model($data['id'],$data['razon_social'],$data['nombre_comercial'],$data['direccion'],$data['ciudad'],$data['codigo_postal'],$data['telefono'],$data['nif'],$data['email']);
+		$cliente = new Cliente_Model($data['id'],$data['razon_social'],$data['nombre_comercial'],$data['direccion'],$data['ciudad'],$data['codigo_postal'],$data['telefono'],$data['nif'],$data['email'],$data['numero_cuenta']);
 
 
 			if($this->clienteMapper->clienteExiste($cliente->getEmail())){
@@ -34,8 +34,6 @@ class ClienteRest extends BaseRest {
 	            exit();
 			}
 	        try{
-				//$cliente->validacionRegistro();
-				//die('si valida');
 
 				$this->clienteMapper->insertarCliente($cliente);
 	            http_response_code(201);
@@ -50,10 +48,11 @@ class ClienteRest extends BaseRest {
 	
 	}
 
+	//Para editar un cliente del sistema.
 	public function editarCliente() {
 		$currentUser = parent::auntenticarUsuario();
         $data = json_decode($_POST['cliente'],true);
-        $cliente = new Cliente_Model($data['id'],$data['razon_social'],$data['nombre_comercial'],$data['direccion'],$data['ciudad'],$data['codigo_postal'],$data['telefono'],$data['nif'],$data['email']);
+        $cliente = new Cliente_Model($data['id'],$data['razon_social'],$data['nombre_comercial'],$data['direccion'],$data['ciudad'],$data['codigo_postal'],$data['telefono'],$data['nif'],$data['email'],$data['numero_cuenta']);
         $resul = $this->clienteMapper->editarCliente($cliente);
         if($resul == 1){
             header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
@@ -69,6 +68,8 @@ class ClienteRest extends BaseRest {
 		
 	}
 
+
+	//Devuelve todos los clientes del sistema.
 	public function getClientes(){
 		$currentUser = parent::auntenticarUsuario();
         $clienteArray = $this->clienteMapper->getClientes();
@@ -77,6 +78,8 @@ class ClienteRest extends BaseRest {
         echo(json_encode($clienteArray));
     }
 
+
+    //Devuelve un único cliente del sistema.
 	public function getCliente($id){
 		$currentUser = parent::auntenticarUsuario();
         $clienteArray = $this->clienteMapper->getCliente($id);
@@ -85,6 +88,8 @@ class ClienteRest extends BaseRest {
         echo(json_encode($clienteArray));
     }
 
+
+    //Elimina un cliente de la base de datos.
     public function eliminarCliente($id){
     	$currentUser = parent::auntenticarUsuario();
         $cliente = $this->clienteMapper->eliminarCliente($id);

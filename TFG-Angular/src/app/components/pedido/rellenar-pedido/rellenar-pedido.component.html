@@ -100,7 +100,7 @@
         <div class="modal-body mx-3">
             <div class="form-group">
               <label class="control-label" for="cantidad">Cantidad(Stock: {{stock}} unidades)</label>
-              <input type="text" class="form-control boxed" id="cantidad" formControlName="cantidad"  name="cantidad" >
+              <input type="text" class="form-control boxed" id="cantidad" formControlName="cantidad"  name="cantidad" autocomplete="off" >
               <div *ngIf="(cantidad.invalid && cantidad.touched) || cantidad.dirty">
                 <small *ngIf="cantidad.errors?.required" class="form_error">La cantidad es obligatoria</small>
                 <small *ngIf="cantidad.errors?.pattern" class="form_error">Solo puedes introducir dígitos</small>
@@ -127,7 +127,7 @@
             </div>
             <div *ngIf="opcion.value == 'precio_nuevo'" class="form-group">
               <label class="control-label" for="precio_nuevo">Nuevo precio</label>
-              <input type="text" class="form-control boxed" id="precio_nuevo" formControlName="precio_nuevo"  name="precio_nuevo" >
+              <input type="text" class="form-control boxed" id="precio_nuevo" formControlName="precio_nuevo"  name="precio_nuevo" autocomplete="off">
               <div *ngIf="(precio_nuevo.invalid && precio_nuevo.touched) || precio_nuevo.dirty">
                 <small *ngIf="precio_nuevo.errors?.pattern" class="form_error">Solo puedes introducir dígitos con dos decimales</small>
                 <small *ngIf="mensaje_error_descuento == true" class="form_error">Imposible aplicar este descuento</small>
@@ -136,7 +136,7 @@
 
             <div *ngIf="opcion.value == 'porcentaje_descuento'" class="form-group">
               <label class="control-label" for="porcentaje_descuento">Porcentaje descuento</label>
-              <input type="text" class="form-control boxed" id="descuento" formControlName="porcentaje_descuento"  name="porcentaje_descuento" >
+              <input type="text" class="form-control boxed" id="descuento" formControlName="porcentaje_descuento"  name="porcentaje_descuento" autocomplete="off">
               <div *ngIf="(porcentaje_descuento.invalid && porcentaje_descuento.touched) || porcentaje_descuento.dirty">
                 <small *ngIf="porcentaje_descuento.errors?.pattern" class="form_error">Solo puedes introducir dígitos con dos decimales</small>
                 <small *ngIf="mensaje_error_descuento == true" class="form_error">Imposible aplicar este descuento</small>
@@ -145,16 +145,17 @@
 
             <div *ngIf="opcion.value == 'descuento'" class="form-group">
               <label class="control-label" for="descuento">Descuento</label>
-              <input type="text" class="form-control boxed" id="descuento" formControlName="descuento"  name="descuento" >
+              <input type="text" class="form-control boxed" id="descuento" formControlName="descuento"  name="descuento" autocomplete="off">
               <div *ngIf="(descuento.invalid && descuento.touched) || descuento.dirty">
                 <small *ngIf="descuento.errors?.pattern" class="form_error">Solo puedes introducir dígitos con dos decimales</small>
                 <small *ngIf="mensaje_error_descuento == true" class="form_error">Imposible aplicar este descuento</small>
               </div>
             </div>
-
+            <p *ngIf="opcion.value=='precio_nuevo' && precio_nuevo.value" class="mensaje_modal">Descuento aplicado: {{(cantidad.value*precio_venta)-(cantidad.value*precio_nuevo.value)}}€</p>
             <p *ngIf="opcion.value=='precio_nuevo'" class="mensaje_modal">Importe final: {{(cantidad.value*precio_nuevo.value)}}€</p>
-            <p *ngIf="opcion.value=='porcentaje_descuento'" class="mensaje_modal">Descuento aplicado: {{(porcentaje_descuento.value/100)*(cantidad.value*precio_venta)}}€</p>
+            <p *ngIf="opcion.value=='porcentaje_descuento' && porcentaje_descuento.value" class="mensaje_modal">Descuento aplicado: {{(porcentaje_descuento.value/100)*(cantidad.value*precio_venta)}}€</p>
             <p *ngIf="opcion.value=='porcentaje_descuento'" class="mensaje_modal">Importe final: {{(1-(porcentaje_descuento.value/100))*(cantidad.value*precio_venta)}}€</p>
+            <p *ngIf="opcion.value=='descuento' && descuento.value" class="mensaje_modal">Descuento aplicado: {{(descuento.value)}}€</p>
             <p *ngIf="opcion.value=='descuento'" class="mensaje_modal">Importe final: {{(cantidad.value*precio_venta)-descuento.value}}€</p>
                   
           <div class="modal-footer d-flex justify-content-center">

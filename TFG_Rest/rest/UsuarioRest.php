@@ -50,6 +50,8 @@ class UsuarioRest extends BaseRest {
 	
 	}
 
+
+	//Para editar los datos de un usuario.
 	public function editarUsuario() {
 		$currentUser = parent::auntenticarUsuario();
         $data = json_decode($_POST['usuario'],true);
@@ -82,7 +84,7 @@ class UsuarioRest extends BaseRest {
 		}
 	}
 
-
+	//Devuelve todos los usuarios almacenados en el sistema.
 	public function getUsuarios(){
 		$currentUser = parent::auntenticarUsuario();
         $userArray = $this->usuarioMapper->getUsuarios();
@@ -91,7 +93,7 @@ class UsuarioRest extends BaseRest {
         echo(json_encode($userArray));
     }
 
-
+    //Devuelve los datos de un único usuario del sistema.
 	public function getUsuario($uuid){
 		$currentUser = parent::auntenticarUsuario();
         $userArray = $this->usuarioMapper->getUsuario($uuid);
@@ -100,6 +102,8 @@ class UsuarioRest extends BaseRest {
         echo(json_encode($userArray));
     }
 
+
+    //Elimina un usario de la base de datos.
     public function eliminarUsuario($uuid){
     	$currentUser = parent::auntenticarUsuario();
         $user = $this->usuarioMapper->eliminarUsuario($uuid);

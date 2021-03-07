@@ -1,14 +1,15 @@
 export class Cliente{
 	constructor(
-		public id: string,
-		public razon_social: string,
-		public nombre_comercial: string,
-		public direccion: string,
-		public ciudad: string,
-		public codigo_postal: number,
-		public telefono: number,
-		public nif: string,
-		public email: string
+		public id: string,						//Identificador del cliente.
+		public razon_social: string,			//Razón social del cliente.
+		public nombre_comercial: string,		//Nombre comercial del cliente.
+		public direccion: string,				//Dirección del cliente.
+		public ciudad: string,					//Ciudad del cliente.
+		public codigo_postal: number,			//Código postal de la ciudad del cliente.
+		public telefono: number,				//Teléfono del cliente.
+		public nif: string,						//NIF del cliente.
+		public email: string,					//Email del cliente.
+		public numero_cuenta: string			//Numero de cuenta del cliente.
 	){}
 
 

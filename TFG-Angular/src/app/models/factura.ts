@@ -1,11 +1,11 @@
 export class Factura{
 	constructor(
-		public id: string,
-		public razon_social: string,
-		public nombre_comercial:string,
-		public fecha_factura: string,
-		public pagado: string,
-		public fecha_pagado: string
+		public id: string,							//Identificador de la factura.
+		public razon_social: string,				//Razon social del cliente que genero la factura.
+		public nombre_comercial:string,				//Nombre comercial del cliente que genero la factura.
+		public fecha_factura: string,				//Fecha de generación de la factura.
+		public pagado: string,						//Si la factura esta pagada o no.
+		public fecha_pagado: string					//Fecha en la que se realizo el pago de la factura.
 	){}
 
 
