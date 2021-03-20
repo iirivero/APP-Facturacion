@@ -23,7 +23,7 @@ export class AltaPedidoComponent implements OnInit {
   public title: string;
 
   //Columnas que va a tener la tabla.
-  displayedColumns: string[] = ['razon_social', 'nombre_comercial', 'direccion', 'ciudad', 'codigo_postal', 'telefono', 'cif', 'email', 'Acciones'];
+    displayedColumns: string[] = ['razon_social', 'nombre_comercial', 'telefono', 'email', 'Acciones'];
 
   //Empleado para pasar los datos a la tabla.
   dataSource = new MatTableDataSource<Cliente>();

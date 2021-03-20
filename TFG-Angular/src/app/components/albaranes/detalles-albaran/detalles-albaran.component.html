@@ -1,0 +1,67 @@
+<div class="container"> 
+<span id="fecha">{{fecha_inicial | date:'dd-MMM-yyyy'}}</span>
+
+	<div id="recuadro">
+		<h1> Detalles del albarán </h1>
+		<p> Identificador       : {{pedido.id}}</p>
+		<p> Razón social      	: {{pedido.razon_social}}</p>
+		<p> Nombre comercial    : {{pedido.nombre_comercial}}</p>
+		<p> Fecha 				: {{pedido.fecha | date:'dd/MM/yyyy'}}</p>		
+		<p> Base imponible 		: {{pedido.base_imponible}} €</p>	
+		<p> Precio IVA 			: {{pedido.iva}} €</p>	
+		<p> Precio total 		: {{pedido.precio_total}} €</p>	
+		<p> Facturado 			: {{pedido.facturado}}</p>	
+		<p> Factura 			: {{pedido.id_factura}}</p>					
+	</div>
+
+        <button class="btn btn-primary col-3 ml-5 mb-2" data-toggle="modal" data-target="#modalAlbaran"> Generar albarán </button>        
+        <button *ngIf="pedido.generado=='No'" [routerLink]="['/rellenar-pedido', pedido.id]" class="btn btn-warning col-3 ml-5 mb-2 "> Editar </button>
+        <button *ngIf="pedido.generado=='No'" (click)="mostrarDialogo(pedido)" class="btn btn-danger col-3 ml-5 mb-2 "> Eliminar </button>
+
+</div>		
+
+
+<!-- Aqui empieza el modal del pedido -->
+
+<div class="modal fade" id="modalAlbaran" #modalAlbaran tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <form [formGroup]="FormularioAlbaran" action="">
+      <div class="modal-content">
+        <div class="modal-header text-center">
+          <h4 class="modal-title w-100 font-weight-bold">Selecciona el modelo</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body mx-3">
+
+            
+            <div class="form-group">
+              <label class="control-label" for="opcion">Selecciona el modelo</label><br>
+
+              <label>
+                <input type="radio" value="modelo1" formControlName="opcion" name="opcion" id="opcion">
+                <span class="radio_options"> Modelo con todo detalle</span>
+              </label><br>
+              <label>
+                <input type="radio" value="modelo2" formControlName="opcion" name="opcion" id="opcion">
+                <span class="radio_options"> Modelo con importe total</span>
+              </label><br>
+              <label>
+                <input type="radio" value="modelo3" formControlName="opcion" name="opcion" id="opcion">
+                <span class="radio_options"> Modelo sin ningun importe</span>
+              </label>
+            </div>
+            
+                  
+          <div class="modal-footer d-flex justify-content-center">
+            <button [disabled]="FormularioAlbaran.invalid" type="button" (click)="descargarPDF()" data-dismiss="modal" class="btn btn-outline-success" >Generar</button>
+            <button  data-dismiss="modal" aria-label="Close" type="button" class="btn btn-outline-success">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- Aqui acaba el modal del pedido -->

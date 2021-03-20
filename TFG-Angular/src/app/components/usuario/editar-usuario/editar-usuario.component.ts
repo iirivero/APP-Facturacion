@@ -17,6 +17,8 @@ export class EditarUsuarioComponent implements OnInit {
 	public title: string;            //Titulo del componente.
 	public usuario: Usuario;         //Objeto empleado para guardar el usuario que se quiere modificar.
 	public status: string;           //Variable para mostar los mensajes del sistema.
+  public uuid:string;              //Identificador del usuario.
+  public admin: string;            //Variable utilizada para mostrar los datos necesarios al administrador.
 
 
 //Creación de un formGroup que se utiliza para realizar todas las validaciones para los campos del formulario.
@@ -67,11 +69,15 @@ export class EditarUsuarioComponent implements OnInit {
   ngOnInit(): void {
 
   if(sessionStorage.getItem('emailLogin')!= null || sessionStorage.getItem('pass')!= null){
+    this.admin = sessionStorage.getItem('admin');
+    if(this.admin == 'No'){
+      this._router.navigate(['/alta-pedido']);
+    }
     this._route.params.subscribe(params => {
-      let uuid = params.uuid;
+      this.uuid = params.uuid;
 
       //Se llama al metodo getUsuario para obtener, de la base de datos, el usuario que se quiere modificar.
-      this.getUsuario(uuid);
+      this.getUsuario();
     });
 
   }else{
@@ -83,8 +89,8 @@ export class EditarUsuarioComponent implements OnInit {
 //Función para recuperar los datos del usuario que se quiere modificar, estos datos se le pasan al formulario.
 //Los datos del usuario se recuperan utilizando el servicio de usuarios, que se comunica con la base de datos
 //mediente el metodo getUsuario.
-  getUsuario(uuid){
-  	this._usuarioService.getUsuario(uuid).subscribe(
+  getUsuario(){
+  	this._usuarioService.getUsuario(this.uuid).subscribe(
   		usuarios => {
         for (let usuario of usuarios){
 
@@ -140,6 +146,11 @@ export class EditarUsuarioComponent implements OnInit {
 
   } 
 
+
+  //Función para volver a la pagina anterior.
+  volverAtras(){
+    this._router.navigate(['/detalles-usuario',this.uuid]);
+  }
 
 //Permite obtener el valor del nombre del usuario del formulario.
   get nombre(){

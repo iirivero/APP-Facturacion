@@ -22,6 +22,7 @@ class DatosRest extends BaseRest {
     //Modifica los datos de la empresa.
 	public function editarDatos() {
         $currentUser = parent::auntenticarUsuario();
+        parent::isAdmin();
         $data = json_decode($_POST['datos'],true);
         $datos = new Datos_Model($data['id'],$data['nombre'],$data['direccion'],$data['ciudad'],$data['codigo_postal'],$data['telefono'],$data['nif'],$data['email']);
         $resul = $this->datosMapper->editarDatos($datos);
@@ -40,11 +41,10 @@ class DatosRest extends BaseRest {
 	}
 
 
-    }
-
     //Devuelve los datos de la empresa.
 	public function getDatos(){
         $currentUser = parent::auntenticarUsuario();
+        parent::isAdmin();
         $datosArray = $this->datosMapper->getDatos();
         header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
         header('Content-Type: application/json');

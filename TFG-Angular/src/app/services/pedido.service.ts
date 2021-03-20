@@ -63,6 +63,26 @@ export class PedidoService{
   }
 
 
+  //Recoge todos los pedidos que estan sin facturar pertenecientes a un cliente, recibiendo como parametro el id del cliente.
+  getPedidosSinFacturar(id_cliente): Observable<any>{
+
+    let headers = new HttpHeaders().set('Content-Type', 'application/json')
+    .append('Authorization', 'Basic ' + btoa(sessionStorage.getItem('emailLogin') + ':' + sessionStorage.getItem('pass')));
+
+    return this.http.get(this.url+'/sin-facturar/'+id_cliente, {headers: headers,responseType:'json'});
+  }
+
+
+  //Recoge todos albaranes facturados en una factura, recibiendo como parametro el id de la factura.
+  getPedidoFacturado(id_factura): Observable<any>{
+
+    let headers = new HttpHeaders().set('Content-Type', 'application/json')
+    .append('Authorization', 'Basic ' + btoa(sessionStorage.getItem('emailLogin') + ':' + sessionStorage.getItem('pass')));
+
+    return this.http.get(this.url+'/facturado/'+id_factura, {headers: headers,responseType:'json'});
+  }
+
+
   // Permite eliminar un pedido, recibiendo como parametro el id del pedido.
   eliminarPedido(id) : Observable<any> {
     (id);

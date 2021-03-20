@@ -38,7 +38,11 @@ import { AltaPedidoComponent } from './components/pedido/alta-pedido/alta-pedido
 import { RellenarPedidoComponent } from './components/pedido/rellenar-pedido/rellenar-pedido.component';
 import { CrearFacturaComponent } from './components/facturas/crear-factura/crear-factura.component';
 import { RellenarFacturaComponent } from './components/facturas/rellenar-factura/rellenar-factura.component';
-import { GenerarAlbaranComponent } from './components/albaranes/generar-albaran/generar-albaran.component';
+import { DetallesUsuarioComponent } from './components/usuario/detalles-usuario/detalles-usuario.component';
+import { DetallesClienteComponent } from './components/cliente/detalles-cliente/detalles-cliente.component';
+import { DetallesArticuloComponent } from './components/articulos/detalles-articulo/detalles-articulo.component';
+import { DetallesAlbaranComponent } from './components/albaranes/detalles-albaran/detalles-albaran.component';
+import { DetallesFacturaComponent } from './components/facturas/detalles-factura/detalles-factura.component';
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -72,7 +76,11 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     RellenarPedidoComponent,
     CrearFacturaComponent,
     RellenarFacturaComponent,
-    GenerarAlbaranComponent
+    DetallesUsuarioComponent,
+    DetallesClienteComponent,
+    DetallesArticuloComponent,
+    DetallesAlbaranComponent,
+    DetallesFacturaComponent
   ],
   imports: [
     BrowserModule,

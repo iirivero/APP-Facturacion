@@ -65,7 +65,8 @@
 			</div>	
 		</div>
 
-		<button (click)="altaUsuario()" type="submit"  class="btn btn-rounded btn-secondary" [disabled]="FormularioAltaUsuario.invalid">añadir</button>
+		<button (click)="altaUsuario()" type="submit"  class="btn btn-rounded btn-secondary" [disabled]="FormularioAltaUsuario.invalid">Añadir</button>
+		<button [routerLink]="['/usuario']" class="btn btn-rounded btn-secondary float-right"> Volver </button>
 	</form>
 
 

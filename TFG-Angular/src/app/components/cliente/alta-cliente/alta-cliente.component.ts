@@ -25,22 +25,22 @@ export class AltaClienteComponent implements OnInit {
 	public FormularioAltaCliente = new FormGroup({
   razon_social: new FormControl('', [
       Validators.required,
-      Validators.pattern("[A-Za-zÁÉÍÓÚñáéíóúÑ ]*")
+      Validators.pattern("[A-Za-z0-9ÁÉÍÓÚñáéíóúÑñ .,:@]*")
       ]
       ),
     nombre_comercial: new FormControl('', [
       Validators.required,
-      Validators.pattern("[A-Za-zÁÉÍÓÚñáéíóúÑ ,.]*")
+      Validators.pattern("[A-Za-z0-9ÁÉÍÓÚñáéíóúÑñ ,.:@]*")
       ]
       ),
     direccion: new FormControl('',[
       Validators.required,
-      Validators.pattern("[A-Za-z0-9ÁÉÍÓÚñáéíóúÑº ,.]*")
+      Validators.pattern("[A-Za-z0-9ÁÉÍÓÚñáéíóúÑñº ,.º-]*")
     ]
     ),
   	ciudad: new FormControl('',[
       Validators.required,
-      Validators.pattern("[A-Za-zÁÉÍÓÚñáéíóúÑ ]*")
+      Validators.pattern("[A-Za-zÁÉÍÓÚñáéíóúÑñ -]*")
     ]
     ),
   	codigo_postal: new FormControl('',[
@@ -50,22 +50,22 @@ export class AltaClienteComponent implements OnInit {
     ),
   	telefono: new FormControl('',[
       Validators.required,
-      Validators.pattern("^[679]{1}[0-9]{8}$")
+      Validators.pattern("^[6789]{1}[0-9]{8}$")
     ]
     ),
   	nif: new FormControl('',[
       Validators.required,
-      Validators.pattern("^[a-zA-Z]{1}\\d{8}$")
+      Validators.pattern("^[a-zA-Z-ñÑ]{1}\\d{8}$")
     ]
     ),
   	email: new FormControl('',[
       Validators.required,
-      Validators.pattern("^[a-zA-Z0-9ÁÉÍÓÚñáéíóúÑ._%+-]+@[a-zA-Z0-9ÁÉÍÓÚñáéíóúÑ.-]+\\.[a-z]{2,4}$")
+      Validators.pattern("^[a-zA-Z0-9ÁÉÍÓÚñáéíóúÑñ._%+-]+@[a-zA-Z0-9ÁÉÍÓÚñáéíóúÑñ.-]+\\.[a-z]{2,4}$")
     ]
     ),
   	numero_cuenta: new FormControl('',[
       Validators.required,
-      Validators.pattern("^[a-zA-Z]{2}[0-9]{22}$")
+      Validators.pattern("^[a-zA-ZñÑ]{2}[0-9]{22}$")
     ]
     )
 

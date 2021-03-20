@@ -8,49 +8,32 @@
 
     <!-- Position Column -->
     <ng-container matColumnDef="codigo">
-      <th mat-header-cell *matHeaderCellDef>codigo</th>
+      <th mat-header-cell *matHeaderCellDef>Código</th>
       <td mat-cell *matCellDef="let articulo"> {{articulo.codigo}} </td>
     </ng-container>
 
         <!-- Position Column -->
     <ng-container matColumnDef="nombre">
-      <th mat-header-cell *matHeaderCellDef>nombre</th>
+      <th mat-header-cell *matHeaderCellDef>Nombre</th>
       <td mat-cell *matCellDef="let articulo"> {{articulo.nombre}} </td>
     </ng-container>
 
-        <!-- Position Column -->
-    <ng-container matColumnDef="proveedor">
-      <th mat-header-cell *matHeaderCellDef>proveedor</th>
-      <td mat-cell *matCellDef="let articulo"> {{articulo.proveedor}} </td>
-    </ng-container>
-
-        <!-- Position Column -->
-    <ng-container matColumnDef="precio_compra">
-      <th mat-header-cell *matHeaderCellDef>precio compra</th>
-      <td mat-cell *matCellDef="let articulo"> {{articulo.precio_compra}} </td>
-    </ng-container>
-
-        <!-- Position Column -->
-    <ng-container matColumnDef="rentabilidad">
-      <th mat-header-cell *matHeaderCellDef>rentabilidad</th>
-      <td mat-cell *matCellDef="let articulo"> {{articulo.rentabilidad}} </td>
-    </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="precio_venta">
-      <th mat-header-cell *matHeaderCellDef> precio venta </th>
-      <td mat-cell *matCellDef="let articulo"> {{articulo.precio_venta}} </td>
+      <th mat-header-cell *matHeaderCellDef> Precio venta </th>
+      <td mat-cell *matCellDef="let articulo"> {{articulo.precio_venta}} € </td>
     </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="iva">
-      <th mat-header-cell *matHeaderCellDef> iva </th>
-      <td mat-cell *matCellDef="let articulo"> {{articulo.iva}} </td>
+      <th mat-header-cell *matHeaderCellDef> IVA </th>
+      <td mat-cell *matCellDef="let articulo"> {{articulo.iva}}% </td>
     </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="stock">
-      <th mat-header-cell *matHeaderCellDef> stock </th>
+      <th mat-header-cell *matHeaderCellDef> Stock </th>
       <td mat-cell *matCellDef="let articulo"> {{articulo.stock}} </td>
     </ng-container>
 
@@ -59,9 +42,7 @@
       <th mat-header-cell *matHeaderCellDef> Acciones </th>
       <td mat-cell *matCellDef="let articulo">
       <div class="row">
-        <button [routerLink]="['/actualizar-stock', articulo.codigo]" class="btn btn-warning col-3 ml-1 mr-1 my-1"> Stock </button>
-        <button [routerLink]="['/editar-articulos', articulo.codigo]" class="btn btn-warning col-3 mr-1 my-1"> Editar </button>
-        <button (click)="mostrarDialogo(articulo)" class="btn btn-danger col-4 my-1"> Eliminar </button>
+        <button [routerLink]="['/detalles-articulo', articulo.codigo]" class="btn btn-twitter col-8 mr-1 my-1"> Detalles </button>
       </div>
       </td>
 

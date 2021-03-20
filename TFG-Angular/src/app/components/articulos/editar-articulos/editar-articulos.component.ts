@@ -15,9 +15,11 @@ import { FormControl,FormGroup,Validators } from '@angular/forms';
 export class EditarArticulosComponent implements OnInit {
 
   //Creación de todas las variables para editar un artículo.
-  public title: string;            //Titulo del componente.
-  public articulo: Articulo;         //Objeto empleado para guardar el articulo que se quiere modificar.
-  public status: string;           //Variable para mostar los mensajes del sistema.
+  public title: string;                  //Titulo del componente.
+  public articulo: Articulo;             //Objeto empleado para guardar el articulo que se quiere modificar.
+  public status: string;                 //Variable para mostar los mensajes del sistema.
+  public codigo_articulo:string;         //Identificador del articulo.
+  public admin: string;                  //Variable utilizada para mostrar los datos necesarios al administrador.
 
 //Creación de un formGroup que se utiliza para realizar todas las validaciones para los campos del formulario.
 //Este formGroup tiene como variables : nombre, descripcion, proveedor, precio_compra, rentabilidad, precio_venta, iva y stock.
@@ -89,12 +91,16 @@ export class EditarArticulosComponent implements OnInit {
   ngOnInit(): void {
 
   if(sessionStorage.getItem('emailLogin')!= null || sessionStorage.getItem('pass')!= null){
-
+    this.admin = sessionStorage.getItem('admin');
+    if(this.admin == 'No'){
+      this._router.navigate(['/alta-pedido']);
+    }
+    
     this._route.params.subscribe(params => {
-      let codigo = params.codigo;
+      this.codigo_articulo = params.codigo;
 
       //Se llama al metodo getArticulo para obtener, de la base de datos, el artículo que se quiere modificar.
-      this.getArticulo(codigo);
+      this.getArticulo();
     });
   }else{
     this._router.navigate(['/login']);
@@ -107,8 +113,8 @@ export class EditarArticulosComponent implements OnInit {
 //Función para recuperar los datos de los artículos que se quiere modificar, estos datos se le pasan al formulario.
 //Los datos del artículo se recuperan utilizando el servicio de artículos, que se comunica con la base de datos
 //mediente el metodo getArticulo.
-  getArticulo(codigo){
-  	this._articuloService.getArticulo(codigo).subscribe(
+  getArticulo(){
+  	this._articuloService.getArticulo(this.codigo_articulo).subscribe(
   		articulos => {
 
         for (let articulo of articulos){
@@ -177,6 +183,11 @@ export class EditarArticulosComponent implements OnInit {
     }
   );
 
+  }
+
+  //Función para volver a la pagina anterior.
+  volverAtras(){
+    this._router.navigate(['/detalles-articulo',this.codigo_articulo]);
   } 
 
   //Permite obtener el valor del nombre del artículo del formulario.

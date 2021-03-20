@@ -75,4 +75,13 @@ class Usuario_Mapper {
         return $resul;
     }
 
+    // Para validar si un usuario es administrador en el sistema
+    public function isAdmin($email) {
+        $stmt = $this->db->prepare("SELECT count(email) FROM usuarios where email=? and administrador='Si'");
+        $stmt->execute(array($email));
+        if ($stmt->fetchColumn() > 0) {
+            return true;
+        }
+    }
+
 }

@@ -21,6 +21,7 @@ class ArticuloRest extends BaseRest {
 	// Para registrar un nuevo artículo en el sistema
 	public function añadirArticulo() {
 		$currentUser = parent::auntenticarUsuario();
+		parent::isAdmin();
 		$data = $_POST['articulo'];
 		$data = json_decode($data,true);
 		$articulo = new Articulo_Model($data['codigo'],$data['nombre'],$data['descripcion'],$data['proveedor'],$data['precio_compra'],$data['rentabilidad'],$data['precio_venta'],$data['iva'],$data['stock']);
@@ -51,6 +52,7 @@ class ArticuloRest extends BaseRest {
 	//Para editar un artículo.
 	public function editarArticulo() {
 		$currentUser = parent::auntenticarUsuario();
+		parent::isAdmin();
         $data = json_decode($_POST['articulo'],true);
         $articulo = new Articulo_Model($data['codigo'],$data['nombre'],$data['descripcion'],$data['proveedor'],$data['precio_compra'],$data['rentabilidad'],$data['precio_venta'],$data['iva'],$data['stock']);
         $resul = $this->articuloMapper->editarArticulo($articulo);
@@ -72,6 +74,7 @@ class ArticuloRest extends BaseRest {
 	//Devuelve todos los artículo del sistema
 	public function getArticulos(){
 		$currentUser = parent::auntenticarUsuario();
+		parent::isAdmin();
         $articuloArray = $this->articuloMapper->getArticulos();
         header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
         header('Content-Type: application/json');
@@ -82,7 +85,7 @@ class ArticuloRest extends BaseRest {
     //Devuelve un único artículo.
 	public function getArticulo($codigo){
 		$currentUser = parent::auntenticarUsuario();
-		
+		parent::isAdmin();
 		if(!$this->articuloMapper->articuloExiste($codigo)){
 	
             http_response_code(400);
@@ -101,6 +104,7 @@ class ArticuloRest extends BaseRest {
     //Elimina un artículo de la base de datos.
     public function eliminarArticulo($codigo){
     	$currentUser = parent::auntenticarUsuario();
+    	parent::isAdmin();
         $articulo = $this->articuloMapper->eliminarArticulo($codigo);
         if($articulo == 1){
             header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');

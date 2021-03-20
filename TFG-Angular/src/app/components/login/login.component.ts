@@ -4,13 +4,13 @@ import { UsuarioService } from '../../services/usuarios.service';
 import { Global } from '../../services/global';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { MenuComponent } from '../menu/menu.component';
-import * as CryptoJS from 'crypto-js';
+import { Md5 } from 'ts-md5/dist/md5';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  providers: [UsuarioService]
+  providers: [UsuarioService,Md5]
 })
 export class LoginComponent implements OnInit {
 
@@ -28,7 +28,8 @@ export class LoginComponent implements OnInit {
   constructor(
   	private _usuarioService: UsuarioService,
     private _router: Router,
-    private _route: ActivatedRoute
+    private _route: ActivatedRoute,
+    private _md5: Md5
   	) {
 
   //Inicializamos las diferentes variables.
@@ -41,6 +42,7 @@ export class LoginComponent implements OnInit {
 //En esta función se hace una comprobación para saber si el usuario que esta accediendo a este modulo
 // esta identificado en el sistena.
   ngOnInit(): void {
+
     if(sessionStorage.getItem('reload')== 'true'){
       window.sessionStorage.clear();
       window.location.reload();
@@ -59,15 +61,14 @@ export class LoginComponent implements OnInit {
 
   //Función que recoge el email y la contraseña introducida por el usuario y realiza la accion de identificación.
   login() {
-
-    this._usuarioService.login(this.usuario.email, CryptoJS.MD5(this.usuario.password).toString()).subscribe(
+  this._usuarioService.login(this.usuario.email, Md5.hashStr(this.usuario.password).toString()).subscribe(
       result => {
 
         if (result.status === 200) {
           
           //Si el login es correcto, almacena el email, la contraseña y si es administrador en unas variables de sesión.
           window.sessionStorage.setItem('emailLogin', this.usuario.email);
-          window.sessionStorage.setItem('pass', CryptoJS.MD5(this.usuario.password).toString());
+          window.sessionStorage.setItem('pass', Md5.hashStr(this.usuario.password).toString());
           window.sessionStorage.setItem('admin', result.body.administrador);
           document.location.reload();
           
@@ -82,6 +83,7 @@ export class LoginComponent implements OnInit {
         this.intentoFallidoLogin=true;
       })
     ;
+    
   }
 
 

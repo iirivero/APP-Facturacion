@@ -17,6 +17,7 @@ export class EditarClienteComponent implements OnInit {
   public title: string;            //Titulo del componente.
   public cliente: Cliente;         //Objeto empleado para guardar el usuario que se quiere modificar.
   public status: string;           //Variable para mostar los mensajes del sistema.
+  public id_cliente:string;              //Identificador del cliente.
 
 //Creación de un formGroup que se utiliza para realizar todas las validaciones para los campos del formulario.
 //Este formGroup tiene como variables : razon_social, nombre_comercial, direccion, ciudad, codigo_postal, teléfono, nif, email y numero_cuenta.
@@ -97,10 +98,10 @@ export class EditarClienteComponent implements OnInit {
 
   if(sessionStorage.getItem('emailLogin')!= null || sessionStorage.getItem('pass')!= null){
     this._route.params.subscribe(params => {
-      let id = params.id;
+      this.id_cliente = params.id;
 
       //Se llama al metodo getCliente para obtener, de la base de datos, el cliente que se quiere modificar.
-      this.getCliente(id);
+      this.getCliente();
     });
   }else{
     this._router.navigate(['/login']);  //Se redirecciona al usuario a la página de login cuando esta accediendo a un modulo sin estar identificado.
@@ -111,8 +112,8 @@ export class EditarClienteComponent implements OnInit {
 //Función para recuperar los datos del cliente que se quiere modificar, estos datos se le pasan al formulario.
 //Los datos del cliente se recuperan utilizando el servicio de clientes, que se comunica con la base de datos
 //mediente el metodo getCliente.
-  getCliente(id){
-  	this._clienteService.getCliente(id).subscribe(
+  getCliente(){
+  	this._clienteService.getCliente(this.id_cliente).subscribe(
   		clientes => {
         for (let cliente of clientes){
 
@@ -181,6 +182,10 @@ export class EditarClienteComponent implements OnInit {
 
   } 
 
+  //Función para volver a la pagina anterior.
+  volverAtras(){
+    this._router.navigate(['/detalles-cliente',this.id_cliente]);
+  }
 
   //Permite obtener el valor de la razon social del cliente del formulario.
   get razon_social(){

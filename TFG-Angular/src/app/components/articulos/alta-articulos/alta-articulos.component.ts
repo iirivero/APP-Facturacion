@@ -18,7 +18,7 @@ export class AltaArticulosComponent implements OnInit {
 	public title: string;              //Titulo del componente.
 	public articulo: Articulo;         //Objeto empleado para guardar el nuevo artículo.
 	public status: string;             //Variable para mostar los mensajes del sistema.
-
+  	public admin: string;			   //Variable utilizada para mostrar los datos necesarios al administrador.
 
 
 //Creación de un formGroup que se utiliza para realizar todas las validaciones para los campos del formulario.
@@ -26,12 +26,12 @@ export class AltaArticulosComponent implements OnInit {
 	public FormularioAltaArticulo = new FormGroup({
   	codigo: new FormControl('', [
       Validators.required,
-      Validators.pattern("[A-Za-z0-9]*")
+      Validators.pattern("[A-Za-z0-9-.]*")
       ]
       ),
   	nombre: new FormControl('', [
       Validators.required,
-      Validators.pattern("[A-Za-zÁÉÍÓÚñáéíóúÑ ]*")
+      Validators.pattern("[A-Za-z0-9ÁÉÍÓÚñáéíóúÑñ .-]*")
       ]
       ),
   	descripcion: new FormControl('',[
@@ -39,7 +39,7 @@ export class AltaArticulosComponent implements OnInit {
     ),
   	proveedor: new FormControl('',[
       Validators.required,
-      Validators.pattern("[A-Za-zÁÉÍÓÚñáéíóúÑ ]*")
+      Validators.pattern("[A-Za-z0-9ÁÉÍÓÚñáéíóúÑñ .-]*")
     ]
     ),
   	precio_compra: new FormControl('',[
@@ -53,8 +53,7 @@ export class AltaArticulosComponent implements OnInit {
     ]
     ),
   	iva: new FormControl('',[
-      Validators.required,
-      Validators.pattern("[0-9]*")
+      Validators.required
     ]
     ),
   	stock: new FormControl('',[
@@ -76,7 +75,7 @@ export class AltaArticulosComponent implements OnInit {
 	){
 	
 	    //Inicializamos las diferentes variables.
-		this.title = "Añadir articulo";
+		this.title = "Añadir artículo";
 		this.articulo = new Articulo('','','','',null,null,null,null,null);
 
 	}
@@ -91,7 +90,13 @@ export class AltaArticulosComponent implements OnInit {
 
 	this._router.navigate(['/login']);    //Se redirecciona al usuario a la página de login cuando esta accediendo a un modulo sin estar identificado.
 
-	}
+	}else{
+	    this.admin = sessionStorage.getItem('admin');
+	    if(this.admin == 'No'){
+	      this._router.navigate(['/alta-pedido']);
+	    }
+  	}
+  	
 	}
 
 	//Función para añadir los diferentes artículos en el sistema, en esta función se añaden todos

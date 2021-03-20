@@ -1,8 +1,18 @@
 <div class="container mt-4">
+
+    <button [routerLink]="['/crear-factura']" [routerLinkActive]="['actived']" class="btn-twitter col-12 mt-1" > Crear nueva factura </button>
+
     <input class="form-control boxed filtro" matInput (keyup)="applyFilter($event)" placeholder="FILTRO...">
 
   <div class="mat-elevation-z8">
   <table mat-table [dataSource]="dataSource">
+
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="identificador">
+      <th mat-header-cell *matHeaderCellDef>identificador</th>
+      <td mat-cell *matCellDef="let factura"> {{factura.id}} </td>
+    </ng-container>
 
     <!-- Position Column -->
     <ng-container matColumnDef="razon_social">
@@ -19,7 +29,7 @@
         <!-- Position Column -->
     <ng-container matColumnDef="fecha_factura">
       <th mat-header-cell *matHeaderCellDef>fecha factura</th>
-      <td mat-cell *matCellDef="let factura"> {{factura.fecha_factura | date:'dd/MM/yyyy hh:mm'}} </td>
+      <td mat-cell *matCellDef="let factura"> {{factura.fecha_factura | date:'dd/MM/yyyy'}} </td>
     </ng-container>
 
         <!-- Position Column -->
@@ -31,7 +41,7 @@
         <!-- Position Column -->
     <ng-container matColumnDef="fecha_pagado">
       <th mat-header-cell *matHeaderCellDef>fecha pagado</th>
-      <td mat-cell *matCellDef="let factura"> {{factura.fecha_pagado}} </td>
+      <td mat-cell *matCellDef="let factura"> {{factura.fecha_pagado | date:'dd/MM/yyyy'}} </td>
     </ng-container>
 
 
@@ -39,8 +49,9 @@
     <ng-container matColumnDef="Acciones">
       <th mat-header-cell *matHeaderCellDef> Acciones </th>
       <td mat-cell *matCellDef="let factura">
-        <button [routerLink]="['/rellenar-factura', factura.id]" class="btn btn-warning col-12 mt-1"> Editar </button>
-        <button (click)="mostrarDialogo(factura)" class="btn btn-danger col-12 mb-3 mt-1"> Eliminar </button>
+      <div class="row">
+        <button [routerLink]="['/detalles-factura', factura.id]" class="btn btn-twitter col-8 mr-1 my-1"> Detalles </button>
+      </div>
       </td>
 
     </ng-container>

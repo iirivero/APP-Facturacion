@@ -65,7 +65,7 @@ export class UsuarioComponent implements OnInit {
   if(sessionStorage.getItem('emailLogin')!= null || sessionStorage.getItem('pass')!= null){
     this.admin = sessionStorage.getItem('admin');
     if(this.admin == 'No'){
-      this._router.navigate(['/articulos']);
+      this._router.navigate(['/alta-pedido']);
     }
 
     //Se llama al metodo getUsuarios, este devuelve todos los usuarios del sistema.
@@ -79,7 +79,7 @@ export class UsuarioComponent implements OnInit {
 
 //Función para recuperar los datos de los usuario que se quieren listar, estos datos se le pasan a a la tabla.
 //Los datos del usuario se recuperar utilizando el servicio de usuarios, que se comunica con la base de datos
-//mediente el metodo getUsuario.
+//mediente el metodo getUsuarios.
   getUsuarios(){
   	this._usuarioService.getUsuarios().subscribe(usuarios=>{
       (usuarios);
@@ -92,7 +92,7 @@ export class UsuarioComponent implements OnInit {
         //Se genera el paginador de la tabla.
         this.dataSource = new MatTableDataSource<Usuario>(this.arrayUsuarios);
         this.dataSource.paginator = this.paginator;
-        this.dataSource.paginator._intl.itemsPerPageLabel="Usuarios por pagina";
+        this.dataSource.paginator._intl.itemsPerPageLabel="Usuarios por página";
       
     },
     error =>{
@@ -102,7 +102,7 @@ export class UsuarioComponent implements OnInit {
   	);
   }
 
-  
+  /*
   //Metodo empleado para refrescar el array de usuarios y el paginator.
    
   refresh() {
@@ -119,7 +119,7 @@ export class UsuarioComponent implements OnInit {
         //Se genera el paginador de la tabla.
         this.dataSource = new MatTableDataSource<Usuario>(this.arrayUsuarios);
         this.dataSource.paginator = this.paginator;
-        this.dataSource.paginator._intl.itemsPerPageLabel="Noticias por pagina";
+        this.dataSource.paginator._intl.itemsPerPageLabel="Noticias por página";
 
       },error=>{
 
@@ -127,35 +127,9 @@ export class UsuarioComponent implements OnInit {
       }
     )
   }
+*/
 
 
-//Función para mostrar un dialogo de confirmación para el borrado de un usuario.
-mostrarDialogo(usuario: Usuario): void {
-  this.dialogo
-    .open(DialogoConfirmacionComponent, {
-      data: `Estas seguro de querer eliminar el usuario con email : ` + usuario.email + ` ?`
-    })
-    .afterClosed()
-    .subscribe((confirmado: Boolean) => {
-      if (confirmado) {
-        this.delete(usuario);
-
-      } else {
-        
-      }
-    });
-}
-  
-//Función para eliminar un usuario, el servicio se comunica con la API REST y borra el usuarios de la base de datos.
-private delete(usuario: Usuario) {
-  this._usuarioService.eliminarUsuario(usuario.uuid).subscribe(
-    result=>{
-      this.refresh();
-    }, error=>{
-      
-    }
-  )
-}
 
 
  // Aplica el filtro para poder buscar por todos los campos de la tabla.

@@ -5,7 +5,6 @@ import { Pedido } from '../../../models/pedido';
 import { PedidoService } from '../../../services/pedido.service';
 import { Linea_Pedido } from '../../../models/linea_pedido';
 import { LineaPedidoService } from '../../../services/linea_pedido.service';
-import { Global } from '../../../services/global';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { MatTableDataSource} from '@angular/material/table';
 import { MatPaginator,PageEvent} from '@angular/material/paginator';
@@ -165,7 +164,7 @@ public FormularioPedido = new FormGroup({
       (pedido);
 
         //Almacena los datos recibidos de la base de datos en un objeto de tipo pedido.
-        this.pedido = new Pedido(pedido[0].id,pedido[0].id_cliente,'',pedido[0].fecha,parseInt(pedido[0].base_imponible),parseInt(pedido[0].iva),parseInt(pedido[0].total),pedido[0].facturado,pedido[0].id_factura);
+        this.pedido = new Pedido(pedido[0].id,pedido[0].id_cliente,'',pedido[0].fecha,parseInt(pedido[0].base_imponible),parseInt(pedido[0].iva),parseInt(pedido[0].total),pedido[0].facturado,pedido[0].id_factura,pedido[0].generado);
 
     },
     error =>{

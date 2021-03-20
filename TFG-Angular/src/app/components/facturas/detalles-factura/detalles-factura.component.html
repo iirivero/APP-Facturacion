@@ -1,0 +1,55 @@
+<div class="container"> 
+<span id="fecha">{{fecha_inicial | date:'dd-MMM-yyyy'}}</span>
+	<div id="recuadro">
+		<h1> Detalles de la factura </h1>
+		<p> Identificador          		 : {{factura.id}}</p>
+		<p> Razón social      	 		 : {{factura.razon_social}}</p>
+		<p> Nombre comercial    		 : {{factura.nombre_comercial}}</p>
+		<p> Fecha factura        		 : {{factura.fecha_factura | date:'dd/MM/yyyy'}}</p>
+		<p> Pagado 				 	 	 : {{factura.pagado}} </p>		
+		<p> Fecha pagado 			 	 : {{factura.fecha_pagado | date:'dd/MM/yyyy'}}</p>						
+	</div>	
+
+        <button (click)="generarPDF()" class="btn btn-primary col-2 ml-5 mb-2"> Generar factura </button>     
+        <button *ngIf="factura.generado=='No'" [routerLink]="['/rellenar-factura', factura.id,factura.id_cliente]" class="btn btn-warning col-2 ml-5 mb-2 "> Editar </button>
+        <button *ngIf="factura.pagado == 'No' " data-toggle="modal" data-target="#modalPago" class="btn btn-warning col-2 ml-5 mb-2"> Pagar </button>
+        <button *ngIf="factura.generado=='No'" (click)="mostrarDialogo(factura)" class="btn btn-danger col-2 ml-5 mb-2"> Eliminar </button>
+        
+</div>
+
+<!-- Aqui empieza el modal de gestión del pago -->
+
+<div class="modal fade" id="modalPago" #modalPago tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <form [formGroup]="FormularioPago" action="">
+      <div class="modal-content">
+        <div class="modal-header text-center">
+          <h4 class="modal-title w-100 font-weight-bold">Selecciona la fecha del pago</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body mx-3">
+
+            
+            <div class="form-group">
+              <label class="control-label" for="opcion">Selecciona la fecha del pago</label><br>
+
+              <input type="date" class="form-control boxed" id="fecha" formControlName="fecha"  name="fecha" autocomplete="off" >
+              <div *ngIf="(fecha.invalid && fecha.touched) || fecha.dirty">
+                <small *ngIf="fecha.errors?.required" class="form_error">La fecha es obligatoria</small>
+              </div>
+            </div>
+            
+                  
+          <div class="modal-footer d-flex justify-content-center">
+            <button [disabled]="FormularioPago.invalid" type="button" (click)="mostrarPagado()" data-dismiss="modal" class="btn btn-outline-success" >Generar</button>
+            <button  data-dismiss="modal" aria-label="Close" type="button" class="btn btn-outline-success">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- Aqui acaba el modal del pedido -->

@@ -2,11 +2,11 @@
 	<h2>{{title}}</h2>
 
 	<div class="message success" *ngIf="status == 'success'">
-		El articulo se ha creado correctamente
+		El artículo se ha creado correctamente
 	</div>
 
 	<div class="message failed" *ngIf="status == 'failed'">
-		El articulo no se ha podido crear
+		El artículo no se ha podido crear
 	</div>
 
 	<form [formGroup]="FormularioAltaArticulo">
@@ -30,7 +30,7 @@
 		</div>
 
 		<div class="form-group">
-			<label class="control-label" for="descripcion">Descripcion</label>
+			<label class="control-label" for="descripcion">Descripción</label>
 			<textarea class="form-control boxed" id="descripcion" formControlName="descripcion"  name="descripcion"></textarea>
 		</div>
 
@@ -62,13 +62,25 @@
 		</div>
 
 		<div class="form-group">
-			<label class="control-label" for="iva">IVA</label>
-			<input type="text" class="form-control boxed" id="iva" formControlName="iva"  name="iva" >
+			<label class="control-label" for="iva">IVA</label><br>
+
+			<label>
+				<input type="radio" value="4" formControlName="iva">
+				<span> 7%</span>
+			</label><br>
+			<label>
+				<input type="radio" value="10" formControlName="iva">
+				<span> 10%</span>
+			</label><br>
+			<label>
+				<input type="radio" value="21" formControlName="iva">
+				<span> 21%</span>
+			</label>
 			<div *ngIf="(iva.invalid && iva.touched) || iva.dirty">
 			  <small *ngIf="iva.errors?.required" class="form_error">El iva es obligatorio</small>
-			  <small *ngIf="iva.errors?.pattern" class="form_error">Solo puedes introducir dígitos</small>
-			</div>
+			</div>	
 		</div>
+
 
 		<div class="form-group">
 			<label class="control-label" for="stock">Stock</label>
@@ -79,6 +91,7 @@
 			</div>
 		</div>
 		
-		<button (click)="altaArticulo()" type="submit"  class="btn btn-rounded btn-secondary" [disabled]="FormularioAltaArticulo.invalid">añadir</button>
+		<button (click)="altaArticulo()" type="submit"  class="btn btn-rounded btn-secondary" [disabled]="FormularioAltaArticulo.invalid">Añadir</button>
+		<button [routerLink]="['/articulos']" class="btn btn-rounded btn-secondary float-right"> Volver </button>
 	</form>
 </div>

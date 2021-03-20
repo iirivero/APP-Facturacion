@@ -20,9 +20,12 @@ export class ArticulosComponent implements OnInit {
   //Array donde se almacenan todos los artículos del sistema.
   arrayArticulos: Array<Articulo>;
 
+  //Variable utilizada para mostrar los datos necesarios al administrador.
+  public admin: string;
+
 
   //Columnas que va a tener la tabla.
-  displayedColumns: string[] = ['codigo', 'nombre', 'proveedor', 'precio_compra', 'rentabilidad', 'precio_venta', 'iva', 'stock', 'Acciones'];
+  displayedColumns: string[] = ['codigo', 'nombre', 'precio_venta', 'iva', 'stock', 'Acciones'];
 
   //Empleado para pasar los datos a la tabla.
   dataSource = new MatTableDataSource<Articulo>();
@@ -57,7 +60,10 @@ export class ArticulosComponent implements OnInit {
   ngOnInit(){
   	
   if(sessionStorage.getItem('emailLogin')!= null || sessionStorage.getItem('pass')!= null){
-
+    this.admin = sessionStorage.getItem('admin');
+    if(this.admin == 'No'){
+      this._router.navigate(['/alta-pedido']);
+    }
 
     //Se llama al metodo getArticulos, este devuelve todos los artículos del sistema.
     this.getArticulos();
@@ -94,7 +100,7 @@ export class ArticulosComponent implements OnInit {
   	);
   }
 
-
+/*
   //Metodo empleado para refrescar el array de artículos y el paginator.
   refresh() {
     this.arrayArticulos = [];
@@ -119,36 +125,9 @@ export class ArticulosComponent implements OnInit {
       }
     )
   }
+*/
 
 
-//Función para mostrar un dialogo de confirmación para el borrado de un artículo.
-mostrarDialogo(articulo: Articulo): void {
-  this.dialogo
-    .open(DialogoConfirmacionComponent, {
-      data: `Estas seguro de querer eliminar el articulo con nombre: ` + articulo.nombre + ` y codigo: ` + articulo.codigo + ` ?`
-    })
-    .afterClosed()
-    .subscribe((confirmado: Boolean) => {
-      if (confirmado) {
-        this.delete(articulo);
-
-      } else {
-        
-      }
-    });
-}
-
-
-//Función para eliminar un artículo, el servicio se comunica con la API REST y borra el artículo de la base de datos.
-private delete(articulo: Articulo) {
-  this._articuloService.eliminarArticulo(articulo.codigo).subscribe(
-    result=>{
-      this.refresh();
-    }, error=>{
-      
-    }
-  )
-}
 
  //Aplica el filtro para poder buscar por todos los campos de la tabla.
 applyFilter(event: Event) {

@@ -21,6 +21,7 @@ class FacturaRest extends BaseRest {
 	// Para registrar un nuevo factura en el sistema
 	public function crearFactura() {
 		$currentUser = parent::auntenticarUsuario();
+		parent::isAdmin();
 		$data = $_POST['id_cliente'];
 		$data = json_decode($data,true);
 		$fecha = date("Y-m-d H:i:s");
@@ -45,12 +46,13 @@ class FacturaRest extends BaseRest {
 	// Para modificar una factura del sistema.
 	public function actualizarFactura() {
 		$currentUser = parent::auntenticarUsuario();
+		parent::isAdmin();
 		$data = $_POST['factura'];
 		$data = json_decode($data,true);
 
 
 	        try{
-				$this->facturaMapper->actualizarFactura($data['base_imponible'],$data['iva'],$data['precio_total'],$data['id']);
+				$this->facturaMapper->actualizarFactura($data['pagado'],$data['fecha_pagado'],$data['generado'],$data['id']);
 	            http_response_code(201);
 	            header('Content-Type: application/json');
 	            echo(json_encode("Cliente creado"));
@@ -66,6 +68,7 @@ class FacturaRest extends BaseRest {
 	//Devuelve todas las facturas de la base de datos.
 	public function getFacturas(){
 		$currentUser = parent::auntenticarUsuario();
+		parent::isAdmin();
         $facturaArray = $this->facturaMapper->getFacturas();
         header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
         header('Content-Type: application/json');
@@ -75,6 +78,7 @@ class FacturaRest extends BaseRest {
     //Devuelve una única factura pasandole el id.
 	public function getFactura($id){
 		$currentUser = parent::auntenticarUsuario();
+		parent::isAdmin();
         $factura = $this->facturaMapper->getFactura($id);
         header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
         header('Content-Type: application/json');
@@ -85,6 +89,7 @@ class FacturaRest extends BaseRest {
     //Elimina una factura de la base de datos.
     public function eliminarFactura($id){
     	$currentUser = parent::auntenticarUsuario();
+    	parent::isAdmin();
         $factura = $this->facturaMapper->eliminarFactura($id);
         if($factura == 1){
             header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');

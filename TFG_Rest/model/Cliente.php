@@ -15,7 +15,7 @@ class Cliente_Model implements JsonSerializable{
 	private $numero_cuenta;
 
 	// Constructor de Cliente
-	public function __construct($id=NULL,$razon_social=NULL, $nombre_comercial=NULL, $direccion=NULL, $ciudad=NULL, $codigo_postal=NULL, $telefono=NULL, $nif=NULL, $email=NULL,$numero_cuenta) {
+	public function __construct($id=NULL,$razon_social=NULL, $nombre_comercial=NULL, $direccion=NULL, $ciudad=NULL, $codigo_postal=NULL, $telefono=NULL, $nif=NULL, $email=NULL,$numero_cuenta=NULL) {
 		$this->id = $id;
 		$this->razon_social = $razon_social;
 		$this->nombre_comercial = $nombre_comercial;
@@ -101,7 +101,7 @@ class Cliente_Model implements JsonSerializable{
 	}
 
 
-	public function getNumeroCuenta() {
+	public function getNumero_cuenta() {
 		return $this->numero_cuenta;
 	}
 

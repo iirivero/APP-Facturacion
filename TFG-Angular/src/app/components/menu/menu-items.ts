@@ -12,7 +12,7 @@ export const ROUTES: RouteInfo[] = [
   {
     path: "/usuario",
     title: "USUARIOS",
-    icon: "mdi mdi-blur-radial",
+    icon: "mdi mdi-account",
     class: "",
     extralink: false,
     submenu: [],
@@ -20,7 +20,7 @@ export const ROUTES: RouteInfo[] = [
   {
     path: "/cliente",
     title: "CLIENTES",
-    icon: "mdi mdi-equal",
+    icon: "mdi mdi-account-circle",
     class: "",
     extralink: false,
     submenu: [],
@@ -28,7 +28,7 @@ export const ROUTES: RouteInfo[] = [
   {
     path: "/articulos",
     title: "ARTICULOS",
-    icon: "mdi mdi-message-bulleted",
+    icon: "mdi mdi-coffee",
     class: "",
     extralink: false,
     submenu: [],
@@ -36,7 +36,7 @@ export const ROUTES: RouteInfo[] = [
   {
     path: "/alta-pedido",
     title: "NUEVO PEDIDO",
-    icon: "mdi mdi-message-bulleted",
+    icon: "mdi mdi-plus-circle-outline",
     class: "",
     extralink: false,
     submenu: [],
@@ -44,7 +44,7 @@ export const ROUTES: RouteInfo[] = [
   {
     path: "/albaranes",
     title: "ALBARANES",
-    icon: "mdi mdi-view-carousel",
+    icon: "mdi mdi-file",
     class: "",
     extralink: false,
     submenu: [],
@@ -52,7 +52,7 @@ export const ROUTES: RouteInfo[] = [
   {
     path: "/facturas",
     title: "FACTURAS",
-    icon: "mdi mdi-arrange-bring-to-front",
+    icon: "mdi  mdi-file-document",
     class: "",
     extralink: false,
     submenu: [],
@@ -68,7 +68,7 @@ export const ROUTES: RouteInfo[] = [
   {
     path: "/datos",
     title: "DATOS EMPRESA ",
-    icon: "mdi mdi-arrange-bring-to-front",
+    icon: "mdi mdi-information-outline",
     class: "",
     extralink: false,
     submenu: [],

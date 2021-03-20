@@ -8,7 +8,16 @@ table {
 }
 
 
+
 .container h2{
 	margin-left: -23px;
     margin-bottom: 16px;
+}
+
+.row{
+	margin-right: 10px;
+}
+
+th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type{
+		padding-right: 0px;
 }

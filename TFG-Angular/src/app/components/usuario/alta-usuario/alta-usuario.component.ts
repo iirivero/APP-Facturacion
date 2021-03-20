@@ -5,14 +5,14 @@ import { Global } from '../../../services/global';
 import { FormControl,FormGroup,Validators } from '@angular/forms';
 import { v4 as uuidv4 } from 'uuid';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import * as CryptoJS from 'crypto-js';
+import { Md5 } from 'ts-md5/dist/md5';
 
 
 @Component({
   selector: 'app-alta-usuario',
   templateUrl: './alta-usuario.component.html',
   styleUrls: ['./alta-usuario.component.css'],
-  providers: [UsuarioService]
+  providers: [UsuarioService,Md5]
 })
 export class AltaUsuarioComponent implements OnInit {
 
@@ -20,28 +20,29 @@ export class AltaUsuarioComponent implements OnInit {
 	public title: string;              //Titulo del componente.
 	public usuario: Usuario;           //Objeto empleado para guardar el nuevo usuario.
 	public status: string;             //Variable para mostar los mensajes del sistema.
+  public admin: string;              //Variable utilizada para mostrar los datos necesarios al administrador.
 
 //Creación de un formGroup que se utiliza para realizar todas las validaciones para los campos del formulario.
 //Este formGroup tiene como variables : nombre, apellidos, email, password y administrador.
 	public FormularioAltaUsuario = new FormGroup({
     nombre: new FormControl('', [
       Validators.required,
-      Validators.pattern("[A-Za-zÁÉÍÓÚñáéíóúÑ ]*")
+      Validators.pattern("[A-Za-zÁÉÍÓÚñáéíóúÑñ ]*")
       ]
       ),
     apellidos: new FormControl('',[
       Validators.required,
-      Validators.pattern("[A-Za-zÁÉÍÓÚñáéíóúÑ ]*")
+      Validators.pattern("[A-Za-zÁÉÍÓÚñáéíóúÑñ ]*")
     ]
     ),
     email: new FormControl('',[
       Validators.required,
-      Validators.pattern("^[a-zA-Z0-9ÁÉÍÓÚñáéíóúÑ._%+-]+@[a-zA-Z0-9ÁÉÍÓÚñáéíóúÑ.-]+\\.[a-z]{2,4}$")
+      Validators.pattern("^[a-zA-Z0-9ÁÉÍÓÚñáéíóúÑñ._%+-]+@[a-zA-Z0-9ÁÉÍÓÚñáéíóúÑñ.-]+\\.[a-z]{2,4}$")
     ]
     ),
     password: new FormControl('',[
       Validators.required,
-      Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[$@$!%*?&])([A-Za-z\\d$@$!%*?&]|[^ ]){8,15}$")
+      Validators.pattern("^(?=.*[a-zñ])(?=.*[A-ZÑ])(?=.*\\d)(?=.*[$@$!%*?&])([A-Za-zñÑ\\d$@$!%*?&]|[^ ]){8,15}$")
     ]
     ),
     administrador: new FormControl('',[
@@ -59,7 +60,8 @@ export class AltaUsuarioComponent implements OnInit {
    */
 	constructor(
 		private _usuarioService: UsuarioService,
-    private _router: Router
+    private _router: Router,
+    private _md5: Md5
 	){
 	
     //Inicializamos las diferentes variables.
@@ -77,6 +79,11 @@ export class AltaUsuarioComponent implements OnInit {
 
     this._router.navigate(['/login']);        //Se redirecciona al usuario a la página de login cuando esta accediendo a un modulo sin estar identificado.
   
+  }else{
+    this.admin = sessionStorage.getItem('admin');
+    if(this.admin == 'No'){
+      this._router.navigate(['/alta-pedido']);
+    }
   }
 
 	}
@@ -91,7 +98,7 @@ export class AltaUsuarioComponent implements OnInit {
     this.usuario.nombre= this.nombre.value;
     this.usuario.apellidos = this.apellidos.value;
     this.usuario.email = this.email.value;
-    this.usuario.password = CryptoJS.MD5(this.password.value).toString();
+    this.usuario.password = Md5.hashStr(this.password.value).toString();
     this.usuario.administrador = this.administrador.value;
 
     //Se llama al metodo añadirUsuario de _usuarioService, se espera la respuesta del servicio

@@ -1,0 +1,18 @@
+<div class="container"> 
+
+	<div id="recuadro">
+		<h1> Detalles del articulo </h1>
+		<p> Nombre           : {{articulo.nombre}}</p>
+		<p> Descripción      : {{articulo.descripcion}}</p>
+		<p> Proveedor        : {{articulo.proveedor}}</p>
+		<p> Precio de compra : {{articulo.precio_compra}} €</p>
+		<p> Rentabilidad     : {{articulo.rentabilidad}}%</p>
+		<p> Precio de venta  : {{articulo.precio_venta}} €</p>
+		<p> IVA              : {{articulo.iva}}%</p>
+		<p> Stock actual     : {{articulo.stock}}</p>							
+	</div>
+
+    <button [routerLink]="['/actualizar-stock', articulo.codigo]" class="btn btn-primary col-3 ml-5 mb-2 "> Actualizar Stock </button>
+    <button [routerLink]="['/editar-articulos', articulo.codigo]" class="btn btn-warning col-3 ml-5 mb-2 "> Editar </button>
+    <button (click)="mostrarDialogo(articulo)" class="btn btn-danger col-3 ml-5 mb-2 "> Eliminar </button>
+</div>

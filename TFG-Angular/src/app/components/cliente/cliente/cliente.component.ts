@@ -23,7 +23,7 @@ export class ClienteComponent implements OnInit {
   arrayClientes: Array<Cliente>;
 
   //Columnas que va a tener la tabla.
-  displayedColumns: string[] = ['razon_social', 'nombre_comercial', 'direccion', 'ciudad', 'codigo_postal', 'telefono', 'nif', 'email', 'Acciones'];
+  displayedColumns: string[] = ['razon_social', 'nombre_comercial', 'telefono', 'email', 'Acciones'];
 
   //Empleado para pasar los datos a la tabla.
   dataSource = new MatTableDataSource<Cliente>();
@@ -59,9 +59,6 @@ export class ClienteComponent implements OnInit {
   	
   if(sessionStorage.getItem('emailLogin')!= null || sessionStorage.getItem('pass')!= null){
     this.admin = sessionStorage.getItem('admin');
-    if(this.admin == 'No'){
-      this._router.navigate(['/articulos']);
-    }
 
     //Se llama al metodo getClientes, este devuelve todos los clientes del sistema.
     this.getClientes();
@@ -96,7 +93,7 @@ export class ClienteComponent implements OnInit {
     }
   	);
   }
-
+/*
   //Metodo empleado para refrescar el array de clientes y el paginator.
   refresh() {
     this.arrayClientes = [];
@@ -121,34 +118,7 @@ export class ClienteComponent implements OnInit {
     );
   }
 
-
-//Función para mostrar un dialogo de confirmación para el borrado de un cliente.
-mostrarDialogo(cliente: Cliente): void {
-  this.dialogo
-    .open(DialogoConfirmacionComponent, {
-      data: `Estas seguro de querer eliminar el cliente con nombre : ` + cliente.nombre_comercial + ` ?`
-    })
-    .afterClosed()
-    .subscribe((confirmado: Boolean) => {
-      if (confirmado) {
-        this.delete(cliente);
-
-      } else {
-        
-      }
-    });
-}
-  
-//Función para eliminar un cliente, el servicio se comunica con la API REST y borra el cliente de la base de datos.
-private delete(cliente: Cliente) {
-  this._clienteService.eliminarCliente(cliente.id).subscribe(
-    result=>{
-      this.refresh();
-    }, error=>{
-      
-    }
-  )
-}
+*/
 
  //Aplica el filtro para poder buscar por todos los campos de la tabla.
 applyFilter(event: Event) {

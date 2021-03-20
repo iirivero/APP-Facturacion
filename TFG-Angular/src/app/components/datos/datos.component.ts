@@ -17,24 +17,25 @@ export class DatosComponent implements OnInit {
 	//Creación de todas las variables para editar los datos de la empresa.
 	public title: string;			 //Titulo del componente.
 	public datos: Datos;        	 //Objeto empleado para guardar los datos de la empresa que se quiere modificar.
-	public status: string;           //Variable para mostar los mensajes del sistema.		
+	public status: string;           //Variable para mostar los mensajes del sistema.
+   public admin: string;		     //Variable utilizada para mostrar los datos necesarios al administrador.
 
 	//Creación de un formGroup que se utiliza para realizar todas las validaciones para los campos del formulario.
 	//Este formGroup tiene como variables : nombre, direccion, ciudad, codigo_postal, telefono, nif y email.
 	public FormularioDatos = new FormGroup({
     nombre: new FormControl('', [
       Validators.required,
-      Validators.pattern("[A-Za-z0-9ÁÉÍÓÚñáéíóúÑ ,.]*")
+      Validators.pattern("[A-Za-z0-9ÁÉÍÓÚñáéíóúÑñ ,.-:@]*")
       ]
       ),
     direccion: new FormControl('', [
       Validators.required,
-      Validators.pattern("[A-Za-z0-9ÁÉÍÓÚñáéíóúÑº ,.]*")
+      Validators.pattern("[A-Za-z0-9ÁÉÍÓÚñáéíóúÑñº ,.º-]*")
       ]
       ),
     ciudad: new FormControl('', [
       Validators.required,
-      Validators.pattern("[A-Za-zÁÉÍÓÚñáéíóúÑ ]*")
+      Validators.pattern("[A-Za-zÁÉÍÓÚñáéíóúÑñ -]*")
       ]
       ),
     codigo_postal: new FormControl('', [
@@ -44,7 +45,7 @@ export class DatosComponent implements OnInit {
       ),
     telefono: new FormControl('',[
       Validators.required,
-      Validators.pattern("^[679]{1}[0-9]{8}$")
+      Validators.pattern("^[6789]{1}[0-9]{8}$")
     ]
     ),
 	nif: new FormControl('',[
@@ -54,7 +55,7 @@ export class DatosComponent implements OnInit {
     ),
 	email: new FormControl('',[
       Validators.required,
-      Validators.pattern("^[a-zA-Z0-9ÁÉÍÓÚñáéíóúÑ._%+-]+@[a-zA-Z0-9ÁÉÍÓÚñáéíóúÑ.-]+\\.[a-z]{2,4}$")
+      Validators.pattern("^[a-zA-Z0-9ÁÉÍÓÚñáéíóúÑñ._%+-]+@[a-zA-Z0-9ÁÉÍÓÚñáéíóúÑñ.-]+\\.[a-z]{2,4}$")
     ]
     )
 
@@ -83,6 +84,10 @@ export class DatosComponent implements OnInit {
   	ngOnInit(): void {
 
 	if(sessionStorage.getItem('emailLogin')!= null || sessionStorage.getItem('pass')!= null){
+	    this.admin = sessionStorage.getItem('admin');
+	    if(this.admin == 'No'){
+	      this._router.navigate(['/alta-pedido']);
+	    }
 
         //Se llama al metodo getDatos para obtener, de la base de datos, los datos actuales de la empresa que se quiere modificar.
 		this.getDatos(); 

@@ -83,7 +83,8 @@ CREATE TABLE IF NOT EXISTS `facturas` (
   `id_cliente` int(11) NOT NULL,
   `fecha_factura` DATETIME NOT NULL,
   `pagado` ENUM('Si','No') NOT NULL,
-  `fecha_pagado` DATETIME DEFAULT NULL
+  `fecha_pagado` DATETIME DEFAULT NULL,
+  `generado` ENUM('Si','No') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -99,7 +100,8 @@ CREATE TABLE IF NOT EXISTS `pedidos` (
   `iva` decimal(10,2) NOT NULL,
   `total` decimal(10,2) NOT NULL,
   `facturado` ENUM('Si','No') NOT NULL,
-  `id_factura` int(11) NULL  
+  `id_factura` int(11) NULL,
+  `generado` ENUM('Si','No') NOT NULL  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --

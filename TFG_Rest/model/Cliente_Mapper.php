@@ -9,13 +9,13 @@ class Cliente_Mapper {
 	// Para insertar un nuevo cliente en el sistema
 	public function insertarCliente($cliente) {
 		$stmt = $this->db->prepare("INSERT INTO clientes values('',?,?,?,?,?,?,?,?,?)"); 
-		$stmt->execute(array($cliente->getRazon_social(), $cliente->getNombre_comercial(), $cliente->getDireccion(), $cliente->getCiudad(),$cliente->getCodigo_postal(),$cliente->getTelefono(),$cliente->getCif(),$cliente->getEmail(),$cliente->getNumeroCuenta()));
+		$stmt->execute(array($cliente->getRazon_social(), $cliente->getNombre_comercial(), $cliente->getDireccion(), $cliente->getCiudad(),$cliente->getCodigo_postal(),$cliente->getTelefono(),$cliente->getCif(),$cliente->getEmail(),$cliente->getNumero_cuenta()));
 	}
 
     //Para editar un cliente del sistema.
     public function editarCliente($cliente){
         $stmt = $this->db->prepare("UPDATE clientes SET razon_social = ? , nombre_comercial=?, direccion=?, ciudad=?, codigo_postal=?, telefono=?, nif=?, email=?, numero_cuenta= ? WHERE id = ?");
-        $resul = $stmt->execute(array($cliente->getRazon_social(), $cliente->getNombre_comercial(), $cliente->getDireccion(), $cliente->getCiudad(),$cliente->getCodigo_postal(),$cliente->getTelefono(),$cliente->getCif(),$cliente->getEmail(),$cliente->getNumeroCuenta(),$cliente->getId()));
+        $resul = $stmt->execute(array($cliente->getRazon_social(), $cliente->getNombre_comercial(), $cliente->getDireccion(), $cliente->getCiudad(),$cliente->getCodigo_postal(),$cliente->getTelefono(),$cliente->getCif(),$cliente->getEmail(),$cliente->getNumero_cuenta(),$cliente->getId()));
         return $resul;
 
     }

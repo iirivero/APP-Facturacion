@@ -57,7 +57,7 @@ export class FacturaService{
     let parametros = "factura="+json;
     let headers = new HttpHeaders().set('Content-Type','application/x-www-form-urlencoded')
       .append('Authorization', 'Basic ' + btoa(sessionStorage.getItem('emailLogin') + ':' + sessionStorage.getItem('pass')));
-    return this.http.post(this.url+'/'+'editar', parametros, {headers: headers,responseType:'json'});
+    return this.http.post(this.url+'/'+'actualizar', parametros, {headers: headers,responseType:'json'});
 
   }
 

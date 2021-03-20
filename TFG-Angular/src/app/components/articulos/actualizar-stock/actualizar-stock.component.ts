@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Articulo } from '../../../models/articulo';
 import { ArticuloService } from '../../../services/articulos.service';
-import { Global } from '../../../services/global';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 @Component({
@@ -17,7 +16,8 @@ export class ActualizarStockComponent implements OnInit {
   public title: string;              //Titulo del componente.
   public articulo: Articulo;         //Objeto empleado para guardar el nuevo artículo.
   public stock_nuevo: number;        //Variable para almacenar el nuevo valor del stock.
-
+  public codigo_articulo:string;     //Identificador del articulo.
+  public admin: string;              //Variable utilizada para mostrar los datos necesarios al administrador.
 
   /**
    * En el constructor inicializamos los servicios que vamos a usar para comunicarnos con la API REST:
@@ -44,11 +44,15 @@ export class ActualizarStockComponent implements OnInit {
   ngOnInit(): void {
 
   if(sessionStorage.getItem('emailLogin')!= null || sessionStorage.getItem('pass')!= null){
+    this.admin = sessionStorage.getItem('admin');
+    if(this.admin == 'No'){
+      this._router.navigate(['/alta-pedido']);
+    }
     this._route.params.subscribe(params => {
-      let codigo = params.codigo;
+      this.codigo_articulo = params.codigo;
 
       //Se llama al metodo getArticulo para obtener, de la base de datos, el artículo que se quiere modificar.
-      this.getArticulo(codigo);
+      this.getArticulo();
 
     });
   }else{
@@ -61,8 +65,8 @@ export class ActualizarStockComponent implements OnInit {
 //Función para recuperar los datos de los artículos que se quiere modificar el stock, estos datos se le pasan al formulario.
 //Los datos del artículo se recuperan utilizando el servicio de artículos, que se comunica con la base de datos
 //mediente el metodo getArticulo.
-  getArticulo(codigo){
-  	this._articuloService.getArticulo(codigo).subscribe(
+  getArticulo(){
+  	this._articuloService.getArticulo(this.codigo_articulo).subscribe(
   		articulos => {
         for (let articulo of articulos){
 
@@ -77,6 +81,11 @@ export class ActualizarStockComponent implements OnInit {
   		}
   	)
   }
+
+  //Función para volver a la pagina anterior.
+  volverAtras(){
+    this._router.navigate(['/detalles-articulo',this.codigo_articulo]);
+  } 
 
   //Metodo que se ejecuta cuando el usuario presiona el boton de enviar del formulario.
   onSubmit(form){

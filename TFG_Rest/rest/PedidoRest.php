@@ -50,7 +50,7 @@ class PedidoRest extends BaseRest {
 
 
 	        try{
-				$this->pedidoMapper->actualizarPedido($data['base_imponible'],$data['iva'],$data['precio_total'],$data['id']);
+				$this->pedidoMapper->actualizarPedido($data['base_imponible'],$data['iva'],$data['precio_total'],$data['facturado'],$data['id_factura'],$data['generado'],$data['id']);
 	            http_response_code(201);
 	            header('Content-Type: application/json');
 	            echo(json_encode("Cliente creado"));
@@ -81,6 +81,24 @@ class PedidoRest extends BaseRest {
         echo(json_encode($pedido));
     }
 
+    //Devuelve todos los pedidos que estan sin facturar para un cliente.
+	public function getPedidoSinFacturar($id_cliente){
+		$currentUser = parent::auntenticarUsuario();
+        $pedidoArray = $this->pedidoMapper->getPedidoSinFacturar($id_cliente);
+        header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
+        header('Content-Type: application/json');
+        echo(json_encode($pedidoArray));
+    }
+
+    //Devuelve todos los pedidos de una factura.
+	public function getPedidoFacturado($id_factura){
+		$currentUser = parent::auntenticarUsuario();
+        $pedidoArray = $this->pedidoMapper->getPedidoFacturado($id_factura);
+        header($_SERVER['SERVER_PROTOCOL'].' 200 Ok');
+        header('Content-Type: application/json');
+        echo(json_encode($pedidoArray));
+    }
+
 
     //Elimina un pedido de la base de datos.
     public function eliminarPedido($id){
@@ -102,6 +120,8 @@ $pedidoRest = new PedidoRest();
 URIDispatcher::getInstance()
 ->map("GET",	"/pedido", array($pedidoRest,"getPedidos"))
 ->map("GET",	"/pedido/$1", array($pedidoRest,"getPedido"))
+->map("GET",	"/pedido/sin-facturar/$1", array($pedidoRest,"getPedidoSinFacturar"))
+->map("GET",	"/pedido/facturado/$1", array($pedidoRest,"getPedidoFacturado"))
 ->map("POST", "/pedido", array($pedidoRest,"crearPedido"))
 ->map("POST", "/pedido/actualizar", array($pedidoRest,"actualizarPedido"))
 ->map("DELETE","/pedido/eliminar/$1", array($pedidoRest,"eliminarPedido"));

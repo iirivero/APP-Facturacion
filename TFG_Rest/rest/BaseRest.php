@@ -43,4 +43,18 @@ class BaseRest {
 			}
 		}
 	}
+
+
+	public function isAdmin(){
+		$usuarioMapper = new Usuario_Mapper();
+		if($usuarioMapper->isAdmin($_SERVER['PHP_AUTH_USER'])){
+
+			return true;
+
+		}else {
+			header($_SERVER['SERVER_PROTOCOL'].' 401 Unauthorized');
+			header('WWW-Authenticate: Basic realm="Rest API of TFG"');
+			die('No tienes permiso para realizar esta acción');
+		}
+	}
 }

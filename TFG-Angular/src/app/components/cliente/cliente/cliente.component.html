@@ -8,49 +8,26 @@
 
     <!-- Position Column -->
     <ng-container matColumnDef="razon_social">
-      <th mat-header-cell *matHeaderCellDef>razon social</th>
+      <th mat-header-cell *matHeaderCellDef>Razón social</th>
       <td mat-cell *matCellDef="let cliente"> {{cliente.razon_social}} </td>
     </ng-container>
 
         <!-- Position Column -->
     <ng-container matColumnDef="nombre_comercial">
-      <th mat-header-cell *matHeaderCellDef>nombre comercial</th>
+      <th mat-header-cell *matHeaderCellDef>Nombre comercial</th>
       <td mat-cell *matCellDef="let cliente"> {{cliente.nombre_comercial}} </td>
-    </ng-container>
-
-        <!-- Position Column -->
-    <ng-container matColumnDef="direccion">
-      <th mat-header-cell *matHeaderCellDef>direccion</th>
-      <td mat-cell *matCellDef="let cliente"> {{cliente.direccion}} </td>
-    </ng-container>
-
-        <!-- Position Column -->
-    <ng-container matColumnDef="ciudad">
-      <th mat-header-cell *matHeaderCellDef>ciudad</th>
-      <td mat-cell *matCellDef="let cliente"> {{cliente.ciudad}} </td>
-    </ng-container>
-
-        <!-- Position Column -->
-    <ng-container matColumnDef="codigo_postal">
-      <th mat-header-cell *matHeaderCellDef>codigo postal</th>
-      <td mat-cell *matCellDef="let cliente"> {{cliente.codigo_postal}} </td>
     </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="telefono">
-      <th mat-header-cell *matHeaderCellDef> telefono </th>
+      <th mat-header-cell *matHeaderCellDef> Teléfono </th>
       <td mat-cell *matCellDef="let cliente"> {{cliente.telefono}} </td>
     </ng-container>
 
-    <!-- Name Column -->
-    <ng-container matColumnDef="nif">
-      <th mat-header-cell *matHeaderCellDef> NIF </th>
-      <td mat-cell *matCellDef="let cliente"> {{cliente.nif}} </td>
-    </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="email">
-      <th mat-header-cell *matHeaderCellDef> email </th>
+      <th mat-header-cell *matHeaderCellDef> Email </th>
       <td mat-cell *matCellDef="let cliente"> {{cliente.email}} </td>
     </ng-container>
 
@@ -59,8 +36,7 @@
       <th mat-header-cell *matHeaderCellDef> Acciones </th>
       <td mat-cell *matCellDef="let cliente">
       <div class="row">
-        <button [routerLink]="['/editar-cliente', cliente.id]" class="btn btn-warning col-5 mr-1 my-1">Editar</button>
-        <button (click)="mostrarDialogo(cliente)" class="btn btn-danger col-6 my-1">Eliminar</button>
+        <button [routerLink]="['/detalles-cliente', cliente.id]" class="btn btn-twitter col-8 mr-1 my-1"> Detalles </button>
       </div>
       </td>
 

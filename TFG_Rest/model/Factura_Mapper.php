@@ -8,50 +8,53 @@ class Factura_Mapper {
 	}
 	// Para insertar un nuevo factura en el sistema
 	public function insertarFactura($factura) {
-		$stmt = $this->db->prepare("INSERT INTO facturas values('',?,?,?,?,?,?,?,?)"); 
-		$stmt->execute(array($factura->getRazon_social(), $factura->getNombre_comercial(), $factura->getDireccion(), $factura->getCiudad(),$factura->getCodigo_postal(),$factura->getTelefono(),$factura->getCif(),$factura->getEmail()));
+		$stmt = $this->db->prepare("INSERT INTO facturas values('',?,?,'No',NULL,'No')"); 
+		$stmt->execute(array($factura->getId_cliente(), $factura->getFecha_factura()));
 	}
 
-    //Para editar los datos de una factura.
-    public function editarFactura($factura){
-        $stmt = $this->db->prepare("UPDATE facturas SET razon_social = ? , nombre_comercial=?, direccion=?, ciudad=?, codigo_postal=?, telefono=?, cif=?, email=? WHERE id = ?");
-        $resul = $stmt->execute(array($factura->getRazon_social(), $factura->getNombre_comercial(), $factura->getDireccion(), $factura->getCiudad(),$factura->getCodigo_postal(),$factura->getTelefono(),$factura->getCif(),$factura->getEmail(),$factura->getId()));
+
+    //Devuelve el id de la factura.
+    public function getIdFactura($id,$fecha) {
+        $stmt = $this->db->prepare("SELECT id FROM facturas where id_cliente=? and fecha_factura=?");
+        $stmt->execute(array($id,$fecha));
+        $resul = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $resul;
 
     }
 
-	// Para saber si ya existe un factura registrado en el sistema con el email indicado (sólo un factura por email)
-	public function facturaExiste($emailfactura) {
-		$stmt = $this->db->prepare("SELECT count(email) FROM facturas where email=?");
-		$stmt->execute(array($emailfactura));
-		if ($stmt->fetchColumn() > 0) {
-			return true;
-		}
-	}
+    
+    //Devuelve todos las facturas del sistema.
+    public function getFacturas() {
 
-    //Devuelve todas las facturas del sistema.
-	public function getFacturas() {
-        $stmt = $this->db->prepare("SELECT * from facturas");
+        $stmt = $this->db->prepare("SELECT f.*,c.razon_social,c.nombre_comercial FROM facturas f ,clientes c WHERE f.id_cliente = c.id");
         $stmt->execute();
         $resul = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $resul;
 
-    } 
+    }
 
     //Devuelve los datos de una única factura.
-	public function getFactura($id) {
-        $stmt = $this->db->prepare("SELECT * from facturas where id=?");
+    public function getFactura($id) {
+
+        $stmt = $this->db->prepare("SELECT f.*,c.razon_social,c.nombre_comercial FROM facturas f ,clientes c WHERE f.id_cliente = c.id AND f.id =?");
         $stmt->execute(array($id));
         $resul = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $resul;
 
-    } 
+    }    
 
-    //Elimina una factura del sistema.
-    public function eliminarFactura($id)
-    {
+    //Elimina los datos de una factura del sistema.
+    public function eliminarFactura($id){
         $stmt = $this->db->prepare("DELETE from facturas WHERE id = ?");
         $resul = $stmt->execute(array($id));
         return $resul;
     }
+
+    //Modifica los datos de una factura.
+    public function actualizarFactura($pagado,$fecha_pagado,$generado,$id){
+        $stmt = $this->db->prepare("UPDATE facturas SET pagado = ?, fecha_pagado = ?, generado = ? WHERE id= ?");
+        $resul = $stmt->execute(array($pagado,$fecha_pagado,$generado,$id));
+        return $resul;
+    }
+    
 }
