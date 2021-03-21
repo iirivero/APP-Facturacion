@@ -22,10 +22,26 @@ class FacturaRest extends BaseRest {
 	public function crearFactura() {
 		$currentUser = parent::auntenticarUsuario();
 		parent::isAdmin();
+        $id = $this->facturaMapper->getIdMaximo();
+
+		$comprobacion = substr($id, 0,4);
+		$id = substr($id, 5);
+		//Comprobación para cuando se cambia de año.
+		if($comprobacion != date("Y")){
+			$id = NULL;
+		}
+
+		//If para poner el formato del id de la factura.
+        if($id == NULL){
+        	$id_nuevo = date("Y") . '0' . '1';
+        }else{
+        	$id = ($id+1);
+        	$id_nuevo = date("Y") . '0' . $id;
+        }
 		$data = $_POST['id_cliente'];
 		$data = json_decode($data,true);
 		$fecha = date("Y-m-d H:i:s");
-		$factura = new Factura_Model(null,$data,$fecha);
+		$factura = new Factura_Model($id_nuevo,$data,$fecha);
 
 	        try{
 
@@ -74,6 +90,8 @@ class FacturaRest extends BaseRest {
         header('Content-Type: application/json');
         echo(json_encode($facturaArray));
     }
+
+    
 
     //Devuelve una única factura pasandole el id.
 	public function getFactura($id){

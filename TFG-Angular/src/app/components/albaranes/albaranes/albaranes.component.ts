@@ -26,7 +26,7 @@ export class AlbaranesComponent implements OnInit {
   public cliente: Cliente;
 
   //Columnas que va a tener la tabla.
-  displayedColumns: string[] = ['razon_social','nombre_comercial', 'fecha', 'base_imponible', 'iva', 'precio_total', 'facturado', 'Acciones'];
+  displayedColumns: string[] = ['identificador','nombre_comercial', 'fecha', 'base_imponible', 'iva', 'precio_total', 'facturado', 'Acciones'];
 
   //Empleado para pasar los datos a la tabla.
   dataSource = new MatTableDataSource<Pedido>();

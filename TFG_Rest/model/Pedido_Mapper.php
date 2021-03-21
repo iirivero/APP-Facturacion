@@ -9,8 +9,8 @@ class Pedido_Mapper {
     
     //Para insertar un nuevo pedido en el sistema
 	public function insertarPedido($pedido) {
-		$stmt = $this->db->prepare("INSERT INTO pedidos values('',?,?,0,0,0,'No',null,'No')"); 
-		$stmt->execute(array($pedido->getId_cliente(), $pedido->getFecha()));
+		$stmt = $this->db->prepare("INSERT INTO pedidos values(?,?,?,0,0,0,'No',null,'No')"); 
+		$stmt->execute(array($pedido->getId(),$pedido->getId_cliente(), $pedido->getFecha()));
 	}
 
 
@@ -76,5 +76,13 @@ class Pedido_Mapper {
         $stmt = $this->db->prepare("UPDATE pedidos SET base_imponible = ?, iva = ?, total = ?, facturado = ?, id_factura = ?, generado = ? WHERE id= ?");
         $resul = $stmt->execute(array($base_imponible,$iva,$total,$facturado,$id_factura,$generado,$id));
         return $resul;
+    }
+
+    //Devuelve el ultimo id.
+    public function getIdMaximo(){
+        $stmt = $this->db->prepare("SELECT MAX(id) as maximo FROM pedidos");
+        $stmt->execute();
+        $resul = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $resul["maximo"];
     }
 }

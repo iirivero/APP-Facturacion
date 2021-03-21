@@ -185,7 +185,7 @@ private delete(pedido: Pedido) {
   )
 }
 
-
+//Función para elegir el modelo para generar el pdf del albarán.
 descargarPDF(){
 
 
@@ -207,7 +207,7 @@ descargarPDF(){
     }
   }
 
-this.FormularioAlbaran.reset();
+this.FormularioAlbaran.reset();   //Resetea los datos del formulario.
 }
 
 

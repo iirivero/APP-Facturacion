@@ -8,8 +8,8 @@ class Factura_Mapper {
 	}
 	// Para insertar un nuevo factura en el sistema
 	public function insertarFactura($factura) {
-		$stmt = $this->db->prepare("INSERT INTO facturas values('',?,?,'No',NULL,'No')"); 
-		$stmt->execute(array($factura->getId_cliente(), $factura->getFecha_factura()));
+		$stmt = $this->db->prepare("INSERT INTO facturas values(?,?,?,'No',NULL,'No')"); 
+		$stmt->execute(array($factura->getId(),$factura->getId_cliente(), $factura->getFecha_factura()));
 	}
 
 
@@ -55,6 +55,14 @@ class Factura_Mapper {
         $stmt = $this->db->prepare("UPDATE facturas SET pagado = ?, fecha_pagado = ?, generado = ? WHERE id= ?");
         $resul = $stmt->execute(array($pagado,$fecha_pagado,$generado,$id));
         return $resul;
+    }
+
+    //Devuelve el ultimo id.
+    public function getIdMaximo(){
+        $stmt = $this->db->prepare("SELECT MAX(id) as maximo FROM facturas");
+        $stmt->execute();
+        $resul = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $resul["maximo"];
     }
     
 }

@@ -21,10 +21,27 @@ class PedidoRest extends BaseRest {
 	// Para registrar un nuevo pedido en el sistema
 	public function crearPedido() {
 		$currentUser = parent::auntenticarUsuario();
+		$id = $this->pedidoMapper->getIdMaximo();
+		
+		$comprobacion = substr($id, 0,4);
+		$id = substr($id, 5);
+		//Comprobación para cuando se cambia de año.
+		if($comprobacion != date("Y")){
+			$id = NULL;
+		}
+
+		//If para poner el formato del id del albarán.
+        if($id == NULL){
+        	$id_nuevo = date("Y") . '0' . '1';
+        }else{
+        	$id = ($id+1);
+        	$id_nuevo = date("Y") . '0' . $id;
+        }
+
 		$data = $_POST['id_cliente'];
 		$data = json_decode($data,true);
 		$fecha = date("Y-m-d H:i:s");
-		$pedido = new Pedido_Model(null,$data,$fecha);
+		$pedido = new Pedido_Model($id_nuevo,$data,$fecha);
 
 	        try{
 
@@ -71,6 +88,7 @@ class PedidoRest extends BaseRest {
         header('Content-Type: application/json');
         echo(json_encode($pedidoArray));
     }
+
 
     //Devuelve los datos de un único pedido.
 	public function getPedido($id){
