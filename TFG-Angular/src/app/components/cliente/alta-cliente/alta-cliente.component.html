@@ -1,0 +1,100 @@
+<div class="container"> 
+	<h2>{{title}}</h2>
+
+	<div class="message success" *ngIf="status == 'success'">
+		El cliente se ha creado correctamente
+	</div>
+
+	<div class="message failed" *ngIf="status == 'failed'">
+		El cliente no se ha podido crear
+	</div>
+
+	<form [formGroup]="FormularioAltaCliente">
+
+		<div class="form-group">
+			<label class="control-label" for="razon_social">Razón social</label>
+			<input type="text" class="form-control boxed" id="razon_social" formControlName="razon_social"  name="razon_social" >
+			<div *ngIf="(razon_social.invalid && razon_social.touched) || razon_social.dirty">
+			  <small *ngIf="razon_social.errors?.required" class="form_error">La razón social es obligatoria</small>
+  			  <small *ngIf="razon_social.errors?.pattern" class="form_error">La razón social solo puede tener letras y espacios</small>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="control-label" for="nombre_comercial">Nombre comercial</label>
+			<input type="text" class="form-control boxed" id="nombre_comercial" formControlName="nombre_comercial"  name="nombre_comercial" >
+			<div *ngIf="(nombre_comercial.invalid && nombre_comercial.touched) || nombre_comercial.dirty">
+			  <small *ngIf="nombre_comercial.errors?.required" class="form_error">El nombre comercial es obligatorio</small>
+			  <small *ngIf="nombre_comercial.errors?.pattern" class="form_error">El nombre comercial solo puede tener letras y espacios</small>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="control-label" for="direccion">Dirección</label>
+			<input type="text" class="form-control boxed" id="direccion" formControlName="direccion"  name="direccion" >
+			<div *ngIf="(direccion.invalid && direccion.touched) || direccion.dirty">
+			  <small *ngIf="direccion.errors?.required" class="form_error">La dirección es obligatoria</small>
+			  <small *ngIf="direccion.errors?.pattern" class="form_error">La dirección no es valida</small>
+			</div>
+		</div>
+
+
+		<div class="form-group">
+			<label class="control-label" for="ciudad">Ciudad</label>
+			<input type="text" class="form-control boxed" id="ciudad" formControlName="ciudad"  name="ciudad" >
+			<div *ngIf="(ciudad.invalid && ciudad.touched) || ciudad.dirty">
+			  <small *ngIf="ciudad.errors?.required" class="form_error">La ciudad es obligatoria</small>
+			  <small *ngIf="ciudad.errors?.pattern" class="form_error">La ciudad solo puede tener letras y espacios</small>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="control-label" for="codigo_postal">Código postal</label>
+			<input type="text" class="form-control boxed" id="codigo_postal" formControlName="codigo_postal"  name="codigo_postal" >
+			<div *ngIf="(codigo_postal.invalid && codigo_postal.touched) || codigo_postal.dirty">
+			  <small *ngIf="codigo_postal.errors?.required" class="form_error">El código postal es obligatorio</small>
+			  <small *ngIf="codigo_postal.errors?.pattern" class="form_error">El código postal solo puede tener 5 dígitos</small>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="control-label" for="telefono">Teléfono</label>
+			<input type="text" class="form-control boxed" id="telefono" formControlName="telefono"  name="telefono" >
+			<div *ngIf="(telefono.invalid && telefono.touched) || telefono.dirty">
+			  <small *ngIf="telefono.errors?.required" class="form_error">El teléfono son obligatorio</small>
+			  <small *ngIf="telefono.errors?.pattern" class="form_error">El teléfono no es valido</small>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="control-label" for="nif">NIF</label>
+			<input type="text" class="form-control boxed" id="nif" formControlName="nif"  name="nif" >
+			<div *ngIf="(nif.invalid && nif.touched) || nif.dirty">
+			  <small *ngIf="nif.errors?.required" class="form_error">El NIF es obligatorio</small>
+			  <small *ngIf="nif.errors?.pattern" class="form_error">El NIF tiene que tener una letra seguida de ocho dígitos</small>
+			</div>
+		</div>
+
+
+		<div class="form-group">
+			<label class="control-label" for="email">Email</label>
+			<input type="text" class="form-control boxed" id="email" formControlName="email"  name="email" >
+			<div *ngIf="(email.invalid && email.touched) || email.dirty">
+			  <small *ngIf="email.errors?.required" class="form_error">El email es obligatorio</small>
+			  <small *ngIf="email.errors?.pattern" class="form_error">El email no es valido</small>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="control-label" for="numero_cuenta">Número de cuenta</label>
+			<input type="text" class="form-control boxed" id="numero_cuenta" formControlName="numero_cuenta"  name="numero_cuenta" >
+			<div *ngIf="(numero_cuenta.invalid && numero_cuenta.touched) || numero_cuenta.dirty">
+			  <small *ngIf="numero_cuenta.errors?.required" class="form_error">El número de cuenta es obligatorio</small>
+			  <small *ngIf="numero_cuenta.errors?.pattern" class="form_error">El número de cuenta no es valido</small>
+			</div>
+		</div>
+
+		<button (click)="altaCliente()" type="submit"  class="btn btn-rounded btn-secondary" [disabled]="FormularioAltaCliente.invalid">Añadir</button>
+		<button [routerLink]="['/cliente']" class="btn btn-rounded btn-secondary float-right"> Volver </button>
+	</form>
+</div>

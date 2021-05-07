@@ -1,0 +1,97 @@
+<div class="container"> 
+	<h2>{{title}}</h2>
+
+	<div class="message success" *ngIf="status == 'success'">
+		El artículo se ha creado correctamente
+	</div>
+
+	<div class="message failed" *ngIf="status == 'failed'">
+		El artículo no se ha podido crear
+	</div>
+
+	<form [formGroup]="FormularioAltaArticulo">
+
+		<div class="form-group">
+			<label class="control-label" for="codigo">Código</label>
+			<input type="text" class="form-control boxed" id="codigo" formControlName="codigo"  name="codigo" >
+			<div *ngIf="(codigo.invalid && codigo.touched) || codigo.dirty">
+			  <small *ngIf="codigo.errors?.required" class="form_error">El código es obligatorio</small>
+  			  <small *ngIf="codigo.errors?.pattern" class="form_error">El código solo puede tener letras y dígitos</small>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="control-label" for="nombre">Nombre</label>
+			<input type="text" class="form-control boxed" id="nombre" formControlName="nombre"  name="nombre" >
+			<div *ngIf="(nombre.invalid && nombre.touched) || nombre.dirty">
+			  <small *ngIf="nombre.errors?.required" class="form_error">El nombre es obligatorio</small>
+			  <small *ngIf="nombre.errors?.pattern" class="form_error">El nombre solo puede tener letras y espacios</small>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="control-label" for="descripcion">Descripción</label>
+			<textarea class="form-control boxed" id="descripcion" formControlName="descripcion"  name="descripcion"></textarea>
+		</div>
+
+		<div class="form-group">
+			<label class="control-label" for="proveedor">Proveedor</label>
+			<input type="text" class="form-control boxed" id="proveedor" formControlName="proveedor"  name="proveedor" >
+			<div *ngIf="(proveedor.invalid && proveedor.touched) || proveedor.dirty">
+			  <small *ngIf="proveedor.errors?.required" class="form_error">El proveedor es obligatorio</small>
+			  <small *ngIf="proveedor.errors?.pattern" class="form_error">El proveedor solo puede tener letras y espacios</small>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="control-label" for="precio_compra">Precio de compra</label>
+			<input type="text" class="form-control boxed" id="precio_compra" formControlName="precio_compra"  name="precio_compra" >
+			<div *ngIf="(precio_compra.invalid && precio_compra.touched) || precio_compra.dirty">
+			  <small *ngIf="precio_compra.errors?.required" class="form_error">El precio de compra es obligatorio</small>
+			  <small *ngIf="precio_compra.errors?.pattern" class="form_error">Solo puedes introducir dígitos con dos decimales</small>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="control-label" for="rentabilidad">Rentabilidad</label>
+			<input type="text" class="form-control boxed" id="rentabilidad" formControlName="rentabilidad"  name="rentabilidad" >
+			<div *ngIf="(rentabilidad.invalid && rentabilidad.touched) || rentabilidad.dirty">
+			  <small *ngIf="rentabilidad.errors?.required" class="form_error">La rentabilidad son obligatorio</small>
+			  <small *ngIf="rentabilidad.errors?.pattern" class="form_error">Solo puedes introducir dígitos</small>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="control-label" for="iva">IVA</label><br>
+
+			<label>
+				<input type="radio" value="4" formControlName="iva">
+				<span> 7%</span>
+			</label><br>
+			<label>
+				<input type="radio" value="10" formControlName="iva">
+				<span> 10%</span>
+			</label><br>
+			<label>
+				<input type="radio" value="21" formControlName="iva">
+				<span> 21%</span>
+			</label>
+			<div *ngIf="(iva.invalid && iva.touched) || iva.dirty">
+			  <small *ngIf="iva.errors?.required" class="form_error">El iva es obligatorio</small>
+			</div>	
+		</div>
+
+
+		<div class="form-group">
+			<label class="control-label" for="stock">Stock</label>
+			<input type="text" class="form-control boxed" id="stock" formControlName="stock"  name="stock" >
+			<div *ngIf="(stock.invalid && stock.touched) || stock.dirty">
+			  <small *ngIf="stock.errors?.required" class="form_error">El stock es obligatorio</small>
+			  <small *ngIf="stock.errors?.pattern" class="form_error">Solo puedes introducir dígitos</small>
+			</div>
+		</div>
+		
+		<button (click)="altaArticulo()" type="submit"  class="btn btn-rounded btn-secondary" [disabled]="FormularioAltaArticulo.invalid">Añadir</button>
+		<button [routerLink]="['/articulos']" class="btn btn-rounded btn-secondary float-right"> Volver </button>
+	</form>
+</div>

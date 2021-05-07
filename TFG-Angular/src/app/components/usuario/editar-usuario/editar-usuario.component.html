@@ -1,0 +1,47 @@
+<div class="container">
+	<h2>{{title}}</h2>
+
+	<div class="message success" *ngIf="status == 'success'">
+		El usuario se ha editado correctamente
+	</div>
+
+	<div class="message failed" *ngIf="status == 'failed'">
+		El usuario no se ha podido editar
+	</div>
+
+	<form [formGroup]="FormularioEditarUsuario">
+
+		<div class="form-group">
+			<label class="control-label" for="nombre">Nombre</label>
+			<input type="text" class="form-control boxed"  id="nombre" maxlength="25" formControlName="nombre"  name="nombre" >
+			<div *ngIf="(nombre.invalid && nombre.touched) || nombre.dirty">
+			  <small *ngIf="nombre.errors?.required" class="form_error">El nombre es obligatorio</small>
+			  <small *ngIf="nombre.errors?.pattern" class="form_error">El nombre solo puede tener letras y espacios</small>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="control-label" for="apellidos">Apellidos</label>
+			<input type="text" class="form-control boxed" id="apellidos" maxlength="45" formControlName="apellidos"  name="apellidos" >
+			<div *ngIf="(apellidos.invalid && apellidos.touched) || apellidos.dirty">
+			  <small *ngIf="apellidos.errors?.required" class="form_error">Los apellidos son obligatorios</small>
+			  <small *ngIf="apellidos.errors?.pattern" class="form_error">Los apellidos solo pueden tener letras y espacios</small>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="control-label" for="email">Email</label>
+			<input type="text" class="form-control boxed" id="email" maxlength="65" formControlName="email"  name="email" >
+			<div *ngIf="(email.invalid && email.touched) || email.dirty">
+			  <small *ngIf="email.errors?.required" class="form_error">El email es obligatorio</small>
+			  <small *ngIf="email.errors?.pattern" class="form_error">El email no es válido</small>
+			</div>
+		</div>
+
+		<button (click)="editarUsuario()" type="submit"  class="btn btn-rounded btn-secondary" [disabled]="FormularioEditarUsuario.invalid">Guardar cambios</button>
+
+		<button (click)="volverAtras()" class="btn btn-rounded btn-secondary float-right"> Volver </button>
+	</form>
+
+
+</div>
